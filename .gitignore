@@ -1,3 +1,4 @@
+# .gitignore from template
 # C++ objects and libs
 
 *.slo
@@ -18,3 +19,9 @@ moc_*.cpp
 qrc_*.cpp
 Makefile
 *-build-*
+
+# Additions to template
+Makefile.Debug
+Makefile.Release
+*.exe
+ui_mainwindow.h
