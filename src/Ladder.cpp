@@ -119,19 +119,14 @@ void Ladder::heightOne(const std::vector<Slot>& ladderSlots)
     int indexPosition = 0;
     // choose limp:
     // choose slot
-    cerr << "===============" << endl;
-    cerr << "Choosing slot #: " << num++ << endl;
-    cerr << "===============" << endl;
     vector<Slot>::const_iterator it;
     for(it = ladderSlots.begin(); it != ladderSlots.end(); it++){
       if(slotTaken(it->name(), limps)){
         continue;
       }
-     // std::cerr << "slot " << it->name() << " requires: " << fReqs[slotToInt(it->name())].abi() << endl;
       // determine if this slot has a final implant occupying it
       bool mustRemove = true;
       if(fReqs[slotToInt(it->name())].abi() == "abi"){
-        std::cerr << "don't have to remove: " << it->name() << endl;
         mustRemove = false;
       }
       // choose implant vector
@@ -149,32 +144,24 @@ void Ladder::heightOne(const std::vector<Slot>& ladderSlots)
         // test implant
         limps[limps.size() - 1] = (*it)[i][max];
         limps[limps.size() - 1].setRemove(mustRemove);
-        cerr << "Testing implant: ";
-        limps[limps.size() - 1].out(cerr);
         Ladder tempLadder(fReqs, stats);
         tempLadder.equipLimps(limps);
         tempLadder.heightZero_AvgQL();
         double tempAvgQL = tempLadder.avgQL();
-        cerr << "  ...Average QL found was: " << tempAvgQL;
         // + .01 added because optimizations in release mode were causing rounding problems
         if(tempAvgQL > maxAvgQL + .01){
-          cerr << ". This is a new record!";
           increasingAvgQL = true;
           maxAvgQL = tempAvgQL;
           slotPosition = it;
           vectorPosition = i;
           indexPosition = max;
         }
-        cerr << endl;
       }
     }
     limps[limps.size() - 1] = (*slotPosition)[vectorPosition][indexPosition];
     if(fReqs[slotToInt(slotPosition->name())].abi() == "abi"){
       limps[limps.size() - 1].setRemove(false);
     }
-    cerr << "%%%%%%%%%%%%%% Decided to go with: ";
-    limps[limps.size() - 1].out(cerr);
-    cerr << endl;
   }
   if(!increasingAvgQL){
     // didn't find a useful ladder imp last time, so remove
