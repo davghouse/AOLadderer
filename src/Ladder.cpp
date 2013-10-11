@@ -109,7 +109,6 @@ void Ladder::heightOne(const std::vector<Slot>& ladderSlots)
 {
   double maxAvgQL = 0;
   bool increasingAvgQL = true;
-  int num = 1;
   vector<Implant> limps;
   while(increasingAvgQL && limps.size() != 10){
     increasingAvgQL = false;
