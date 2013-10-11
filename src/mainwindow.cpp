@@ -336,7 +336,7 @@ void MainWindow::showHeightOne(const Ladder & ladder)
   for(vector<int>::const_iterator it = ladder.process[1].order.begin();
       it != ladder.process[1].order.end(); it++){
     Implant imp = ladder.process[1].config[*it];
-    if(imp.abi() != "abi" && imp.ql() > 0){
+    if(imp.abi() != "abi" && imp.ql() > 0 && imp.mustRemove()){
       if(doneWithLaddering){
         if(*it == firstAfterDash){
           ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
@@ -364,9 +364,8 @@ void MainWindow::showHeightOne(const Ladder & ladder)
       }
     }
   }
-  if(!doneWithLaddering){
+  if(!doneWithLaddering)
     ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
-  }
   std::sort(shining.begin(), shining.end());
   std::sort(bright.begin(), bright.end());
   std::sort(faded.begin(), faded.end());
