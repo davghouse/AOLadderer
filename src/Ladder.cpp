@@ -4,7 +4,7 @@
 
 using std::vector; using std::string;
 using std::ostream;
-using std::endl; using std::cout;
+using std::endl; using std::cout; using std::cerr;
 using std::max; using std::sort;
 
 bool printFlag = false;
@@ -99,10 +99,17 @@ void Ladder::heightZero_AvgQL()
 }
 
 // height one
+// improvements:
+// check for any unused ladder implants that are:
+// beneficial to equipping final implants and
+// not in the same slot as a final implant (or a current limp)
+// such implants do not need to be removed in reverse order;
+// they can be removed after all required implants are equipped.
 void Ladder::heightOne(const std::vector<Slot>& ladderSlots)
 {
   double maxAvgQL = 0;
   bool increasingAvgQL = true;
+  int num = 1;
   vector<Implant> limps;
   while(increasingAvgQL && limps.size() != 10){
     increasingAvgQL = false;
@@ -112,10 +119,20 @@ void Ladder::heightOne(const std::vector<Slot>& ladderSlots)
     int indexPosition = 0;
     // choose limp:
     // choose slot
+    cerr << "===============" << endl;
+    cerr << "Choosing slot #: " << num++ << endl;
+    cerr << "===============" << endl;
     vector<Slot>::const_iterator it;
     for(it = ladderSlots.begin(); it != ladderSlots.end(); it++){
       if(slotTaken(it->name(), limps)){
         continue;
+      }
+     // std::cerr << "slot " << it->name() << " requires: " << fReqs[slotToInt(it->name())].abi() << endl;
+      // determine if this slot has a final implant occupying it
+      bool mustRemove = true;
+      if(fReqs[slotToInt(it->name())].abi() == "abi"){
+        std::cerr << "don't have to remove: " << it->name() << endl;
+        mustRemove = false;
       }
       // choose implant vector
       Slot::size_type i;
@@ -131,26 +148,39 @@ void Ladder::heightOne(const std::vector<Slot>& ladderSlots)
         }
         // test implant
         limps[limps.size() - 1] = (*it)[i][max];
+        limps[limps.size() - 1].setRemove(mustRemove);
+        cerr << "Testing implant: ";
+        limps[limps.size() - 1].out(cerr);
         Ladder tempLadder(fReqs, stats);
         tempLadder.equipLimps(limps);
         tempLadder.heightZero_AvgQL();
         double tempAvgQL = tempLadder.avgQL();
+        cerr << "  ...Average QL found was: " << tempAvgQL;
         // + .01 added because optimizations in release mode were causing rounding problems
         if(tempAvgQL > maxAvgQL + .01){
+          cerr << ". This is a new record!";
           increasingAvgQL = true;
           maxAvgQL = tempAvgQL;
           slotPosition = it;
           vectorPosition = i;
           indexPosition = max;
         }
+        cerr << endl;
       }
     }
-    limps[limps.size() - 1] = (*slotPosition)[vectorPosition][indexPosition]; 
+    limps[limps.size() - 1] = (*slotPosition)[vectorPosition][indexPosition];
+    if(fReqs[slotToInt(slotPosition->name())].abi() == "abi"){
+      limps[limps.size() - 1].setRemove(false);
+    }
+    cerr << "%%%%%%%%%%%%%% Decided to go with: ";
+    limps[limps.size() - 1].out(cerr);
+    cerr << endl;
   }
   if(!increasingAvgQL){
     // didn't find a useful ladder imp last time, so remove
     limps.resize(limps.size() - 1);
   }
+
   Ladder tempLadder(fReqs,stats);
   tempLadder.equipLimps(limps);
   tempLadder.heightZero_AvgQL();
@@ -538,26 +568,8 @@ bool slotTaken(const string& str, const vector<string>& strs){
 void Ladder::equipLimpsLaddered(const vector<Implant>& limps)
 {
   // these already have QLs
-  if(printFlag){
-  cout << "My stats started as: ";
-  cout << endl;
-  stats.out(cout);
-  cout << endl;
-  }
   for(vector<Implant>::size_type i = 0; i != limps.size(); i++){
-    if(printFlag){
-    cout << "Equipping: ";
-    limps[i].out(cout);
-    cout << endl;
-    cout << "This limp requires: " << QLToTre(limps[i].ql()) << " treatment, " << QLToAbi(limps[i].ql()) << limps[i].abi() << endl;
-    }
     stats.updateStats(limps[i], true, limps[i].ql());
-    if(printFlag){
-    cout << "My stats are now: ";
-    cout << endl;
-    stats.out(cout);
-    cout << endl;
-    }
     config.updateConfig(limps[i], limps[i].ql());
   }
 }
@@ -656,7 +668,12 @@ void Ladder::equipLimps(const vector<Implant>& limps)
   
   for(vector<Implant>::size_type i = 0; i != limps.size(); i++){
     int QL = stats.updateStats(limps[i]);
-    config.updateConfig(Implant(QL, limps[i].slot(), limps[i].abi(), limps[i].shi(), limps[i].bri(), limps[i].fad(), true));
+    if(limps[i].mustRemove()){
+      config.updateConfig(Implant(QL, limps[i].slot(), limps[i].abi(), limps[i].shi(), limps[i].bri(), limps[i].fad(), true));
+    }
+    else{
+      config.updateConfig(Implant(QL, limps[i].slot(), limps[i].abi(), limps[i].shi(), limps[i].bri(), limps[i].fad(), true, false));
+    }
   }
 }
 
@@ -667,8 +684,9 @@ void Ladder::unequipLimps()
   bool limpFound = false;
   Config tempConfig;
   // go through the config, removing limps in reverse order, putting in the required imp immediately
+  // do not remove limps if their remove flag is false
   for(vector<int>::const_reverse_iterator ri = config.rbegin(); ri != config.rend(); ri++){
-    if(config[*ri].isLocked()){
+    if(config[*ri].isLocked() && config[*ri].mustRemove()){
       limpFound = true;
       // remove it
       stats.updateStats(config[*ri], false);
@@ -677,6 +695,7 @@ void Ladder::unequipLimps()
       tempConfig.updateConfig(Implant(QL, fReqs[*ri].slot(), fReqs[*ri].abi(), fReqs[*ri].shi(), fReqs[*ri].bri(), fReqs[*ri].fad()));
     }
   }
+  // include the implants equipped previously
   if(limpFound){
     for(vector<int>::const_iterator it = config.begin(); it != config.end(); it++){
       if(!config[*it].isLocked())
