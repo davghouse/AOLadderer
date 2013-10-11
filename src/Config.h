@@ -36,7 +36,7 @@ public:
     double avg = 0;
     int usedImplantCount = 0;
     for(std::vector<Implant>::size_type i = 0; i != config.size(); i++){
-      if(config[i].abi() != "abi" && config[i].ql() > 0){
+      if(config[i].abi() != "abi" && config[i].ql() > 0 && config[i].mustRemove()){
         avg += config[i].ql();
         usedImplantCount++;
       }
