@@ -11,10 +11,13 @@ class Implant{
   friend class MainWindow;
 public:
   Implant() {
-  Ladder = false;
-  Ql = 0;
+
+    Ladder = false;
+    Ql = 0;
+    remove = true;
   }
-  Implant(int ql, std::string slot, std::string a, std::string s, std::string b, std::string f, bool locked = false)
+
+  Implant(int ql, std::string slot, std::string a, std::string s, std::string b, std::string f, bool locked = false, bool removed = true)
     : Ql(ql), Slot(slot), a(a), s(s), b(b), f(f) {
   
     if((s != "shi" || b != "bri" || f != "fad") && a != "abi")
@@ -27,6 +30,7 @@ public:
     bI = clusterToInt(b);
     fI = clusterToInt(f);
     lock = locked;
+    remove = removed;
   }
 
   bool ladder() const{ return Ladder; }
@@ -42,7 +46,8 @@ public:
   const std::string& fad() const { return f; }
   int fadI() const { return fI; }
 
-  bool isLocked() const{ return lock; }
+  bool isLocked() const { return lock; }
+  bool mustRemove() const { return remove; }
 
   void out(std::ostream& out) const{
     out << Ql << " " << Slot;
@@ -50,6 +55,7 @@ public:
   } 
 
   void setQL(int QL){ Ql = QL; }
+  void setRemove(bool removeBool){ remove = removeBool; }
 
 private:
   bool Ladder;
@@ -75,6 +81,9 @@ private:
 
   // used to prevent laddering implants from being moved
   bool lock;
+
+  // used to allow ladder implants to avoid removal if no final implant occupies their slot
+  bool remove;
 };
 
 #endif
