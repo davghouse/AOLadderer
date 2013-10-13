@@ -43,7 +43,7 @@ Example implants:
 | Feet | 1   | Agility, 6         | 11             | Concealment, 6 | Martial Arts, 3 | Duck-Exp, 2  |
 | Head | 200 | Intelligence, 404  | 951            | Chemistry, 105 | Nano Pool, 63   | Tutoring, 42 |
 
-An equivalent representation of the above implants, with no redundancy:  
+Another equivalent representation of the above implants:  
 
 | QL  | Shining     | Bright       | Faded    |
 | --- | ----------- | ------------ | -------- |
@@ -59,5 +59,38 @@ The following implants might be useful in a laddering process:
 | Chest | ?   | Psychic      | Sense     | Psychic   | Strength |
 | Head  | ?   | Intelligence | Treatment | Nano Pool | Sense    |
 
-In AO, **twinking** is the process of equipping a character with hard-to-equip and/or hard-to-get items.  
+Perhaps the Head implant would be equipped to allow a character with surplus Psychic to equip a higher QL of the Chest.
+Both together might allow for equipping a higher QL of some Sense-requiring implant desired by the character.  
+
+  
+**Twinking** is the process of equipping a character with hard-to-equip and/or hard-to-get items.  
 For many characters, laddering implants is a part of this process.  
+
+Usage
+-----
+
+For Windows 7 or 8 users, download the latest release, unzip, and double-click on Ladderer.exe.  
+
+Choose your implant configuration and input the abilities and Treatment you'll have at the time of equipping.
+I do this by getting an actual character and equipping it with gear I think will be good for implant laddering.
+Make sure there are no important implant slots full; it's assumed all slots are empty, but R/L-Wrist and L-Hand don't matter.
+There are options to cast buffs on yourself if you don't want to get them beforehand. Be careful not to double-count.
+Then just press build and follow the steps from there. Be sure not to remove ladder implants until absolutely necessary.
+
+Usefulness
+----------
+
+First, a comparison:
+
+Implant configuration of a level 48 NT twinked by hand: 
+
+This tool provides a decent approximation for people wanting to quickly equip a low to mid-level character.
+I wouldn't use the tool for full-blown twinks, because it has several limitations:  
+
+* 
+
+
+
+
+
+
