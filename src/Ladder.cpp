@@ -4,10 +4,8 @@
 
 using std::vector; using std::string;
 using std::ostream;
-using std::endl; using std::cout; using std::cerr;
+using std::endl; using std::cout;
 using std::max; using std::sort;
-
-bool printFlag = false;
 
 int permcount = 0;
 int counter = 0;
@@ -171,6 +169,9 @@ void Ladder::heightOne(const std::vector<Slot>& ladderSlots)
   tempLadder.equipLimps(limps);
   tempLadder.heightZero_AvgQL();
   process = tempLadder.process;
+  if(process.size() == 1){
+    process.push_back(process[0]);
+  }
   stats = tempLadder.stats;
 }
 

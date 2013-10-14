@@ -132,4 +132,18 @@ doesn't change.
 
 Fortunately, there aren't many laddering implants. There are 33 subsets, with implants equal (from a laddering perspective)
 up to their required ability. There are 63 total laddering implants considered by the algorithm. 
-Some ladder implants aren't included -- if their cluster specification is a subset of another's and they require the same ability.
+Some ladder implants aren't included -- if their cluster specification is a subset of another's and they require the same ability.  
+
+To-do
+------------
+* Remove unused code
+* Try out conforming to [Google C++ Style Guide] (http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml)
+* Refactor/rearchitecture code 
+* Allow exporting configurations to [Auno] (http://auno.org)
+* Allow saving and loading configurations
+* Add support for Jobe clusters
+* ~~Consider adding support for refined implants~~
+* Redesign UI so it uses a table widget and works under magnification
+* Build on Linux
+* Explore better algorithms
+* Incorporate into a general twinker for Anarchy Online
