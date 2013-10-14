@@ -2,17 +2,9 @@
 #include "Stats.h"
 
 // rounding is detailed here
-// take the ceiling of (tre - TREREQc)/TREREQm. Convert to treatment value.
-// return ceiling if tre is as big as this value. Else, return floor.
+// be really explicit to avoid errors
 int treToQL(double tre)
 {
-/*
-  double QL = ((tre - TREREQc)/TREREQm);
-  int tre2 = QLToTre(ceil(QL));
-  if(tre >= tre2)
-    return ceil(QL);
-  return QL;
-  */
   int QL = ceil((tre - TREREQc)/TREREQm);
   int temp = 0;
   if(QLToTre(QL + 2) <= tre){
@@ -40,7 +32,9 @@ int treToQL(double tre)
   return std::min(temp, 200);
 }
 
-int QLToTre(int QL){
+// treatment required rounds to nearest integer
+int QLToTre(int QL)
+{
   return QL*TREREQm + TREREQc + .5;
 }
 
@@ -50,7 +44,8 @@ int abiToQL(int abi)
 }
 
 // 0 - shining, 1 - bright, 2 - faded
-int abiModFromQL(int type, int QL){
+int abiModFromQL(int type, int QL)
+{
   if(type == 0)
     return SHIABIm*QL + SHIABIc + .5;
   if(type == 1)
@@ -58,7 +53,8 @@ int abiModFromQL(int type, int QL){
   return FADABIm*QL + FADABIc + .5;
 }
 
-int skiModFromQL(int type, int QL){
+int skiModFromQL(int type, int QL)
+{
   if(type == 0)
     return SHISKIm*QL + SHISKIc + .5;
   if(type == 1)
@@ -66,7 +62,8 @@ int skiModFromQL(int type, int QL){
   return FADSKIm*QL + FADSKIc + .5;
 }
 
-double treTrickleFromAbiMod(int abi, int abiMod){
+double treTrickleFromAbiMod(int abi, int abiMod)
+{
   // treatment trickle: (.5*int + .3*agi * .2*sen)/4
   // strength, agility, stamina, intelligence, sense, psychic
   // 0         1        2        3             4      5
@@ -79,6 +76,7 @@ double treTrickleFromAbiMod(int abi, int abiMod){
   return 0;
 }
 
-int QLToAbi(int QL){
+int QLToAbi(int QL)
+{
   return QL*ABIREQm + ABIREQc + .5;
 }

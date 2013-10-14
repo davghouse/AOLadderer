@@ -51,20 +51,6 @@ public:
   void psy(int i) { abis[5] += i; }
   void tre(double d) { treatment += d; }
 
-  void out(std::ostream& out) const{
-    out << "str " << abis[0] << " " << "agi " << abis[1] << std::endl
-        << "sta " << abis[2] << " " << "int " << abis[3] << std::endl
-        << "sen " << abis[4] << " " << "psy " << abis[5] << std::endl;
-    out << "tre " << treatment << std::endl;
-  }
-
-  std::string findLimiting(const Implant& imp){
-    if(treToQL(treatment) < abiToQL(abis[imp.abiI()])){
-      return "tre";
-    }
-    return imp.abi();
-  }
-
   // added for GUI
   void updateStats(const std::vector<int>& abisHolder, double treatmentHolder)
   {

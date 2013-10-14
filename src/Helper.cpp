@@ -127,26 +127,6 @@ int abiReqToInt_GUI(std::string& a){
 }
 
 // added for GUI
-std::string intToAbiReq(int i){
-  if(i == 0)
-    return "str";
-  else if(i == 1)
-    return "agi";
-  else if(i == 2)
-    return "sta";
-  else if(i == 3)
-    return "int";
-  else if(i == 4)
-    return "sen";
-  else if(i == 5)
-    return "psy";
-  else if(i == 6)
-    return "tre";
-  else
-    return "abi";
-}
-
-
 int clusterToInt(const std::string& cluster){
   if(cluster == "str")
     return 0;
