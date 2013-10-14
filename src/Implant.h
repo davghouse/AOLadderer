@@ -11,7 +11,6 @@ class Implant{
   friend class MainWindow;
 public:
   Implant() {
-
     Ladder = false;
     Ql = 0;
     remove = true;
@@ -19,7 +18,6 @@ public:
 
   Implant(int ql, std::string slot, std::string a, std::string s, std::string b, std::string f, bool locked = false, bool removed = true)
     : Ql(ql), Slot(slot), a(a), s(s), b(b), f(f) {
-  
     if((s != "shi" || b != "bri" || f != "fad") && a != "abi")
       Ladder = true; // imp can be used to ladder
     else
@@ -48,11 +46,6 @@ public:
 
   bool isLocked() const { return lock; }
   bool mustRemove() const { return remove; }
-
-  void out(std::ostream& out) const{
-    out << Ql << " " << Slot;
-    out << std::string(7 - Slot.size(), ' ') << a << " " << s << " " << b << " " << f;
-  } 
 
   void setQL(int QL){ Ql = QL; }
   void setRemove(bool removeBool){ remove = removeBool; }
