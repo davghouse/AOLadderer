@@ -26,7 +26,7 @@ There are 13 slots on a character where implants of the corresponding type can b
 |                 | **Feet**  |                |
 
 Implants are useful because they can contain Nano Clusters.  
-Talking about an implant usually means talking about a cluster specification, with no QL specified.
+Talking about an implant usually means talking about a cluster specification, with no QL specified.  
 Clusters provide beneficial modifications; the higher the implant QL, the greater the benefits.  
 Implants have three slots for clusters, which can contain at most one cluster of the corresponding type:  
 
