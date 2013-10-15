@@ -115,7 +115,6 @@ At this stage in development I won't use the tool for full-blown twinks, but per
 Algorithm
 ---------
 
-The tool uses a pretty simple greedy algorithm.      
 There's a base solver to find the ordering over a set of type-distinct implants that maximizes their average QL.
 Such a set of implants has no more than 10 ladder implants, if every slot that can contain a ladder implant does.
 To find the ordering it looks at every possible ordering of all the ladder implants in the set (10! = 3,628,800).  
