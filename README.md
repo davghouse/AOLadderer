@@ -35,7 +35,7 @@ Implants have three slots for clusters, which can contain at most one cluster of
 
 Each type of implant has a set of Shining, a set of Bright, and a set of Faded clusters available to it.  
 Across all 13 Shining sets, a cluster for each skill and each ability occurs exactly once.    
-This is true for the 13 Bright and 13 Faded sets as well.
+This is true for the 13 Bright and 13 Faded sets as well.  
 Example implants:  
 
 | Type | QL  | Ability Req., Val. | Treatment Req. | Shining, Val.  | Bright, Val.    | Faded, Val.  |
