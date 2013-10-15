@@ -15,7 +15,7 @@ The abilities are:
 | **Sense**     | **Psychic**       |
 
 Implants are items that require one of the six abilities and a skill called Treatment to equip.   
-Implants have a Quality Level (QL), from 1 to 200, which determines the magnitude of the ability and Treatment required.  
+Implants have a Quality Level (QL), from 1 to 200, which determines the amount of ability and Treatment required.  
 Talking about an implant usually means talking about a cluster specification, with no QL specified.
 There are 13 slots on a character where implants of the corresponding type can be equipped:    
 
