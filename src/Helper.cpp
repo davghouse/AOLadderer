@@ -1,4 +1,5 @@
 #include "Helper.h"
+using std::string; using std::vector;
 
 namespace laddererHelper {
 
@@ -196,6 +197,16 @@ std::string longAbiName(const std::string& a)
   if(a == "psy") return "Psychic";
   if(a == "tre") return "Treatment";
   return "xxxx";
+}
+
+bool slotTaken(const string& slotName, const vector<Implant>& imps)
+{
+  for(vector<Implant>::const_iterator it = imps.begin(); it != imps.end(); it++)
+    if(slotName == it->slot())
+      return true;
+  if(slotName == "lwrist" || slotName == "rwrist" || slotName == "lhand")
+    return true;
+  return false;
 }
 
 } // namespace laddererHelper

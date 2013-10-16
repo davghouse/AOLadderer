@@ -3,8 +3,6 @@
 
 #include <string>
 #include <fstream>
-#include "Helper.h"
-
 
 class Implant{
   // added for GUI

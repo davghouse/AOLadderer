@@ -1,4 +1,6 @@
 #include "Implant.h"
+#include "Helper.h"
+
 using std::string;
 using namespace laddererHelper;
 

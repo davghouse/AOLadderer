@@ -3,6 +3,7 @@
 #include "Helper.h"
 #include "QString"
 #include <sstream>
+
 using std::vector;
 using std::string;
 using std::cerr;

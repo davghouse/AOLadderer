@@ -12,7 +12,7 @@ public:
   typedef std::vector<std::vector<Implant> >::const_iterator const_iterator;
 
   Slot();
-  Slot(std::string n) : n(n) {}
+  explicit Slot(std::string n) : n(n) {}
 
   void add(Implant i){ limps[limps.size() - 1].push_back(i); }
   void addVec(){ limps.push_back(std::vector<Implant>()); }

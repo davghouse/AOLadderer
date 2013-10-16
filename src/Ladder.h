@@ -10,14 +10,12 @@
 #include "Slot.h"
 #include "Stats.h"
 
-typedef unsigned int uint;
 
 class Ladder{
-  friend class MainWindow;
-  friend bool compare(const std::vector<uint>&, const std::vector<uint>&, const Ladder&);
-  friend double find_AvgQL(const std::vector<uint>&, const Ladder&);
-
 public:
+  friend class MainWindow;
+  typedef unsigned int uint;
+
   Ladder() {}
   Ladder(const Config&, const Stats&);
   void heightOne(const std::vector<Slot>&);
@@ -29,7 +27,13 @@ private:
   void findLimps();
   void ordering(std::vector<uint>&);
   void run_ordering(std::vector<uint>&, std::vector<uint>&);
+  bool compare(const std::vector<uint> &, const std::vector<uint> &) const;
+  double find_AvgQL(const std::vector<uint> &) const;
   void unequipLimps();
+
+  // Disallow copy and assign
+  Ladder(const Ladder&);
+  void operator=(const Ladder&);
 
 private:
   std::vector<Config> process; // laddering process 
@@ -40,9 +44,5 @@ private:
   Config fReqs; // final implant requirements 
   Stats stats; // current stats
 };
-
-bool slotTaken(const std::string&, const std::vector<Implant>&);
-double find_AvgQL(const std::vector<uint>&, const Ladder&);
-bool compare(const std::vector<uint>&, const std::vector<uint>&, const Ladder&);
 
 #endif // LADDER_H_

@@ -82,18 +82,6 @@ void Ladder::heightOne(const vector<Slot>& ladderSlots)
   stats = tempLadder.stats;
 }
 
-bool slotTaken(const string& slotName, const vector<Implant>& imps)
-{
-  for(vector<Implant>::const_iterator it = imps.begin();
-      it != imps.end(); it++){
-    if(slotName == it->slot())
-      return true;
-  }
-  if(slotName == "lwrist" || slotName == "rwrist" || slotName == "lhand"){
-    return true;
-  }
-  return false;
-}
 
 void Ladder::equipLimps(const vector<Implant>& limps)
 {
@@ -145,7 +133,7 @@ void Ladder::ordering(vector<uint>& ordered)
 void Ladder::run_ordering(vector<uint>& best, vector<uint>& partial)
 {
   if(partial.size() == rlimps.size()){
-    if(!compare(best, partial, *this))
+    if(!compare(best, partial))
       best = partial;
     return;
   }
@@ -169,26 +157,26 @@ void Ladder::run_ordering(vector<uint>& best, vector<uint>& partial)
   }
 }
 
-bool compare(const vector<uint>& best, const vector<uint>& trial, const Ladder& l)
+inline bool Ladder::compare(const vector<uint>& best, const vector<uint>& trial) const
 {
   if(!best.size())
     return false;
-  return find_AvgQL(best, l) >= find_AvgQL(trial, l);
+  return find_AvgQL(best) >= find_AvgQL(trial);
 }
 
-double find_AvgQL(const vector<uint>& indices, const Ladder& l)
+double Ladder::find_AvgQL(const vector<uint>& indices) const
 {
   double avgQL = 0;
-  Stats cStats = l.stats;
+  Stats cStats = stats;
   for(vector<uint>::size_type i = 0; i != indices.size(); i++){
-    avgQL += cStats.updateStats(l.rlimps[indices[i]]);
+    avgQL += cStats.updateStats(rlimps[indices[i]]);
   }
-  for(vector<uint>::size_type i = 0; i != l.fReqs.size(); i++){
-    if(!l.fReqs[i].ladder()){
-     avgQL += cStats.updateStats(l.fReqs[i]);
+  for(vector<uint>::size_type i = 0; i != fReqs.size(); i++){
+    if(!fReqs[i].ladder()){
+     avgQL += cStats.updateStats(fReqs[i]);
     }
   }
-  return avgQL/(l.fReqs.size());
+  return avgQL/(fReqs.size());
 }
 
 void Ladder::unequipLimps()
