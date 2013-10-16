@@ -7,6 +7,7 @@
 class Implant{
   // added for GUI
   friend class MainWindow;
+
 public:
   Implant();
 

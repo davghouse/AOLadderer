@@ -262,7 +262,7 @@ void MainWindow::showHeightOne(const Ladder & ladder)
   bool doneWithLaddering = false;
   int firstAfterDash = 0;
   for(vector<int>::const_iterator it = ladder.process[0].order.begin();
-      it != ladder.process[0].order.end(); it++){
+      it != ladder.process[0].order.end(); ++it){
     Implant imp = ladder.process[0].config[*it];
     if(imp.abi() != "abi" && imp.ql() > 0){
       // ladder implant
@@ -288,9 +288,9 @@ void MainWindow::showHeightOne(const Ladder & ladder)
           string s = q.value(0).toString().toStdString();
           string b = q.value(1).toString().toStdString();
           string f = q.value(2).toString().toStdString();
-          if(s == "Empty") emptyCount++;
-          if(b == "Empty") emptyCount++;
-          if(f == "Empty") emptyCount++;
+          if(s == "Empty") ++emptyCount;
+          if(b == "Empty") ++emptyCount;
+          if(f == "Empty") ++emptyCount;
           if(emptyCount > mostEmpties || (emptyCount == mostEmpties && s == "Empty")){
             mostEmpties = emptyCount;
             shi = s;
@@ -336,7 +336,7 @@ void MainWindow::showHeightOne(const Ladder & ladder)
   }
   // Step Two
   for(vector<int>::const_iterator it = ladder.process[1].order.begin();
-      it != ladder.process[1].order.end(); it++){
+      it != ladder.process[1].order.end(); ++it){
     Implant imp = ladder.process[1].config[*it];
     if(imp.abi() != "abi" && imp.ql() > 0 && imp.mustRemove()){
       if(doneWithLaddering){

@@ -12,15 +12,16 @@
 
 
 class Ladder{
-public:
   friend class MainWindow;
+
+public:
   typedef unsigned int uint;
 
   Ladder() {}
   Ladder(const Config&, const Stats&);
   void heightOne(const std::vector<Slot>&);
   double avgQL() const;
-  
+
 private:
   void equipLimps(const std::vector<Implant>&);
   void heightZero();

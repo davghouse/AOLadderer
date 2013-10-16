@@ -201,7 +201,7 @@ std::string longAbiName(const std::string& a)
 
 bool slotTaken(const string& slotName, const vector<Implant>& imps)
 {
-  for(vector<Implant>::const_iterator it = imps.begin(); it != imps.end(); it++)
+  for(vector<Implant>::const_iterator it = imps.begin(); it != imps.end(); ++it)
     if(slotName == it->slot())
       return true;
   if(slotName == "lwrist" || slotName == "rwrist" || slotName == "lhand")

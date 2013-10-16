@@ -11,6 +11,7 @@
 
 class Config{
   friend class MainWindow;
+
 public:
   typedef std::vector<Implant>::size_type size_type;
 

@@ -80,7 +80,7 @@ Stats::Stats() : treatment(0.0)
 
 void Stats::updateStats(const vector<int>& abisHolder, double treatmentHolder)
 {
-  for(std::vector<int>::size_type i = 0; i != 6; i++)
+  for(std::vector<int>::size_type i = 0; i != 6; ++i)
     abis.push_back(abisHolder[i]);
   treatment = treatmentHolder;
 }
