@@ -46,16 +46,16 @@ private slots:
   void markAsBoughtFaded(QModelIndex);
 
 private:
-  void getConfig(Config&);
+  void getConfig(ImplantConfiguration&);
   void getStats(Stats&);
-  void getConfigHelper(Config&, int, const std::string&, std::string&, std::string&, std::string&);
+  void getConfigHelper(ImplantConfiguration&, int, const std::string&, std::string&, std::string&, std::string&);
   void showHeightOne(const Ladder&);
   void showImplant(const Implant&, std::string&, std::string&, std::string&, int);
 
 private:
   Ui::MainWindow *ui;
   QSqlDatabase implantDB;
-  std::vector<Slot> ladderSlots;
+  std::vector<LadderSlot> ladderSlots;
   bool configNotEmpty;
 };
 

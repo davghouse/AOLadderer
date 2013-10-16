@@ -17,8 +17,8 @@ public:
   typedef unsigned int uint;
 
   Ladder() {}
-  Ladder(const Config&, const Stats&);
-  void heightOne(const std::vector<Slot>&);
+  Ladder(const ImplantConfiguration&, const Stats&);
+  void heightOne(const std::vector<LadderSlot>&);
   double avgQL() const;
 
 private:
@@ -36,12 +36,12 @@ private:
   void operator=(const Ladder&);
 
 private:
-  std::vector<Config> process; // laddering process 
-  Config config; // working config
+  std::vector<ImplantConfiguration> process; // laddering process
+  ImplantConfiguration config; // working config
 
   std::vector<Implant> rlimps; // required implants useful for laddering.
 
-  Config fReqs; // final implant requirements 
+  ImplantConfiguration fReqs; // final implant requirements
   Stats stats; // current stats
 };
 

@@ -6,13 +6,13 @@
 #include "implant.h"
 
  // slot order: head, eye, ear, chest, rarm, larm, waist, rwrist, lwrist, leg, rhand, lhand, feet
-class Slot{
+class LadderSlot{
 public:
   typedef std::vector<std::vector<Implant> >::size_type size_type;
   typedef std::vector<std::vector<Implant> >::const_iterator const_iterator;
 
-  Slot();
-  explicit Slot(std::string n) : n(n) {}
+  LadderSlot();
+  explicit LadderSlot(std::string n) : n(n) {}
 
   void add(Implant i){ limps[limps.size() - 1].push_back(i); }
   void addVec(){ limps.push_back(std::vector<Implant>()); }

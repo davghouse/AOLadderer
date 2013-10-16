@@ -12,13 +12,13 @@ namespace {
 // rounding here is easy
 inline int QLToTre(int QL)
 {
-  return QL*tre_req_m + tre_req_c + .5;
+  return QL*kTreReqM + kTreReqC + .5;
 }
 
 // rounding is detailed here - be really explicit to avoid errors
 inline int treToQL(double tre)
 {
-  int QL = ceil((tre - tre_req_c)/tre_req_m);
+  int QL = ceil((tre - kTreReqC)/kTreReqM);
   if(QLToTre(QL + 1) <= tre)
     return min(QL + 1, 200);
   if(QLToTre(QL) <= tre)
@@ -32,31 +32,31 @@ inline int treToQL(double tre)
 
 inline int QLToAbi(int QL)
 {
-  return QL*abi_req_m + abi_req_c + .5;
+  return QL*kAbiReqM + kAbiReqC + .5;
 }
 
 inline int abiToQL(int abi)
 {
-  return std::min((abi - abi_req_c)/abi_req_m, 200);
+  return std::min((abi - kAbiReqC)/kAbiReqM, 200);
 }
 
 // 0 - shining, 1 - bright, 2 - faded
 inline int abiModFromQL(int type, int QL)
 {
   if(type == 0)
-    return shi_abi_m*QL + shi_abi_c + .5;
+    return kShiAbiM*QL + kShiAbiC + .5;
   if(type == 1)
-    return bri_abi_m*QL + bri_abi_c + .5;
-  return fad_abi_m*QL + fad_abi_c + .5;
+    return kBriAbiM*QL + kBriAbiC + .5;
+  return kFadAbiM*QL + kFadAbiC + .5;
 }
 
 inline int skiModFromQL(int type, int QL)
 {
   if(type == 0)
-    return shi_ski_m*QL + shi_ski_c + .5;
+    return kShiSkiM*QL + kShiSkiC + .5;
   if(type == 1)
-    return bri_ski_m*QL + bri_ski_c + .5;
-  return fad_ski_m*QL + fad_ski_c + .5;
+    return kBriSkiM*QL + kBriSkiC + .5;
+  return kFadSkiM*QL + kFadSkiC + .5;
 }
 
 inline double treTrickleFromAbiMod(int abi, int abiMod)

@@ -3,14 +3,14 @@
 
 using namespace ladder_helper;
 
-Config::Config()
+ImplantConfiguration::ImplantConfiguration()
 {
   config.reserve(13);
   for(size_type i = 0; i != 13; ++i)
     config.push_back(Implant(0, intToSlot(i), "abi", "shi", "bri", "fad"));
 }
 
-double Config::avgQL() const
+double ImplantConfiguration::avgQL() const
 {
   double avg = 0;
   int usedImplantCount = 0;

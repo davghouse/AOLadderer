@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent) :
   while(in >> abi){
     if(abi == "$"){
       in >> ladderSlot;
-      ladderSlots.push_back(Slot(ladderSlot));
+      ladderSlots.push_back(LadderSlot(ladderSlot));
     }
     else if(abi == "#")
       ladderSlots[ladderSlots.size() - 1].addVec();
@@ -70,7 +70,9 @@ MainWindow::~MainWindow()
 }
 
 // member functions:
-void MainWindow::getConfig(Config& requiredConfig)
+
+// some better way to do this... use table widget?
+void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
 {
   std::string shi, bri, fad;
   // head 0 Head
@@ -179,7 +181,7 @@ void MainWindow::getConfig(Config& requiredConfig)
   }
 }
 
-void MainWindow::getConfigHelper(Config& requiredConfig, int i, const string& slot, string& shi, string& bri, string& fad)
+void MainWindow::getConfigHelper(ImplantConfiguration& requiredConfig, int i, const string& slot, string& shi, string& bri, string& fad)
 {
   configNotEmpty = true;
   requiredConfig.config[i].sName = shi;
@@ -234,7 +236,7 @@ void MainWindow::runHeightOneLaddered()
   ui->Bright->clear();
   ui->Faded->clear();
   configNotEmpty = false;
-  Config requiredConfig;
+  ImplantConfiguration requiredConfig;
   Stats baseStats;
   getConfig(requiredConfig);
   getStats(baseStats);
@@ -247,17 +249,17 @@ void MainWindow::runHeightOneLaddered()
   }
 }
 
-struct shoppingItem{
+struct ShoppingItem{
   std::string cluster;
   int ql;
-  bool operator<(const shoppingItem& r) const{ return cluster < r.cluster; }
+  bool operator<(const ShoppingItem& r) const{ return cluster < r.cluster; }
 };
 
 void MainWindow::showHeightOne(const Ladder & ladder)
 {
 
   // for shopping list
-  vector<shoppingItem> shining, bright, faded;
+  vector<ShoppingItem> shining, bright, faded;
   // Step One
   bool doneWithLaddering = false;
   int firstAfterDash = 0;
@@ -300,17 +302,17 @@ void MainWindow::showHeightOne(const Ladder & ladder)
         }
         showImplant(imp, shi, bri, fad, 1);
         if(shi != "-----"){
-          shoppingItem t;
+          ShoppingItem t;
           t.cluster = shi; t.ql = imp.ql();
           shining.push_back(t);
         }
         if(bri != "-----"){
-          shoppingItem t;
+          ShoppingItem t;
           t.cluster = bri; t.ql = imp.ql();
           bright.push_back(t);
         }
         if(fad != "-----"){
-          shoppingItem t;
+          ShoppingItem t;
           t.cluster = fad; t.ql = imp.ql();
           faded.push_back(t);
         }
@@ -350,17 +352,17 @@ void MainWindow::showHeightOne(const Ladder & ladder)
       fad = ladder.fReqs[*it].fName;
       showImplant(imp, shi, bri, fad, 2);
       if(shi != "-----"){
-        shoppingItem t;
+        ShoppingItem t;
         t.cluster = shi; t.ql = imp.ql();
         shining.push_back(t);
       }
       if(bri != "-----"){
-        shoppingItem t;
+        ShoppingItem t;
         t.cluster = bri; t.ql = imp.ql();
         bright.push_back(t);
       }
       if(fad != "-----"){
-        shoppingItem t;
+        ShoppingItem t;
         t.cluster = fad; t.ql = imp.ql();
         faded.push_back(t);
       }
@@ -371,19 +373,19 @@ void MainWindow::showHeightOne(const Ladder & ladder)
   std::sort(shining.begin(), shining.end());
   std::sort(bright.begin(), bright.end());
   std::sort(faded.begin(), faded.end());
-  for(vector<shoppingItem>::iterator it = shining.begin(); it != shining.end(); ++it){
+  for(vector<ShoppingItem>::iterator it = shining.begin(); it != shining.end(); ++it){
     int clusterQL = .86*(it->ql) + .01;
     std::stringstream t;
     t << "QL " << clusterQL << " " << it->cluster;
     ui->Shining->addItem(QString::fromStdString(t.str()));
   }
-  for(vector<shoppingItem>::iterator it = bright.begin(); it != bright.end(); ++it){
+  for(vector<ShoppingItem>::iterator it = bright.begin(); it != bright.end(); ++it){
     int clusterQL = .84*(it->ql) + .01;
     std::stringstream t;
     t << "QL " << clusterQL << " " << it->cluster;
     ui->Bright->addItem(QString::fromStdString(t.str()));
   }
-  for(vector<shoppingItem>::iterator it = faded.begin(); it != faded.end(); ++it){
+  for(vector<ShoppingItem>::iterator it = faded.begin(); it != faded.end(); ++it){
     int clusterQL = .82*(it->ql) + .01;
     std::stringstream t;
     t << "QL " << clusterQL << " " << it->cluster;

@@ -18,25 +18,25 @@
 
 namespace interpolation_coefficients {
 
-const double tre_req_m = 4.723618;
-const double tre_req_c = 6.276382;
+const double kTreReqM = 4.723618;
+const double kTreReqC = 6.276382;
 
-const int abi_req_m = 2;
-const int abi_req_c = 4;
+const int kAbiReqM = 2;
+const int kAbiReqC = 4;
 
-const double shi_ski_m = 0.497487;
-const double shi_ski_c = 5.502513;
-const double bri_ski_m = 0.301507;
-const double bri_ski_c = 2.698492;
-const double fad_ski_m = 0.201005;
-const double fad_ski_c = 1.798994;
+const double kShiSkiM = 0.497487;
+const double kShiSkiC = 5.502513;
+const double kBriSkiM = 0.301507;
+const double kBriSkiC = 2.698492;
+const double kFadSkiM = 0.201005;
+const double kFadSkiC = 1.798994;
 
-const double shi_abi_m = 0.251256;
-const double shi_abi_c = 4.748744;
-const double bri_abi_m = 0.150754;
-const double bri_abi_c = 2.849246;
-const double fad_abi_m = 0.100503;
-const double fad_abi_c = 1.899497;
+const double kShiAbiM = 0.251256;
+const double kShiAbiC = 4.748744;
+const double kBriAbiM = 0.150754;
+const double kBriAbiC = 2.849246;
+const double kFadAbiM = 0.100503;
+const double kFadAbiC = 1.899497;
 
 } // namespace interpolation_coefficients
 

@@ -7,9 +7,9 @@ using std::endl; using std::cout;
 using std::max; using std::sort;
 using namespace ladder_helper;
 
-Ladder::Ladder(const Config& r, const Stats& s) : fReqs(r), stats(s) {}
+Ladder::Ladder(const ImplantConfiguration& r, const Stats& s) : fReqs(r), stats(s) {}
 
-void Ladder::heightOne(const vector<Slot>& ladderSlots)
+void Ladder::heightOne(const vector<LadderSlot>& ladderSlots)
 {
   double maxAvgQL = 0;
   bool increasingAvgQL = true;
@@ -17,12 +17,12 @@ void Ladder::heightOne(const vector<Slot>& ladderSlots)
   while(increasingAvgQL && limps.size() != 10){
     increasingAvgQL = false;
     limps.push_back(Implant());
-    vector<Slot>::const_iterator slotPosition = ladderSlots.begin();
+    vector<LadderSlot>::const_iterator slotPosition = ladderSlots.begin();
     int vectorPosition = 0;
     int indexPosition = 0;
     // choose limp:
     // choose slot
-    vector<Slot>::const_iterator it;
+    vector<LadderSlot>::const_iterator it;
     for(it = ladderSlots.begin(); it != ladderSlots.end(); ++it){
       if(slotTaken(it->name(), limps)){
         continue;
@@ -33,7 +33,7 @@ void Ladder::heightOne(const vector<Slot>& ladderSlots)
         mustRemove = false;
       }
       // choose implant vector
-      Slot::size_type i;
+      LadderSlot::size_type i;
       for(i = 0; i != it->size(); ++i){
         // choose implant
         int max = 0;
@@ -106,7 +106,7 @@ void Ladder::heightZero()
     int QL = stats.updateStats(rlimps[j]);
     config.updateConfig(Implant(QL, rlimps[j].slot(), rlimps[j].abi(), rlimps[j].shi(), rlimps[j].bri(), rlimps[j].fad()));
   }
-  for(Config::size_type i = 0; i != fReqs.size(); ++i){
+  for(ImplantConfiguration::size_type i = 0; i != fReqs.size(); ++i){
     if(!fReqs[i].ladder() && !config[i].isLocked()){
       int QL = stats.updateStats(fReqs[i]);
       config.updateConfig(Implant(QL, fReqs[i].slot(), fReqs[i].abi(), fReqs[i].shi(), fReqs[i].bri(), fReqs[i].fad()));
@@ -117,7 +117,7 @@ void Ladder::heightZero()
 
 void Ladder::findLimps()
 {
-  for(Config::size_type i = 0; i != fReqs.size(); ++i)
+  for(ImplantConfiguration::size_type i = 0; i != fReqs.size(); ++i)
     if(fReqs[i].ladder() && !config[i].isLocked())
       rlimps.push_back(fReqs[i]);
 }
@@ -184,7 +184,7 @@ void Ladder::unequipLimps()
   process.push_back(config);
   // create a temp config for correct ordering
   bool limpFound = false;
-  Config tempConfig;
+  ImplantConfiguration tempConfig;
   // go through the config, removing limps in reverse order, putting in the required imp immediately
   // do not remove limps if their remove flag is false
   for(vector<int>::const_reverse_iterator ri = config.rbegin(); ri != config.rend(); ++ri){

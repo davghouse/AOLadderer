@@ -8,13 +8,13 @@
 #include <numeric>
 #include "implant.h"
 
-class Config{
+class ImplantConfiguration{
   friend class MainWindow;
 
 public:
   typedef std::vector<Implant>::size_type size_type;
 
-  Config();
+  ImplantConfiguration();
   double avgQL() const;
   void updateConfig(Implant imp, int qualityLevel = 0);
  
@@ -32,7 +32,7 @@ private:
   std::vector<int> order; // used in zero height solution to get proper ordering
 };
 
-inline void Config::updateConfig(Implant imp, int qualityLevel)
+inline void ImplantConfiguration::updateConfig(Implant imp, int qualityLevel)
 {
   if(qualityLevel == 0){
     config[imp.slotI()] = imp;
