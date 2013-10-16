@@ -15,8 +15,8 @@ public:
   typedef std::vector<Implant>::size_type size_type;
 
   ImplantConfiguration();
-  double avgQL() const;
-  void updateConfig(Implant imp, int qualityLevel = 0);
+  double AverageQL() const;
+  void UpdateConfig(Implant imp, int qualityLevel = 0);
  
   size_type size() const{ return config_.size(); }
   const Implant& operator[](int i) const { return config_[i]; }
@@ -32,16 +32,16 @@ private:
   std::vector<int> order_; // used in zero height solution to get proper ordering
 };
 
-inline void ImplantConfiguration::updateConfig(Implant imp, int qualityLevel)
+inline void ImplantConfiguration::UpdateConfig(Implant imp, int qualityLevel)
 {
   if(qualityLevel == 0){
-    config_[imp.slotI()] = imp;
-    order_.push_back(imp.slotI());
+    config_[imp.slot_int()] = imp;
+    order_.push_back(imp.slot_int());
   }
   else{
-    config_[imp.slotI()] = imp;
-    order_.push_back(imp.slotI());
-    config_[imp.slotI()].setQL(qualityLevel);
+    config_[imp.slot_int()] = imp;
+    order_.push_back(imp.slot_int());
+    config_[imp.slot_int()].set_ql(qualityLevel);
   }
 }
 

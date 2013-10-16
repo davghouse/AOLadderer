@@ -35,38 +35,38 @@ MainWindow::MainWindow(QWidget *parent) :
       ladder_slots_.push_back(LadderSlot(ladderSlot));
     }
     else if(abi == "#")
-      ladder_slots_[ladder_slots_.size() - 1].addVec();
+      ladder_slots_[ladder_slots_.size() - 1].AddLadderImplantSubset();
     else{
       in >> shi >> bri >> fad;
       // add a ladder imp to the most recent slot
-      ladder_slots_[ladder_slots_.size() - 1].add(Implant(0, ladderSlot, abi, shi, bri, fad, true));
+      ladder_slots_[ladder_slots_.size() - 1].AddLadderImplant(Implant(0, ladderSlot, abi, shi, bri, fad, true));
     }
   }
   // Buffs:
-  connect(ui->SCE, SIGNAL(clicked(bool)), this, SLOT(buffSCE(bool)));
-  connect(ui->SFA, SIGNAL(clicked(bool)), this, SLOT(buffSFA(bool)));
-  connect(ui->CM, SIGNAL(clicked(bool)), this, SLOT(buffCM(bool)));
-  connect(ui->CA, SIGNAL(clicked(bool)), this, SLOT(buffCA(bool)));
-  connect(ui->ES, SIGNAL(clicked(bool)), this, SLOT(buffES(bool)));
-  connect(ui->FG, SIGNAL(clicked(bool)), this, SLOT(buffFG(bool)));
-  connect(ui->EOB, SIGNAL(clicked(bool)), this, SLOT(buffEOB(bool)));
-  connect(ui->ICRT, SIGNAL(clicked(bool)), this, SLOT(buffICRT(bool)));
-  connect(ui->G, SIGNAL(clicked(bool)), this, SLOT(buffG(bool)));
-  connect(ui->EB, SIGNAL(clicked(bool)), this, SLOT(buffEB(bool)));
+  connect(ui->SCE, SIGNAL(clicked(bool)), this, SLOT(ToggleSurgeryClinicEffect(bool)));
+  connect(ui->SFA, SIGNAL(clicked(bool)), this, SLOT(ToggleSuperiorFirstAid(bool)));
+  connect(ui->CM, SIGNAL(clicked(bool)), this, SLOT(ToggleCompositeMedical(bool)));
+  connect(ui->CA, SIGNAL(clicked(bool)), this, SLOT(ToggleCompositeAttribute(bool)));
+  connect(ui->ES, SIGNAL(clicked(bool)), this, SLOT(ToggleEnhancedSenses(bool)));
+  connect(ui->FG, SIGNAL(clicked(bool)), this, SLOT(ToggleFelineGrace(bool)));
+  connect(ui->EOB, SIGNAL(clicked(bool)), this, SLOT(ToggleEssenceOfBehemoth(bool)));
+  connect(ui->ICRT, SIGNAL(clicked(bool)), this, SLOT(ToggleImprovedCutRedTape(bool)));
+  connect(ui->G, SIGNAL(clicked(bool)), this, SLOT(ToggleGauntlet(bool)));
+  connect(ui->EB, SIGNAL(clicked(bool)), this, SLOT(ToggleExtruderBar(bool)));
 
-  connect(ui->IC, SIGNAL(clicked(bool)), this, SLOT(buffIC(bool)));
-  connect(ui->PS, SIGNAL(clicked(bool)), this, SLOT(buffPS(bool)));
+  connect(ui->IC, SIGNAL(clicked(bool)), this, SLOT(ToggleIronCircle(bool)));
+  connect(ui->PS, SIGNAL(clicked(bool)), this, SLOT(ToggleProdigiousStrength(bool)));
 
-  connect(ui->NS, SIGNAL(clicked(bool)), this, SLOT(buffNS(bool)));
-  connect(ui->OME, SIGNAL(clicked(bool)), this, SLOT(buffOME(bool)));
+  connect(ui->NS, SIGNAL(clicked(bool)), this, SLOT(ToggleNeuronalStimulator(bool)));
+  connect(ui->OME, SIGNAL(clicked(bool)), this, SLOT(ToggleOdinsMissingEye(bool)));
 
   // Build:
-  connect(ui->Build, SIGNAL(clicked()), SLOT(runHeightOneLaddered()));
+  connect(ui->Build, SIGNAL(clicked()), SLOT(RunHeightOne()));
 
   // Shopping list
-  connect(ui->Shining, SIGNAL(clicked(QModelIndex)), SLOT(markAsBoughtShining(QModelIndex)));
-  connect(ui->Bright, SIGNAL(clicked(QModelIndex)), SLOT(markAsBoughtBright(QModelIndex)));
-  connect(ui->Faded, SIGNAL(clicked(QModelIndex)), SLOT(markAsBoughtFaded(QModelIndex)));
+  connect(ui->Shining, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtShining(QModelIndex)));
+  connect(ui->Bright, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtBright(QModelIndex)));
+  connect(ui->Faded, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtFaded(QModelIndex)));
 }
 
 MainWindow::~MainWindow()
@@ -78,7 +78,7 @@ MainWindow::~MainWindow()
 // member functions:
 
 // some better way to do this... use table widget?
-void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
+void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
 {
   std::string shi, bri, fad;
   // head 0 Head
@@ -87,7 +87,7 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
   fad = ui->headFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    getConfigHelper(requiredConfig, 0,"Head", shi, bri, fad);
+    GetConfigurationHelper(requiredConfig, 0,"Head", shi, bri, fad);
   }
   // eye 1 Eye
   shi = ui->eyeShi->currentText().toStdString();
@@ -95,7 +95,7 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
   fad = ui->eyeFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    getConfigHelper(requiredConfig, 1,"Eye", shi, bri, fad);
+    GetConfigurationHelper(requiredConfig, 1,"Eye", shi, bri, fad);
   }
   // ear 2 Ear
   shi = ui->earShi->currentText().toStdString();
@@ -103,7 +103,7 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
   fad = ui->earFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    getConfigHelper(requiredConfig,2 ,"Ear", shi, bri, fad);
+    GetConfigurationHelper(requiredConfig,2 ,"Ear", shi, bri, fad);
   }
   // chest 3 Chest
   shi = ui->chestShi->currentText().toStdString();
@@ -111,7 +111,7 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
   fad = ui->chestFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    getConfigHelper(requiredConfig, 3,"Chest", shi, bri, fad);
+    GetConfigurationHelper(requiredConfig, 3,"Chest", shi, bri, fad);
   }
   // rarm 4 Right-Arm
   shi = ui->rarmShi->currentText().toStdString();
@@ -119,7 +119,7 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
   fad = ui->rarmFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    getConfigHelper(requiredConfig, 4,"Right-Arm", shi, bri, fad);
+    GetConfigurationHelper(requiredConfig, 4,"Right-Arm", shi, bri, fad);
   }
   // larm 5 Left-Arm
   shi = ui->larmShi->currentText().toStdString();
@@ -127,7 +127,7 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
   fad = ui->larmFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    getConfigHelper(requiredConfig, 5,"Left-Arm", shi, bri, fad);
+    GetConfigurationHelper(requiredConfig, 5,"Left-Arm", shi, bri, fad);
   }
   // waist 6 Waist
   shi = ui->waistShi->currentText().toStdString();
@@ -135,7 +135,7 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
   fad = ui->waistFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    getConfigHelper(requiredConfig, 6,"Waist", shi, bri, fad);
+    GetConfigurationHelper(requiredConfig, 6,"Waist", shi, bri, fad);
   }
   // rwrist 7 Right-Wrist
   shi = ui->rwristShi->currentText().toStdString();
@@ -143,7 +143,7 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
   fad = ui->rwristFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    getConfigHelper(requiredConfig, 7,"Right-Wrist", shi, bri, fad);
+    GetConfigurationHelper(requiredConfig, 7,"Right-Wrist", shi, bri, fad);
   }
   // lwrist 8 Left-Wrist
   shi = ui->lwristShi->currentText().toStdString();
@@ -151,7 +151,7 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
   fad = ui->lwristFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    getConfigHelper(requiredConfig, 8,"Left-Wrist", shi, bri, fad);
+    GetConfigurationHelper(requiredConfig, 8,"Left-Wrist", shi, bri, fad);
   }
   // leg 9 Leg
   shi = ui->legShi->currentText().toStdString();
@@ -159,7 +159,7 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
   fad = ui->legFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    getConfigHelper(requiredConfig, 9,"Leg", shi, bri, fad);
+    GetConfigurationHelper(requiredConfig, 9,"Leg", shi, bri, fad);
   }
   // rhand 10 Right-Hand
   shi = ui->rhandShi->currentText().toStdString();
@@ -167,7 +167,7 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
   fad = ui->rhandFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    getConfigHelper(requiredConfig, 10,"Right-Hand", shi, bri, fad);
+    GetConfigurationHelper(requiredConfig, 10,"Right-Hand", shi, bri, fad);
   }
   // lhand 11 Left-Hand
   shi = ui->lhandShi->currentText().toStdString();
@@ -175,7 +175,7 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
   fad = ui->lhandFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    getConfigHelper(requiredConfig, 11,"Left-Hand", shi, bri, fad);
+    GetConfigurationHelper(requiredConfig, 11,"Left-Hand", shi, bri, fad);
   }
   // feet 12 Feet
   shi = ui->feetShi->currentText().toStdString();
@@ -183,11 +183,11 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
   fad = ui->feetFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    getConfigHelper(requiredConfig, 12,"Feet", shi, bri, fad);
+    GetConfigurationHelper(requiredConfig, 12,"Feet", shi, bri, fad);
   }
 }
 
-void MainWindow::getConfigHelper(ImplantConfiguration& requiredConfig, int i, const string& slot, string& shi, string& bri, string& fad)
+void MainWindow::GetConfigurationHelper(ImplantConfiguration& requiredConfig, int i, const string& slot, string& shi, string& bri, string& fad)
 {
   config_not_empty_ = true;
   requiredConfig.config_[i].shining_full_ = shi;
@@ -198,28 +198,28 @@ void MainWindow::getConfigHelper(ImplantConfiguration& requiredConfig, int i, co
   QSqlQuery q;
   q.exec(QString::fromStdString(qText));
   q.next();
-  requiredConfig.config_[i].ability_name_ = convertAbiReq(q.value(0).toString().toStdString());
-  requiredConfig.config_[i].ability_int_ = abiReqToInt(requiredConfig.config_[i].ability_name_);
+  requiredConfig.config_[i].ability_name_ = AbilityFullToAbbr(q.value(0).toString().toStdString());
+  requiredConfig.config_[i].ability_int_ = AbilityToInt(requiredConfig.config_[i].ability_name_);
   bool usedToLadder = false;
-  if(abiReqToInt_GUI(shi) >= 0){
+  if(AbilityToIntAndMakeFull(shi) >= 0){
     requiredConfig.config_[i].shining_abbr_ = shi;
-    requiredConfig.config_[i].shining_int_ = clusterToInt(requiredConfig.config_[i].shining_abbr_);
+    requiredConfig.config_[i].shining_int_ = ClusterToInt(requiredConfig.config_[i].shining_abbr_);
     usedToLadder = true;
   }
-  if(abiReqToInt_GUI(bri) >= 0){
+  if(AbilityToIntAndMakeFull(bri) >= 0){
     requiredConfig.config_[i].bright_abbr_ = bri;
-    requiredConfig.config_[i].bright_int_ = clusterToInt(requiredConfig.config_[i].bright_abbr_);
+    requiredConfig.config_[i].bright_int_ = ClusterToInt(requiredConfig.config_[i].bright_abbr_);
     usedToLadder = true;
   }
-  if(abiReqToInt_GUI(fad) >= 0){
+  if(AbilityToIntAndMakeFull(fad) >= 0){
     requiredConfig.config_[i].faded_abbr_ = fad;
-    requiredConfig.config_[i].faded_int_ = clusterToInt(requiredConfig.config_[i].faded_abbr_);
+    requiredConfig.config_[i].faded_int_ = ClusterToInt(requiredConfig.config_[i].faded_abbr_);
     usedToLadder = true;
   }
   requiredConfig.config_[i].used_to_ladder_ = usedToLadder;
 }
 
-void MainWindow::getStats(Stats& baseStats)
+void MainWindow::GetStats(Stats& baseStats)
 {
   vector<int> abisHolder;
   abisHolder.resize(6);
@@ -229,11 +229,11 @@ void MainWindow::getStats(Stats& baseStats)
   abisHolder[3] = ui->Intelligence->value();
   abisHolder[4] = ui->Sense->value();
   abisHolder[5] = ui->Psychic->value();
-  baseStats.updateStats(abisHolder, ui->Treatment->value());
+  baseStats.UpdateStats(abisHolder, ui->Treatment->value());
 }
 
 // slots:
-void MainWindow::runHeightOneLaddered()
+void MainWindow::RunHeightOne()
 {
   ui->stepOne->clear();
   ui->stepTwo->clear();
@@ -244,19 +244,19 @@ void MainWindow::runHeightOneLaddered()
   config_not_empty_ = false;
   ImplantConfiguration requiredConfig;
   Stats baseStats;
-  getConfig(requiredConfig);
-  getStats(baseStats);
+  GetConfiguration(requiredConfig);
+  GetStats(baseStats);
   // height one
   if(config_not_empty_){
     Ladder ladder(requiredConfig,baseStats);
-    ladder.heightOne(ladder_slots_);
-    showHeightOne(ladder);
+    ladder.HeightOne(ladder_slots_);
+    ShowHeightOne(ladder);
     ui->tabWidget->setCurrentWidget(ui->resultsTab);
   }
 }
 
 
-void MainWindow::showHeightOne(const Ladder & ladder)
+void MainWindow::ShowHeightOne(const Ladder & ladder)
 {
 
   // for shopping list
@@ -267,20 +267,20 @@ void MainWindow::showHeightOne(const Ladder & ladder)
   for(vector<int>::const_iterator it = ladder.process_[0].order_.begin();
       it != ladder.process_[0].order_.end(); ++it){
     Implant imp = ladder.process_[0].config_[*it];
-    if(imp.abi() != "abi" && imp.ql() > 0){
+    if(imp.ability_name() != "abi" && imp.ql() > 0){
       // ladder implant
       if(imp.lock_){
         std::string qText = "SELECT shining, bright, faded FROM implants ";
-        qText += "WHERE slot='" + longSlotName(imp.slot()) + "' ";
-        qText += "and req='" + longAbiName(imp.abi()) + "' ";
-        if(imp.shi() != "shi"){
-          qText += "and Shining='" + longAbiName(imp.shi()) + "' ";
+        qText += "WHERE slot='" + SlotAbbrToFull(imp.slot_name()) + "' ";
+        qText += "and req='" + AbilityAndTreatmentAbbrToFull(imp.ability_name()) + "' ";
+        if(imp.shining_abbr() != "shi"){
+          qText += "and Shining='" + AbilityAndTreatmentAbbrToFull(imp.shining_abbr()) + "' ";
         }
-        if(imp.bri() != "bri"){
-          qText += "and Bright='" + longAbiName(imp.bri()) + "' ";
+        if(imp.bright_abbr() != "bri"){
+          qText += "and Bright='" + AbilityAndTreatmentAbbrToFull(imp.bright_abbr()) + "' ";
         }
-        if(imp.fad() != "fad"){
-          qText += "and Faded='" + longAbiName(imp.fad()) + "' ";
+        if(imp.faded_abbr() != "fad"){
+          qText += "and Faded='" + AbilityAndTreatmentAbbrToFull(imp.faded_abbr()) + "' ";
         }
         QSqlQuery q;
         q.exec(QString::fromStdString(qText));
@@ -301,7 +301,7 @@ void MainWindow::showHeightOne(const Ladder & ladder)
             fad = f;
           }
         }
-        showImplant(imp, shi, bri, fad, 1);
+        ShowImplant(imp, shi, bri, fad, 1);
         if(shi != "-----"){
           ShoppingItem t;
           t.cluster_ = shi; t.ql_ = imp.ql();
@@ -329,10 +329,10 @@ void MainWindow::showHeightOne(const Ladder & ladder)
         shi = ladder.required_config_[*it].shining_full_;
         bri = ladder.required_config_[*it].bright_full_;
         fad = ladder.required_config_[*it].faded_full_;
-        showImplant(imp, shi, bri, fad, 1);
+        ShowImplant(imp, shi, bri, fad, 1);
       }
     }
-    ui->avgQLSpinBox->setValue(ladder.avgQL());
+    ui->avgQLSpinBox->setValue(ladder.AverageQL());
   }
   if(!doneWithLaddering){
     ui->stepOne->addItem(QString::fromStdString(std::string(77, '-')));
@@ -341,7 +341,7 @@ void MainWindow::showHeightOne(const Ladder & ladder)
   for(vector<int>::const_iterator it = ladder.process_[1].order_.begin();
       it != ladder.process_[1].order_.end(); ++it){
     Implant imp = ladder.process_[1].config_[*it];
-    if(imp.abi() != "abi" && imp.ql() > 0 && imp.mustRemove()){
+    if(imp.ability_name() != "abi" && imp.ql() > 0 && imp.remove()){
       if(doneWithLaddering){
         if(*it == firstAfterDash){
           ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
@@ -351,7 +351,7 @@ void MainWindow::showHeightOne(const Ladder & ladder)
       shi = ladder.required_config_[*it].shining_full_;
       bri = ladder.required_config_[*it].bright_full_;
       fad = ladder.required_config_[*it].faded_full_;
-      showImplant(imp, shi, bri, fad, 2);
+      ShowImplant(imp, shi, bri, fad, 2);
       if(shi != "-----"){
         ShoppingItem t;
         t.cluster_ = shi; t.ql_ = imp.ql();
@@ -394,16 +394,16 @@ void MainWindow::showHeightOne(const Ladder & ladder)
   }
 }
 
-void MainWindow::showImplant(const Implant& imp, std::string& shi, std::string& bri, std::string& fad, int step)
+void MainWindow::ShowImplant(const Implant& imp, std::string& shi, std::string& bri, std::string& fad, int step)
 {
   if(shi == "Empty") shi = "-----";
   if(bri == "Empty") bri = "-----";
   if(fad == "Empty") fad = "-----";
   string temp;
-  temp += "[" + imp.abi() + "] ";
+  temp += "[" + imp.ability_name() + "] ";
   std::stringstream ss;
   ss << imp.ql();
-  temp += "QL " + ss.str() + " " + longSlotName(imp.slot()) + ":";
+  temp += "QL " + ss.str() + " " + SlotAbbrToFull(imp.slot_name()) + ":";
   temp += std::string(26 - temp.size(), ' ');
   temp += shi + "," + std::string(16 - shi.size(), ' ');
   temp += bri + "," + std::string(16 - bri.size(), ' ');
@@ -417,25 +417,25 @@ void MainWindow::showImplant(const Implant& imp, std::string& shi, std::string& 
 }
 
 
-void MainWindow::buffSCE(bool add)
+void MainWindow::ToggleSurgeryClinicEffect(bool add)
 {
   int val = add ? 100 : -100;
   ui->Treatment->setValue(ui->Treatment->value() + val);
 }
 
-void MainWindow::buffSFA(bool add)
+void MainWindow::ToggleSuperiorFirstAid(bool add)
 {
   int val = add ? 80 : -80;
   ui->Treatment->setValue(ui->Treatment->value() + val);
 }
 
-void MainWindow::buffCM(bool add)
+void MainWindow::ToggleCompositeMedical(bool add)
 {
   int val = add ? 20 : -20;
   ui->Treatment->setValue(ui->Treatment->value() + val);
 }
 
-void MainWindow::buffCA(bool add)
+void MainWindow::ToggleCompositeAttribute(bool add)
 {
   int val = add ? 12 : -12;
                    // agi      int     sen
@@ -450,7 +450,7 @@ void MainWindow::buffCA(bool add)
   ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
-void MainWindow::buffES(bool add)
+void MainWindow::ToggleEnhancedSenses(bool add)
 {
   int val = add ? 15 : -15;
   double trickle = (.2*val)/4;
@@ -459,7 +459,7 @@ void MainWindow::buffES(bool add)
   ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
-void MainWindow::buffFG(bool add)
+void MainWindow::ToggleFelineGrace(bool add)
 {
   int val = add ? 25 : -25;
   double trickle = (.3*val)/4;
@@ -468,14 +468,14 @@ void MainWindow::buffFG(bool add)
   ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
-void MainWindow::buffEOB(bool add)
+void MainWindow::ToggleEssenceOfBehemoth(bool add)
 {
   int val = add ? 27 : -27;
   ui->Stamina->setValue(ui->Stamina->value() + val);
   ui->Strength->setValue(ui->Strength->value() + val);
 }
 
-void MainWindow::buffICRT(bool add)
+void MainWindow::ToggleImprovedCutRedTape(bool add)
 {
   int val = add ? 3 : -3;
   double trickle = (.5*val)/4;
@@ -485,7 +485,7 @@ void MainWindow::buffICRT(bool add)
   ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
-void MainWindow::buffG(bool add)
+void MainWindow::ToggleGauntlet(bool add)
 {
   int val = add ? 10 : -10;
   double trickle = (.3*val+ .5*val+ .2*val)/4;
@@ -499,7 +499,7 @@ void MainWindow::buffG(bool add)
   ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
-void MainWindow::buffEB(bool add)
+void MainWindow::ToggleExtruderBar(bool add)
 {
   int val = add ? 2 : -2;
   double trickle = (.3*val + .5*val + .2*val)/4;
@@ -513,28 +513,28 @@ void MainWindow::buffEB(bool add)
   ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
-void MainWindow::buffIC(bool add)
+void MainWindow::ToggleIronCircle(bool add)
 {
   int val = add ? 20 : -20;
   ui->Stamina->setValue(ui->Stamina->value() + val);
   ui->Strength->setValue(ui->Strength->value() + val);
   if(add && ui->PS->isChecked()){
     ui->PS->setChecked(false);
-    buffPS(false);
+    ToggleProdigiousStrength(false);
   }
 }
 
-void MainWindow::buffPS(bool add)
+void MainWindow::ToggleProdigiousStrength(bool add)
 {
   int val = add ? 40 : -40;
   ui->Strength->setValue(ui->Strength->value() + val);
   if(add && ui->IC->isChecked()){
     ui->IC->setChecked(false);
-    buffIC(false);
+    ToggleIronCircle(false);
   }
 }
 
-void MainWindow::buffNS(bool add)
+void MainWindow::ToggleNeuronalStimulator(bool add)
 {
   int val = add ? 20 : -20;
   double trickle = (.5*val)/4;
@@ -542,12 +542,12 @@ void MainWindow::buffNS(bool add)
   ui->Psychic->setValue(ui->Psychic->value() + val);
   if(add && ui->OME->isChecked()){
     ui->OME->setChecked(false);
-    buffOME(false);
+    ToggleOdinsMissingEye(false);
   }
   ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
-void MainWindow::buffOME(bool add)
+void MainWindow::ToggleOdinsMissingEye(bool add)
 {
   int val = add ? 40 : -40;
   double trickle = (.5*val)/4;
@@ -555,12 +555,12 @@ void MainWindow::buffOME(bool add)
   ui->Psychic->setValue(ui->Psychic->value() + val);
   if(add && ui->NS->isChecked()){
     ui->NS->setChecked(false);
-    buffNS(false);
+    ToggleNeuronalStimulator(false);
   }
   ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
-void MainWindow::markAsBoughtShining(QModelIndex i)
+void MainWindow::ToggleBoughtShining(QModelIndex i)
 {
   QString temp = ui->Shining->item(i.row())->text();
   if(temp[0] == '~'){
@@ -573,7 +573,7 @@ void MainWindow::markAsBoughtShining(QModelIndex i)
   }
 }
 
-void MainWindow::markAsBoughtBright(QModelIndex i)
+void MainWindow::ToggleBoughtBright(QModelIndex i)
 {
   QString temp = ui->Bright->item(i.row())->text();
   if(temp[0] == '~'){
@@ -586,7 +586,7 @@ void MainWindow::markAsBoughtBright(QModelIndex i)
   }
 }
 
-void MainWindow::markAsBoughtFaded(QModelIndex i)
+void MainWindow::ToggleBoughtFaded(QModelIndex i)
 {
   QString temp = ui->Faded->item(i.row())->text();
   if(temp[0] == '~'){

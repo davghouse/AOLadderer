@@ -16,11 +16,11 @@ Implant::Implant(int ql, string slot, string a, string s, string b, string f, bo
     used_to_ladder_ = true; // imp can be used to ladder
   else
     used_to_ladder_ = false;
-  slot_int_ = slotToInt(slot_name_);
-  ability_int_ = abiReqToInt(a);
-  shining_int_ = clusterToInt(s);
-  bright_int_ = clusterToInt(b);
-  faded_int_ = clusterToInt(f);
+  slot_int_ = SlotNameToInt(slot_name_);
+  ability_int_ = AbilityToInt(a);
+  shining_int_ = ClusterToInt(s);
+  bright_int_ = ClusterToInt(b);
+  faded_int_ = ClusterToInt(f);
   lock_ = locked;
   remove_ = removed;
 }

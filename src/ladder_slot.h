@@ -14,8 +14,8 @@ public:
   LadderSlot();
   explicit LadderSlot(std::string n) : name_(n) {}
 
-  void add(Implant i){ ladder_implants_[ladder_implants_.size() - 1].push_back(i); }
-  void addVec(){ ladder_implants_.push_back(std::vector<Implant>()); }
+  void AddLadderImplant(Implant i){ ladder_implants_[ladder_implants_.size() - 1].push_back(i); }
+  void AddLadderImplantSubset(){ ladder_implants_.push_back(std::vector<Implant>()); }
   const std::string& name() const { return name_; }
   size_type size() const { return ladder_implants_.size(); }
 

@@ -9,7 +9,7 @@ using namespace ladder_helper;
 
 Ladder::Ladder(const ImplantConfiguration& r, const Stats& s) : required_config_(r), stats_(s) {}
 
-void Ladder::heightOne(const vector<LadderSlot>& ladderSlots)
+void Ladder::HeightOne(const vector<LadderSlot>& ladderSlots)
 {
   double maxAvgQL = 0;
   bool increasingAvgQL = true;
@@ -24,12 +24,12 @@ void Ladder::heightOne(const vector<LadderSlot>& ladderSlots)
     // choose slot
     vector<LadderSlot>::const_iterator it;
     for(it = ladderSlots.begin(); it != ladderSlots.end(); ++it){
-      if(slotTaken(it->name(), limps)){
+      if(SlotTaken(it->name(), limps)){
         continue;
       }
       // determine if this slot has a final implant occupying it
       bool mustRemove = true;
-      if(required_config_[slotToInt(it->name())].abi() == "abi"){
+      if(required_config_[SlotNameToInt(it->name())].ability_name() == "abi"){
         mustRemove = false;
       }
       // choose implant vector
@@ -40,17 +40,17 @@ void Ladder::heightOne(const vector<LadderSlot>& ladderSlots)
         for(vector<Implant>::size_type j = 0; j != (*it)[i].size(); ++j){
           // looking at implants that have the same cluster specification, but different abi req
           // consider only one; the one for which our abi stats value is highest
-          if(stats_.getAbiFromName((*it)[i][j].abi()) > stats_.getAbiFromName((*it)[i][max].abi())){
+          if(stats_.get_ability_from_name((*it)[i][j].ability_name()) > stats_.get_ability_from_name((*it)[i][max].ability_name())){
             max = j;
           }
         }
         // test implant
         limps[limps.size() - 1] = (*it)[i][max];
-        limps[limps.size() - 1].setRemove(mustRemove);
+        limps[limps.size() - 1].set_remove(mustRemove);
         Ladder tempLadder(required_config_, stats_);
-        tempLadder.equipLimps(limps);
-        tempLadder.heightZero();
-        double tempAvgQL = tempLadder.avgQL();
+        tempLadder.EquipLadderImplants(limps);
+        tempLadder.HeightZero();
+        double tempAvgQL = tempLadder.AverageQL();
         // + .01 added because optimizations in release mode were causing rounding problems
         if(tempAvgQL > maxAvgQL + .01){
           increasingAvgQL = true;
@@ -62,8 +62,8 @@ void Ladder::heightOne(const vector<LadderSlot>& ladderSlots)
       }
     }
     limps[limps.size() - 1] = (*slotPosition)[vectorPosition][indexPosition];
-    if(required_config_[slotToInt(slotPosition->name())].abi() == "abi"){
-      limps[limps.size() - 1].setRemove(false);
+    if(required_config_[SlotNameToInt(slotPosition->name())].ability_name() == "abi"){
+      limps[limps.size() - 1].set_remove(false);
     }
   }
   if(!increasingAvgQL){
@@ -72,8 +72,8 @@ void Ladder::heightOne(const vector<LadderSlot>& ladderSlots)
   }
 
   Ladder tempLadder(required_config_,stats_);
-  tempLadder.equipLimps(limps);
-  tempLadder.heightZero();
+  tempLadder.EquipLadderImplants(limps);
+  tempLadder.HeightZero();
   process_ = tempLadder.process_;
   // makes output easier
   if(process_.size() == 1){
@@ -83,57 +83,69 @@ void Ladder::heightOne(const vector<LadderSlot>& ladderSlots)
 }
 
 
-void Ladder::equipLimps(const vector<Implant>& limps)
+void Ladder::EquipLadderImplants(const vector<Implant>& limps)
 {
   for(vector<Implant>::size_type i = 0; i != limps.size(); ++i){
-    int QL = stats_.updateStats(limps[i]);
-    if(limps[i].mustRemove()){
-      working_config_.updateConfig(Implant(QL, limps[i].slot(), limps[i].abi(), limps[i].shi(), limps[i].bri(), limps[i].fad(), true));
+    int QL = stats_.UpdateStats(limps[i]);
+    if(limps[i].remove()){
+      working_config_.UpdateConfig(Implant(QL, limps[i].slot_name(), limps[i].ability_name(),
+                                           limps[i].shining_abbr(), limps[i].bright_abbr(),
+                                           limps[i].faded_abbr(), true));
     }
     else{
-      working_config_.updateConfig(Implant(QL, limps[i].slot(), limps[i].abi(), limps[i].shi(), limps[i].bri(), limps[i].fad(), true, false));
+      working_config_.UpdateConfig(Implant(QL, limps[i].slot_name(), limps[i].ability_name(),
+                                           limps[i].shining_abbr(), limps[i].bright_abbr(),
+                                           limps[i].faded_abbr(), true, false));
     }
   }
 }
 
-void Ladder::heightZero()
+void Ladder::HeightZero()
 {
-  findLimps();
+  FindLadderImplants();
   vector<uint> ordered;
-  ordering(ordered);
+  Ordering(ordered);
   for(vector<uint>::size_type i = 0; i != ordered.size(); ++i){
     int j = ordered[i];
-    int QL = stats_.updateStats(required_ladder_implants_[j]);
-    working_config_.updateConfig(Implant(QL, required_ladder_implants_[j].slot(), required_ladder_implants_[j].abi(), required_ladder_implants_[j].shi(), required_ladder_implants_[j].bri(), required_ladder_implants_[j].fad()));
+    int QL = stats_.UpdateStats(required_ladder_implants_[j]);
+    working_config_.UpdateConfig(Implant(QL, required_ladder_implants_[j].slot_name(),
+                                         required_ladder_implants_[j].ability_name(),
+                                         required_ladder_implants_[j].shining_abbr(),
+                                         required_ladder_implants_[j].bright_abbr(),
+                                         required_ladder_implants_[j].faded_abbr()));
   }
   for(ImplantConfiguration::size_type i = 0; i != required_config_.size(); ++i){
-    if(!required_config_[i].ladder() && !working_config_[i].isLocked()){
-      int QL = stats_.updateStats(required_config_[i]);
-      working_config_.updateConfig(Implant(QL, required_config_[i].slot(), required_config_[i].abi(), required_config_[i].shi(), required_config_[i].bri(), required_config_[i].fad()));
+    if(!required_config_[i].used_to_ladder() && !working_config_[i].lock()){
+      int QL = stats_.UpdateStats(required_config_[i]);
+      working_config_.UpdateConfig(Implant(QL, required_config_[i].slot_name(),
+                                           required_config_[i].ability_name(),
+                                           required_config_[i].shining_abbr(),
+                                           required_config_[i].bright_abbr(),
+                                           required_config_[i].faded_abbr()));
     }
   }
-  unequipLimps();
+  UnequipLadderImplants();
 }
 
-void Ladder::findLimps()
+void Ladder::FindLadderImplants()
 {
   for(ImplantConfiguration::size_type i = 0; i != required_config_.size(); ++i)
-    if(required_config_[i].ladder() && !working_config_[i].isLocked())
+    if(required_config_[i].used_to_ladder() && !working_config_[i].lock())
       required_ladder_implants_.push_back(required_config_[i]);
 }
 
-void Ladder::ordering(vector<uint>& ordered)
+void Ladder::Ordering(vector<uint>& ordered)
 {
   for(vector<Implant>::size_type i = 0; i != required_ladder_implants_.size(); ++i)
     ordered.push_back(i);
   vector<uint> partial;
-  run_ordering(ordered, partial);
+  RunOrdering(ordered, partial);
 }
 
-void Ladder::run_ordering(vector<uint>& best, vector<uint>& partial)
+void Ladder::RunOrdering(vector<uint>& best, vector<uint>& partial)
 {
   if(partial.size() == required_ladder_implants_.size()){
-    if(!compare(best, partial))
+    if(!Compare(best, partial))
       best = partial;
     return;
   }
@@ -150,36 +162,36 @@ void Ladder::run_ordering(vector<uint>& best, vector<uint>& partial)
       vector<uint>::size_type old_size = partial.size();
       partial.push_back(i);
       // RECURSE -- partial will be previous, plus next available
-      run_ordering(best, partial);
+      RunOrdering(best, partial);
       // pass by reference, then resize when done to continue recursing at this level
       partial.resize(old_size);
     }
   }
 }
 
-inline bool Ladder::compare(const vector<uint>& best, const vector<uint>& trial) const
+inline bool Ladder::Compare(const vector<uint>& best, const vector<uint>& trial) const
 {
   if(!best.size())
     return false;
-  return find_AvgQL(best) >= find_AvgQL(trial);
+  return AverageQLFromOrdering(best) >= AverageQLFromOrdering(trial);
 }
 
-double Ladder::find_AvgQL(const vector<uint>& indices) const
+double Ladder::AverageQLFromOrdering(const vector<uint>& indices) const
 {
   double avgQL = 0;
   Stats cStats = stats_;
   for(vector<uint>::size_type i = 0; i != indices.size(); ++i){
-    avgQL += cStats.updateStats(required_ladder_implants_[indices[i]]);
+    avgQL += cStats.UpdateStats(required_ladder_implants_[indices[i]]);
   }
   for(vector<uint>::size_type i = 0; i != required_config_.size(); ++i){
-    if(!required_config_[i].ladder()){
-     avgQL += cStats.updateStats(required_config_[i]);
+    if(!required_config_[i].used_to_ladder()){
+     avgQL += cStats.UpdateStats(required_config_[i]);
     }
   }
   return avgQL/(required_config_.size());
 }
 
-void Ladder::unequipLimps()
+void Ladder::UnequipLadderImplants()
 {
   process_.push_back(working_config_);
   // create a temp config for correct ordering
@@ -188,28 +200,32 @@ void Ladder::unequipLimps()
   // go through the config, removing limps in reverse order, putting in the required imp immediately
   // do not remove limps if their remove flag is false
   for(vector<int>::const_reverse_iterator ri = working_config_.rbegin(); ri != working_config_.rend(); ++ri){
-    if(working_config_[*ri].isLocked() && working_config_[*ri].mustRemove()){
+    if(working_config_[*ri].lock() && working_config_[*ri].remove()){
       limpFound = true;
       // remove it
-      stats_.updateStats(working_config_[*ri], false);
+      stats_.UpdateStats(working_config_[*ri], false);
       // update stats/config with required implant
-      int QL = stats_.updateStats(required_config_[*ri]);
-      tempConfig.updateConfig(Implant(QL, required_config_[*ri].slot(), required_config_[*ri].abi(), required_config_[*ri].shi(), required_config_[*ri].bri(), required_config_[*ri].fad()));
+      int QL = stats_.UpdateStats(required_config_[*ri]);
+      tempConfig.UpdateConfig(Implant(QL, required_config_[*ri].slot_name(),
+                              required_config_[*ri].ability_name(),
+                              required_config_[*ri].shining_abbr(),
+                              required_config_[*ri].bright_abbr(),
+                              required_config_[*ri].faded_abbr()));
     }
   }
   // include the implants equipped previously
   if(limpFound){
     for(vector<int>::const_iterator it = working_config_.begin(); it != working_config_.end(); ++it){
-      if(!working_config_[*it].isLocked())
-        tempConfig.updateConfig(working_config_[*it]);
+      if(!working_config_[*it].lock())
+        tempConfig.UpdateConfig(working_config_[*it]);
     }
     process_.push_back(tempConfig);
   }
 }
 
-double Ladder::avgQL() const
+double Ladder::AverageQL() const
 {
   if(!process_.size())
     return 0;
-  return process_[process_.size() - 1].avgQL();
+  return process_[process_.size() - 1].AverageQL();
 }

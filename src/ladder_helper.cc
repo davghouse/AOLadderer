@@ -4,7 +4,7 @@ using std::string; using std::vector;
 
 namespace ladder_helper {
 
-int slotToInt(const std::string& slot){
+int SlotNameToInt(const std::string& slot){
   if(slot == "head")
     return 0;
   else if(slot == "eye")
@@ -35,7 +35,7 @@ int slotToInt(const std::string& slot){
     return -2;
 }
 
-std::string intToSlot(int i){
+std::string IntToSlotName(int i){
   switch(i){
   case 0:
     return "head";
@@ -68,7 +68,7 @@ std::string intToSlot(int i){
   }
 }
 
-int abiReqToInt(const std::string& a){
+int AbilityToInt(const std::string& a){
   if(a == "str" || a == "Strength"){
     return 0;
   }
@@ -96,7 +96,7 @@ int abiReqToInt(const std::string& a){
     return -2;
 }
 
-int abiReqToInt_GUI(std::string& a){
+int AbilityToIntAndMakeFull(std::string& a){
   if(a == "str" || a == "Strength"){
     a = "str";
     return 0;
@@ -132,7 +132,7 @@ int abiReqToInt_GUI(std::string& a){
 }
 
 // added for GUI
-int clusterToInt(const std::string& cluster){
+int ClusterToInt(const std::string& cluster){
   if(cluster == "str")
     return 0;
   else if(cluster == "agi")
@@ -153,7 +153,7 @@ int clusterToInt(const std::string& cluster){
     return -2;
 }
 
-std::string convertAbiReq(const std::string& a)
+std::string AbilityFullToAbbr(const std::string& a)
 {
   if(a == "Strength")
     return "str";
@@ -170,7 +170,7 @@ std::string convertAbiReq(const std::string& a)
   return "xxxx";
 }
 
-std::string longSlotName(const std::string& a)
+std::string SlotAbbrToFull(const std::string& a)
 {
   if(a == "head") return "Head";
   if(a == "eye") return "Eye";
@@ -188,7 +188,7 @@ std::string longSlotName(const std::string& a)
   return "xxxx";
 }
 
-std::string longAbiName(const std::string& a)
+std::string AbilityAndTreatmentAbbrToFull(const std::string& a)
 {
   if(a == "str") return "Strength";
   if(a == "agi") return "Agility";
@@ -200,10 +200,10 @@ std::string longAbiName(const std::string& a)
   return "xxxx";
 }
 
-bool slotTaken(const string& slotName, const vector<Implant>& imps)
+bool SlotTaken(const string& slotName, const vector<Implant>& imps)
 {
   for(vector<Implant>::const_iterator it = imps.begin(); it != imps.end(); ++it)
-    if(slotName == it->slot())
+    if(slotName == it->slot_name())
       return true;
   if(slotName == "lwrist" || slotName == "rwrist" || slotName == "lhand")
     return true;

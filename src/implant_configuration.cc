@@ -7,15 +7,15 @@ ImplantConfiguration::ImplantConfiguration()
 {
   config_.reserve(13);
   for(size_type i = 0; i != 13; ++i)
-    config_.push_back(Implant(0, intToSlot(i), "abi", "shi", "bri", "fad"));
+    config_.push_back(Implant(0, IntToSlotName(i), "abi", "shi", "bri", "fad"));
 }
 
-double ImplantConfiguration::avgQL() const
+double ImplantConfiguration::AverageQL() const
 {
   double avg = 0;
   int usedImplantCount = 0;
   for(std::vector<Implant>::size_type i = 0; i != config_.size(); ++i){
-    if(config_[i].abi() != "abi" && config_[i].ql() > 0 && config_[i].mustRemove()){
+    if(config_[i].ability_name() != "abi" && config_[i].ql() > 0 && config_[i].remove()){
       avg += config_[i].ql();
       ++usedImplantCount;
     }

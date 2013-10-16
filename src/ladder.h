@@ -18,18 +18,18 @@ public:
 
   Ladder() {}
   Ladder(const ImplantConfiguration&, const Stats&);
-  void heightOne(const std::vector<LadderSlot>&);
-  double avgQL() const;
+  void HeightOne(const std::vector<LadderSlot>&);
+  double AverageQL() const;
 
 private:
-  void equipLimps(const std::vector<Implant>&);
-  void heightZero();
-  void findLimps();
-  void ordering(std::vector<uint>&);
-  void run_ordering(std::vector<uint>&, std::vector<uint>&);
-  bool compare(const std::vector<uint> &, const std::vector<uint> &) const;
-  double find_AvgQL(const std::vector<uint> &) const;
-  void unequipLimps();
+  void EquipLadderImplants(const std::vector<Implant>&);
+  void HeightZero();
+  void FindLadderImplants();
+  void Ordering(std::vector<uint>&);
+  void RunOrdering(std::vector<uint>&, std::vector<uint>&);
+  bool Compare(const std::vector<uint> &, const std::vector<uint> &) const;
+  double AverageQLFromOrdering(const std::vector<uint> &) const;
+  void UnequipLadderImplants();
 
   // Disallow copy and assign
   Ladder(const Ladder&);

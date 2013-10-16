@@ -22,35 +22,35 @@ public:
 
 
 private slots:
-  void buffSCE(bool);
-  void buffSFA(bool);
-  void buffCM(bool);
-  void buffCA(bool);
-  void buffES(bool);
-  void buffFG(bool);
-  void buffEOB(bool);
-  void buffICRT(bool);
-  void buffG(bool);
-  void buffEB(bool);
+  void ToggleSurgeryClinicEffect(bool);
+  void ToggleSuperiorFirstAid(bool);
+  void ToggleCompositeMedical(bool);
+  void ToggleCompositeAttribute(bool);
+  void ToggleEnhancedSenses(bool);
+  void ToggleFelineGrace(bool);
+  void ToggleEssenceOfBehemoth(bool);
+  void ToggleImprovedCutRedTape(bool);
+  void ToggleGauntlet(bool);
+  void ToggleExtruderBar(bool);
 
-  void buffIC(bool);
-  void buffPS(bool);
+  void ToggleIronCircle(bool);
+  void ToggleProdigiousStrength(bool);
 
-  void buffNS(bool);
-  void buffOME(bool);
+  void ToggleNeuronalStimulator(bool);
+  void ToggleOdinsMissingEye(bool);
 
-  void runHeightOneLaddered();
+  void RunHeightOne();
 
-  void markAsBoughtShining(QModelIndex);
-  void markAsBoughtBright(QModelIndex);
-  void markAsBoughtFaded(QModelIndex);
+  void ToggleBoughtShining(QModelIndex);
+  void ToggleBoughtBright(QModelIndex);
+  void ToggleBoughtFaded(QModelIndex);
 
 private:
-  void getConfig(ImplantConfiguration&);
-  void getStats(Stats&);
-  void getConfigHelper(ImplantConfiguration&, int, const std::string&, std::string&, std::string&, std::string&);
-  void showHeightOne(const Ladder&);
-  void showImplant(const Implant&, std::string&, std::string&, std::string&, int);
+  void GetConfiguration(ImplantConfiguration&);
+  void GetConfigurationHelper(ImplantConfiguration&, int, const std::string&, std::string&, std::string&, std::string&);
+  void GetStats(Stats&);
+  void ShowHeightOne(const Ladder&);
+  void ShowImplant(const Implant&, std::string&, std::string&, std::string&, int);
 
 private:
   Ui::MainWindow *ui;
