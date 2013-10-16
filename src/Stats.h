@@ -48,7 +48,7 @@ private:
 
 inline int Stats::getAbiFromName(const std::string& abiName) const
 {
-  return abis[abiReqToInt(abiName)];
+  return abis[laddererHelper::abiReqToInt(abiName)];
 }
 
 #endif // STATS_H_

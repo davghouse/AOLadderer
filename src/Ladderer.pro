@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     Stats.cpp \
     Ladder.cpp \
     Helper.cpp \
-    Config.cpp
+    Config.cpp \
+    Implant.cpp
 
 HEADERS  += mainwindow.h \
     Stats.h \

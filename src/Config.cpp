@@ -1,4 +1,5 @@
 #include "Config.h"
+using namespace laddererHelper;
 
 Config::Config()
 {

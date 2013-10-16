@@ -10,26 +10,9 @@ class Implant{
   // added for GUI
   friend class MainWindow;
 public:
-  Implant() {
-    Ladder = false;
-    Ql = 0;
-    remove = true;
-  }
+  Implant();
 
-  Implant(int ql, std::string slot, std::string a, std::string s, std::string b, std::string f, bool locked = false, bool removed = true)
-    : Ql(ql), Slot(slot), a(a), s(s), b(b), f(f) {
-    if((s != "shi" || b != "bri" || f != "fad") && a != "abi")
-      Ladder = true; // imp can be used to ladder
-    else
-      Ladder = false;
-    SlotI = slotToInt(Slot);
-    aI = abiReqToInt(a);
-    sI = clusterToInt(s);
-    bI = clusterToInt(b);
-    fI = clusterToInt(f);
-    lock = locked;
-    remove = removed;
-  }
+  Implant(int ql, std::string slot, std::string a, std::string s, std::string b, std::string f, bool locked = false, bool removed = true);
 
   bool ladder() const{ return Ladder; }
   int ql() const { return Ql; }

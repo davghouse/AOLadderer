@@ -1,5 +1,7 @@
 #include "Helper.h"
 
+namespace laddererHelper {
+
 int slotToInt(const std::string& slot){
   if(slot == "head")
     return 0;
@@ -195,3 +197,5 @@ std::string longAbiName(const std::string& a)
   if(a == "tre") return "Treatment";
   return "xxxx";
 }
+
+} // namespace laddererHelper

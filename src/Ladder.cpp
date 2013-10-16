@@ -5,6 +5,7 @@
 using std::vector; using std::string;
 using std::endl; using std::cout;
 using std::max; using std::sort;
+using namespace laddererHelper;
 
 Ladder::Ladder(const Config& r, const Stats& s) : fReqs(r), stats(s) {}
 

@@ -7,6 +7,7 @@ using std::vector;
 using std::string;
 using std::cerr;
 using std::endl;
+using namespace laddererHelper;
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
