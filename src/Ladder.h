@@ -10,7 +10,6 @@
 #include "ladder_slot.h"
 #include "character_stats.h"
 
-
 class Ladder{
   friend class MainWindow;
 
