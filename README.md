@@ -127,7 +127,7 @@ in their required ability, but modify the abilities and Treatment in the same wa
 the remaining required implants, and then removes in reverse the ladder implants, inserting a required implant
 after each removal. The implant yielding the highest average QL is chosen and locked in, and the next step proceeds.
 The algorithm stops when no more laddering slots are available, or when the average QL from one step to the next 
-doesn't change.  
+doesn't increase.  
 
 Fortunately, there aren't many laddering implants. There are 33 subsets, with implants equal (from a laddering perspective)
 up to their required ability. There are 63 total laddering implants considered by the algorithm. 
