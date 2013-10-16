@@ -5,18 +5,18 @@ using namespace ladder_helper;
 
 ImplantConfiguration::ImplantConfiguration()
 {
-  config.reserve(13);
+  config_.reserve(13);
   for(size_type i = 0; i != 13; ++i)
-    config.push_back(Implant(0, intToSlot(i), "abi", "shi", "bri", "fad"));
+    config_.push_back(Implant(0, intToSlot(i), "abi", "shi", "bri", "fad"));
 }
 
 double ImplantConfiguration::avgQL() const
 {
   double avg = 0;
   int usedImplantCount = 0;
-  for(std::vector<Implant>::size_type i = 0; i != config.size(); ++i){
-    if(config[i].abi() != "abi" && config[i].ql() > 0 && config[i].mustRemove()){
-      avg += config[i].ql();
+  for(std::vector<Implant>::size_type i = 0; i != config_.size(); ++i){
+    if(config_[i].abi() != "abi" && config_[i].ql() > 0 && config_[i].mustRemove()){
+      avg += config_[i].ql();
       ++usedImplantCount;
     }
   }

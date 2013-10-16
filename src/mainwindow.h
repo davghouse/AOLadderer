@@ -54,9 +54,9 @@ private:
 
 private:
   Ui::MainWindow *ui;
-  QSqlDatabase implantDB;
-  std::vector<LadderSlot> ladderSlots;
-  bool configNotEmpty;
+  QSqlDatabase standard_implants_;
+  std::vector<LadderSlot> ladder_slots_;
+  bool config_not_empty_;
 };
 
 #endif // MAINWINDOW_H_

@@ -14,22 +14,22 @@ class Stats{
 public:
   Stats();
 
-  int str() const { return abis[0] ; }
-  int agi() const { return abis[1]; }
-  int sta() const { return abis[2]; }
-  int intel() const { return abis[3]; }
-  int sen() const { return abis[4]; }
-  int psy() const { return abis[5]; }
-  double tre() const { return treatment; }
+  int str() const { return abilities_[0] ; }
+  int agi() const { return abilities_[1]; }
+  int sta() const { return abilities_[2]; }
+  int intel() const { return abilities_[3]; }
+  int sen() const { return abilities_[4]; }
+  int psy() const { return abilities_[5]; }
+  double tre() const { return treatment_; }
 
   // this seems bad
-  void str(int i) { abis[0] += i; }
-  void agi(int i) { abis[1] += i; }
-  void sta(int i) { abis[2] += i; }
-  void intel(int i) { abis[3] += i; }
-  void sen(int i) { abis[4] += i; }
-  void psy(int i) { abis[5] += i; }
-  void tre(double d) { treatment += d; }
+  void str(int i) { abilities_[0] += i; }
+  void agi(int i) { abilities_[1] += i; }
+  void sta(int i) { abilities_[2] += i; }
+  void intel(int i) { abilities_[3] += i; }
+  void sen(int i) { abilities_[4] += i; }
+  void psy(int i) { abilities_[5] += i; }
+  void tre(double d) { treatment_ += d; }
 
   // get value of ability from name of ability
   int getAbiFromName(const std::string& abiName) const;
@@ -41,13 +41,13 @@ public:
 private:
   // strength, agility, stamina, intelligence, sense, psychic
   // 0         1        2        3             4      5
-  std::vector<int> abis; 
-  double treatment;
+  std::vector<int> abilities_;
+  double treatment_;
 };
 
 inline int Stats::getAbiFromName(const std::string& abiName) const
 {
-  return abis[ladder_helper::abiReqToInt(abiName)];
+  return abilities_[ladder_helper::abiReqToInt(abiName)];
 }
 
 #endif // CHARACTER_STATS_H_

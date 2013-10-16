@@ -5,22 +5,22 @@ using std::string;
 using namespace ladder_helper;
 
 Implant::Implant() {
-  Ladder = false;
-  Ql = 0;
-  remove = true;
+  used_to_ladder_ = false;
+  ql_ = 0;
+  remove_ = true;
 }
 
 Implant::Implant(int ql, string slot, string a, string s, string b, string f, bool locked, bool removed)
-  : Ql(ql), Slot(slot), a(a), s(s), b(b), f(f) {
+  : ql_(ql), slot_name_(slot), ability_name_(a), shining_abbr_(s), bright_abbr_(b), faded_abbr_(f) {
   if((s != "shi" || b != "bri" || f != "fad") && a != "abi")
-    Ladder = true; // imp can be used to ladder
+    used_to_ladder_ = true; // imp can be used to ladder
   else
-    Ladder = false;
-  SlotI = slotToInt(Slot);
-  aI = abiReqToInt(a);
-  sI = clusterToInt(s);
-  bI = clusterToInt(b);
-  fI = clusterToInt(f);
-  lock = locked;
-  remove = removed;
+    used_to_ladder_ = false;
+  slot_int_ = slotToInt(slot_name_);
+  ability_int_ = abiReqToInt(a);
+  shining_int_ = clusterToInt(s);
+  bright_int_ = clusterToInt(b);
+  faded_int_ = clusterToInt(f);
+  lock_ = locked;
+  remove_ = removed;
 }

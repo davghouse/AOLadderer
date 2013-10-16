@@ -75,16 +75,16 @@ inline double treTrickleFromAbiMod(int abi, int abiMod)
 
 } // namespace
 
-Stats::Stats() : treatment(0.0)
+Stats::Stats() : treatment_(0.0)
 {
-  abis.reserve(6);
+  abilities_.reserve(6);
 }
 
 void Stats::updateStats(const vector<int>& abisHolder, double treatmentHolder)
 {
   for(std::vector<int>::size_type i = 0; i != 6; ++i)
-    abis.push_back(abisHolder[i]);
-  treatment = treatmentHolder;
+    abilities_.push_back(abisHolder[i]);
+  treatment_ = treatmentHolder;
 }
 
 int Stats::updateStats(const Implant& imp, bool inserting, int QL)
@@ -92,36 +92,36 @@ int Stats::updateStats(const Implant& imp, bool inserting, int QL)
   if(inserting){
     // find out what QL imp to put in
     if(QL == 0){
-      QL = std::min(treToQL(treatment), abiToQL(abis[imp.abiI()]));
+      QL = std::min(treToQL(treatment_), abiToQL(abilities_[imp.abiI()]));
     }
     // update stats
     if(imp.ladder()){
       if(imp.shi() != "shi"){
         if(imp.shiI() <= 5 && imp.shiI() >= 0){
           int abiMod = abiModFromQL(0,QL);
-          abis[imp.shiI()] += abiMod;
-          treatment += treTrickleFromAbiMod(imp.shiI(), abiMod);
+          abilities_[imp.shiI()] += abiMod;
+          treatment_ += treTrickleFromAbiMod(imp.shiI(), abiMod);
         }
         else if(imp.shiI() == 6)
-          treatment += skiModFromQL(0,QL);
+          treatment_ += skiModFromQL(0,QL);
       }
       if(imp.bri() != "bri"){
         if(imp.briI() <= 5 && imp.briI() >= 0){
           int abiMod = abiModFromQL(1,QL);
-          abis[imp.briI()] += abiMod;
-          treatment += treTrickleFromAbiMod(imp.briI(), abiMod);
+          abilities_[imp.briI()] += abiMod;
+          treatment_ += treTrickleFromAbiMod(imp.briI(), abiMod);
         }
         else if(imp.briI() == 6)
-          treatment += skiModFromQL(1,QL);
+          treatment_ += skiModFromQL(1,QL);
       }
       if(imp.fad() != "fad"){
         if(imp.fadI() <= 5 && imp.fadI() >= 0){
           int abiMod = abiModFromQL(2,QL);
-          abis[imp.fadI()] += abiMod;
-          treatment += treTrickleFromAbiMod(imp.fadI(), abiMod);
+          abilities_[imp.fadI()] += abiMod;
+          treatment_ += treTrickleFromAbiMod(imp.fadI(), abiMod);
         }
         else if(imp.fadI() == 6)
-          treatment += skiModFromQL(2,QL);
+          treatment_ += skiModFromQL(2,QL);
       }
     }
     return QL;
@@ -131,29 +131,29 @@ int Stats::updateStats(const Implant& imp, bool inserting, int QL)
     if(imp.shi() != "shi"){
       if(imp.shiI() <= 5 && imp.shiI() >= 0){
         int abiMod = abiModFromQL(0, QL);
-        abis[imp.shiI()] -= abiMod;
-        treatment -= treTrickleFromAbiMod(imp.shiI(), abiMod);
+        abilities_[imp.shiI()] -= abiMod;
+        treatment_ -= treTrickleFromAbiMod(imp.shiI(), abiMod);
       }
       else if(imp.shiI() == 6)
-        treatment -= skiModFromQL(0,QL);
+        treatment_ -= skiModFromQL(0,QL);
     }
     if(imp.bri() != "bri"){
       if(imp.briI() <= 5 && imp.briI() >= 0){
         int abiMod = abiModFromQL(1,QL);
-        abis[imp.briI()] -= abiMod;
-        treatment -= treTrickleFromAbiMod(imp.briI(), abiMod);
+        abilities_[imp.briI()] -= abiMod;
+        treatment_ -= treTrickleFromAbiMod(imp.briI(), abiMod);
       }
       else if(imp.briI() == 6)
-        treatment -= skiModFromQL(1,QL);
+        treatment_ -= skiModFromQL(1,QL);
     }
     if(imp.fad() != "fad"){
       if(imp.fadI() <= 5 && imp.fadI() >= 0){
         int abiMod = abiModFromQL(2,QL);
-        abis[imp.fadI()] -= abiMod;
-        treatment -= treTrickleFromAbiMod(imp.fadI(), abiMod);
+        abilities_[imp.fadI()] -= abiMod;
+        treatment_ -= treTrickleFromAbiMod(imp.fadI(), abiMod);
       }
       else if(imp.fadI() == 6)
-        treatment -= skiModFromQL(2,QL);
+        treatment_ -= skiModFromQL(2,QL);
     }
   }
   return 0;

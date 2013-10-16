@@ -10,30 +10,36 @@ using std::cerr;
 using std::endl;
 using namespace ladder_helper;
 
+struct ShoppingItem{
+  std::string cluster_;
+  int ql_;
+  bool operator<(const ShoppingItem& r) const{ return cluster_ < r.cluster_; }
+};
+
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
-  configNotEmpty = false;
+  config_not_empty_ = false;
   // Database
-  implantDB = QSqlDatabase::addDatabase("QSQLITE");
-  implantDB.setDatabaseName("standard_implants.db");
-  implantDB.open();
+  standard_implants_ = QSqlDatabase::addDatabase("QSQLITE");
+  standard_implants_.setDatabaseName("standard_implants.db");
+  standard_implants_.open();
   // Ladder implants
   std::ifstream in("ladder_implants.txt");
   string ladderSlot, abi, shi, bri, fad;
   while(in >> abi){
     if(abi == "$"){
       in >> ladderSlot;
-      ladderSlots.push_back(LadderSlot(ladderSlot));
+      ladder_slots_.push_back(LadderSlot(ladderSlot));
     }
     else if(abi == "#")
-      ladderSlots[ladderSlots.size() - 1].addVec();
+      ladder_slots_[ladder_slots_.size() - 1].addVec();
     else{
       in >> shi >> bri >> fad;
       // add a ladder imp to the most recent slot
-      ladderSlots[ladderSlots.size() - 1].add(Implant(0, ladderSlot, abi, shi, bri, fad, true));
+      ladder_slots_[ladder_slots_.size() - 1].add(Implant(0, ladderSlot, abi, shi, bri, fad, true));
     }
   }
   // Buffs:
@@ -66,7 +72,7 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
   delete ui;
-  implantDB.close();
+  standard_implants_.close();
 }
 
 // member functions:
@@ -183,34 +189,34 @@ void MainWindow::getConfig(ImplantConfiguration& requiredConfig)
 
 void MainWindow::getConfigHelper(ImplantConfiguration& requiredConfig, int i, const string& slot, string& shi, string& bri, string& fad)
 {
-  configNotEmpty = true;
-  requiredConfig.config[i].sName = shi;
-  requiredConfig.config[i].bName = bri;
-  requiredConfig.config[i].fName = fad;
+  config_not_empty_ = true;
+  requiredConfig.config_[i].shining_full_ = shi;
+  requiredConfig.config_[i].bright_full_ = bri;
+  requiredConfig.config_[i].faded_full_ = fad;
   std::string qBegin = "SELECT req FROM implants WHERE slot='" + slot + "'";
   string qText = qBegin + " AND Shining='"+shi+"' AND Bright='"+bri+"' AND Faded='"+fad+"'";
   QSqlQuery q;
   q.exec(QString::fromStdString(qText));
   q.next();
-  requiredConfig.config[i].a = convertAbiReq(q.value(0).toString().toStdString());
-  requiredConfig.config[i].aI = abiReqToInt(requiredConfig.config[i].a);
+  requiredConfig.config_[i].ability_name_ = convertAbiReq(q.value(0).toString().toStdString());
+  requiredConfig.config_[i].ability_int_ = abiReqToInt(requiredConfig.config_[i].ability_name_);
   bool usedToLadder = false;
   if(abiReqToInt_GUI(shi) >= 0){
-    requiredConfig.config[i].s = shi;
-    requiredConfig.config[i].sI = clusterToInt(requiredConfig.config[i].s);
+    requiredConfig.config_[i].shining_abbr_ = shi;
+    requiredConfig.config_[i].shining_int_ = clusterToInt(requiredConfig.config_[i].shining_abbr_);
     usedToLadder = true;
   }
   if(abiReqToInt_GUI(bri) >= 0){
-    requiredConfig.config[i].b = bri;
-    requiredConfig.config[i].bI = clusterToInt(requiredConfig.config[i].b);
+    requiredConfig.config_[i].bright_abbr_ = bri;
+    requiredConfig.config_[i].bright_int_ = clusterToInt(requiredConfig.config_[i].bright_abbr_);
     usedToLadder = true;
   }
   if(abiReqToInt_GUI(fad) >= 0){
-    requiredConfig.config[i].f = fad;
-    requiredConfig.config[i].fI = clusterToInt(requiredConfig.config[i].f);
+    requiredConfig.config_[i].faded_abbr_ = fad;
+    requiredConfig.config_[i].faded_int_ = clusterToInt(requiredConfig.config_[i].faded_abbr_);
     usedToLadder = true;
   }
-  requiredConfig.config[i].Ladder = usedToLadder;
+  requiredConfig.config_[i].used_to_ladder_ = usedToLadder;
 }
 
 void MainWindow::getStats(Stats& baseStats)
@@ -235,25 +241,20 @@ void MainWindow::runHeightOneLaddered()
   ui->Shining->clear();
   ui->Bright->clear();
   ui->Faded->clear();
-  configNotEmpty = false;
+  config_not_empty_ = false;
   ImplantConfiguration requiredConfig;
   Stats baseStats;
   getConfig(requiredConfig);
   getStats(baseStats);
   // height one
-  if(configNotEmpty){
+  if(config_not_empty_){
     Ladder ladder(requiredConfig,baseStats);
-    ladder.heightOne(ladderSlots);
+    ladder.heightOne(ladder_slots_);
     showHeightOne(ladder);
     ui->tabWidget->setCurrentWidget(ui->resultsTab);
   }
 }
 
-struct ShoppingItem{
-  std::string cluster;
-  int ql;
-  bool operator<(const ShoppingItem& r) const{ return cluster < r.cluster; }
-};
 
 void MainWindow::showHeightOne(const Ladder & ladder)
 {
@@ -263,12 +264,12 @@ void MainWindow::showHeightOne(const Ladder & ladder)
   // Step One
   bool doneWithLaddering = false;
   int firstAfterDash = 0;
-  for(vector<int>::const_iterator it = ladder.process[0].order.begin();
-      it != ladder.process[0].order.end(); ++it){
-    Implant imp = ladder.process[0].config[*it];
+  for(vector<int>::const_iterator it = ladder.process_[0].order_.begin();
+      it != ladder.process_[0].order_.end(); ++it){
+    Implant imp = ladder.process_[0].config_[*it];
     if(imp.abi() != "abi" && imp.ql() > 0){
       // ladder implant
-      if(imp.lock){
+      if(imp.lock_){
         std::string qText = "SELECT shining, bright, faded FROM implants ";
         qText += "WHERE slot='" + longSlotName(imp.slot()) + "' ";
         qText += "and req='" + longAbiName(imp.abi()) + "' ";
@@ -303,17 +304,17 @@ void MainWindow::showHeightOne(const Ladder & ladder)
         showImplant(imp, shi, bri, fad, 1);
         if(shi != "-----"){
           ShoppingItem t;
-          t.cluster = shi; t.ql = imp.ql();
+          t.cluster_ = shi; t.ql_ = imp.ql();
           shining.push_back(t);
         }
         if(bri != "-----"){
           ShoppingItem t;
-          t.cluster = bri; t.ql = imp.ql();
+          t.cluster_ = bri; t.ql_ = imp.ql();
           bright.push_back(t);
         }
         if(fad != "-----"){
           ShoppingItem t;
-          t.cluster = fad; t.ql = imp.ql();
+          t.cluster_ = fad; t.ql_ = imp.ql();
           faded.push_back(t);
         }
       }
@@ -325,9 +326,9 @@ void MainWindow::showHeightOne(const Ladder & ladder)
           firstAfterDash = *it;
         }
         std::string shi, bri, fad;
-        shi = ladder.fReqs[*it].sName;
-        bri = ladder.fReqs[*it].bName;
-        fad = ladder.fReqs[*it].fName;
+        shi = ladder.required_config_[*it].shining_full_;
+        bri = ladder.required_config_[*it].bright_full_;
+        fad = ladder.required_config_[*it].faded_full_;
         showImplant(imp, shi, bri, fad, 1);
       }
     }
@@ -337,9 +338,9 @@ void MainWindow::showHeightOne(const Ladder & ladder)
     ui->stepOne->addItem(QString::fromStdString(std::string(77, '-')));
   }
   // Step Two
-  for(vector<int>::const_iterator it = ladder.process[1].order.begin();
-      it != ladder.process[1].order.end(); ++it){
-    Implant imp = ladder.process[1].config[*it];
+  for(vector<int>::const_iterator it = ladder.process_[1].order_.begin();
+      it != ladder.process_[1].order_.end(); ++it){
+    Implant imp = ladder.process_[1].config_[*it];
     if(imp.abi() != "abi" && imp.ql() > 0 && imp.mustRemove()){
       if(doneWithLaddering){
         if(*it == firstAfterDash){
@@ -347,23 +348,23 @@ void MainWindow::showHeightOne(const Ladder & ladder)
         }
       }
       std::string shi, bri, fad;
-      shi = ladder.fReqs[*it].sName;
-      bri = ladder.fReqs[*it].bName;
-      fad = ladder.fReqs[*it].fName;
+      shi = ladder.required_config_[*it].shining_full_;
+      bri = ladder.required_config_[*it].bright_full_;
+      fad = ladder.required_config_[*it].faded_full_;
       showImplant(imp, shi, bri, fad, 2);
       if(shi != "-----"){
         ShoppingItem t;
-        t.cluster = shi; t.ql = imp.ql();
+        t.cluster_ = shi; t.ql_ = imp.ql();
         shining.push_back(t);
       }
       if(bri != "-----"){
         ShoppingItem t;
-        t.cluster = bri; t.ql = imp.ql();
+        t.cluster_ = bri; t.ql_ = imp.ql();
         bright.push_back(t);
       }
       if(fad != "-----"){
         ShoppingItem t;
-        t.cluster = fad; t.ql = imp.ql();
+        t.cluster_ = fad; t.ql_ = imp.ql();
         faded.push_back(t);
       }
     }
@@ -374,21 +375,21 @@ void MainWindow::showHeightOne(const Ladder & ladder)
   std::sort(bright.begin(), bright.end());
   std::sort(faded.begin(), faded.end());
   for(vector<ShoppingItem>::iterator it = shining.begin(); it != shining.end(); ++it){
-    int clusterQL = .86*(it->ql) + .01;
+    int clusterQL = .86*(it->ql_) + .01;
     std::stringstream t;
-    t << "QL " << clusterQL << " " << it->cluster;
+    t << "QL " << clusterQL << " " << it->cluster_;
     ui->Shining->addItem(QString::fromStdString(t.str()));
   }
   for(vector<ShoppingItem>::iterator it = bright.begin(); it != bright.end(); ++it){
-    int clusterQL = .84*(it->ql) + .01;
+    int clusterQL = .84*(it->ql_) + .01;
     std::stringstream t;
-    t << "QL " << clusterQL << " " << it->cluster;
+    t << "QL " << clusterQL << " " << it->cluster_;
     ui->Bright->addItem(QString::fromStdString(t.str()));
   }
   for(vector<ShoppingItem>::iterator it = faded.begin(); it != faded.end(); ++it){
-    int clusterQL = .82*(it->ql) + .01;
+    int clusterQL = .82*(it->ql_) + .01;
     std::stringstream t;
-    t << "QL " << clusterQL << " " << it->cluster;
+    t << "QL " << clusterQL << " " << it->cluster_;
     ui->Faded->addItem(QString::fromStdString(t.str()));
   }
 }

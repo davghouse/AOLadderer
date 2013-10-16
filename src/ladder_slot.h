@@ -12,23 +12,23 @@ public:
   typedef std::vector<std::vector<Implant> >::const_iterator const_iterator;
 
   LadderSlot();
-  explicit LadderSlot(std::string n) : n(n) {}
+  explicit LadderSlot(std::string n) : name_(n) {}
 
-  void add(Implant i){ limps[limps.size() - 1].push_back(i); }
-  void addVec(){ limps.push_back(std::vector<Implant>()); }
-  const std::string& name() const { return n; }
-  size_type size() const { return limps.size(); }
+  void add(Implant i){ ladder_implants_[ladder_implants_.size() - 1].push_back(i); }
+  void addVec(){ ladder_implants_.push_back(std::vector<Implant>()); }
+  const std::string& name() const { return name_; }
+  size_type size() const { return ladder_implants_.size(); }
 
-  const std::vector<Implant>& operator[](int i) const { return limps[i]; }
+  const std::vector<Implant>& operator[](int i) const { return ladder_implants_[i]; }
 
-  const_iterator begin() const { return limps.begin(); }
-  const_iterator end() const { return limps.end(); }
+  const_iterator begin() const { return ladder_implants_.begin(); }
+  const_iterator end() const { return ladder_implants_.end(); }
 
 private:
-  std::string n;
+  std::string name_;
   // this slot has a vector of implant vectors.
   // implants within the same implant vector have the same cluster specification, but different abi reqs.
-  std::vector<std::vector <Implant> > limps;
+  std::vector<std::vector <Implant> > ladder_implants_;
 };
 
 #endif // LADDER_SLOT_H_

@@ -18,30 +18,30 @@ public:
   double avgQL() const;
   void updateConfig(Implant imp, int qualityLevel = 0);
  
-  size_type size() const{ return config.size(); }
-  const Implant& operator[](int i) const { return config[i]; }
-  std::vector<int>::const_reverse_iterator rbegin() const{ return order.rbegin(); }
-  std::vector<int>::const_reverse_iterator rend() const{ return order.rend(); }
-  std::vector<int>::const_iterator begin() const{ return order.begin(); }
-  std::vector<int>::const_iterator end() const{ return order.end(); }
+  size_type size() const{ return config_.size(); }
+  const Implant& operator[](int i) const { return config_[i]; }
+  std::vector<int>::const_reverse_iterator rbegin() const{ return order_.rbegin(); }
+  std::vector<int>::const_reverse_iterator rend() const{ return order_.rend(); }
+  std::vector<int>::const_iterator begin() const{ return order_.begin(); }
+  std::vector<int>::const_iterator end() const{ return order_.end(); }
 
 private:
   // slot order: head, eye, ear, chest, rarm, larm, waist, rwrist, lwrist, leg, rhand, lhand, feet
   //             0     1    2    3      4     5     6      7       8       9    10     11     12
-  std::vector<Implant> config;
-  std::vector<int> order; // used in zero height solution to get proper ordering
+  std::vector<Implant> config_;
+  std::vector<int> order_; // used in zero height solution to get proper ordering
 };
 
 inline void ImplantConfiguration::updateConfig(Implant imp, int qualityLevel)
 {
   if(qualityLevel == 0){
-    config[imp.slotI()] = imp;
-    order.push_back(imp.slotI());
+    config_[imp.slotI()] = imp;
+    order_.push_back(imp.slotI());
   }
   else{
-    config[imp.slotI()] = imp;
-    order.push_back(imp.slotI());
-    config[imp.slotI()].setQL(qualityLevel);
+    config_[imp.slotI()] = imp;
+    order_.push_back(imp.slotI());
+    config_[imp.slotI()].setQL(qualityLevel);
   }
 }
 

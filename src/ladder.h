@@ -36,13 +36,13 @@ private:
   void operator=(const Ladder&);
 
 private:
-  std::vector<ImplantConfiguration> process; // laddering process
-  ImplantConfiguration config; // working config
+  std::vector<ImplantConfiguration> process_; // laddering process
+  ImplantConfiguration working_config_;
 
-  std::vector<Implant> rlimps; // required implants useful for laddering.
+  std::vector<Implant> required_ladder_implants_; // required implants useful for laddering.
 
-  ImplantConfiguration fReqs; // final implant requirements
-  Stats stats; // current stats
+  ImplantConfiguration required_config_; // final implant requirements
+  Stats stats_; // current stats
 };
 
 #endif // LADDER_H_
