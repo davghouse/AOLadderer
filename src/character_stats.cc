@@ -1,8 +1,10 @@
-#include "character_stats.h"
 #include <math.h>
+#include "character_stats.h"
+#include "interpolation_coefficients.h"
 
 using std::string; using std::vector;
 using std::min;
+using namespace interpolation_coefficients;
 
 // anonymous namespace as only used in this .cpp file
 namespace {
@@ -10,13 +12,13 @@ namespace {
 // rounding here is easy
 inline int QLToTre(int QL)
 {
-  return QL*TREREQm + TREREQc + .5;
+  return QL*tre_req_m + tre_req_c + .5;
 }
 
 // rounding is detailed here - be really explicit to avoid errors
 inline int treToQL(double tre)
 {
-  int QL = ceil((tre - TREREQc)/TREREQm);
+  int QL = ceil((tre - tre_req_c)/tre_req_m);
   if(QLToTre(QL + 1) <= tre)
     return min(QL + 1, 200);
   if(QLToTre(QL) <= tre)
@@ -30,31 +32,31 @@ inline int treToQL(double tre)
 
 inline int QLToAbi(int QL)
 {
-  return QL*ABIREQm + ABIREQc + .5;
+  return QL*abi_req_m + abi_req_c + .5;
 }
 
 inline int abiToQL(int abi)
 {
-  return std::min((abi - ABIREQc)/ABIREQm, 200);
+  return std::min((abi - abi_req_c)/abi_req_m, 200);
 }
 
 // 0 - shining, 1 - bright, 2 - faded
 inline int abiModFromQL(int type, int QL)
 {
   if(type == 0)
-    return SHIABIm*QL + SHIABIc + .5;
+    return shi_abi_m*QL + shi_abi_c + .5;
   if(type == 1)
-    return BRIABIm*QL + BRIABIc + .5;
-  return FADABIm*QL + FADABIc + .5;
+    return bri_abi_m*QL + bri_abi_c + .5;
+  return fad_abi_m*QL + fad_abi_c + .5;
 }
 
 inline int skiModFromQL(int type, int QL)
 {
   if(type == 0)
-    return SHISKIm*QL + SHISKIc + .5;
+    return shi_ski_m*QL + shi_ski_c + .5;
   if(type == 1)
-    return BRISKIm*QL + BRISKIc + .5;
-  return FADSKIm*QL + FADSKIc + .5;
+    return bri_ski_m*QL + bri_ski_c + .5;
+  return fad_ski_m*QL + fad_ski_c + .5;
 }
 
 inline double treTrickleFromAbiMod(int abi, int abiMod)

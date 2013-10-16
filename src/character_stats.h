@@ -7,7 +7,6 @@
 #include <algorithm>
 #include <vector>
 #include <math.h>
-#include "interpolation_coefficients.h"
 #include "ladder_helper.h"
 #include "implant.h"
 
