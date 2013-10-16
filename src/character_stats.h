@@ -1,5 +1,5 @@
-#ifndef STATS_H_
-#define STATS_H_
+#ifndef CHARACTER_STATS_H_
+#define CHARACTER_STATS_H_
 
 #include <iostream>
 #include <string>
@@ -7,9 +7,9 @@
 #include <algorithm>
 #include <vector>
 #include <math.h>
-#include "Coefficients.h"
-#include "Helper.h"
-#include "Implant.h"
+#include "interpolation_coefficients.h"
+#include "ladder_helper.h"
+#include "implant.h"
 
 class Stats{
 public:
@@ -48,7 +48,7 @@ private:
 
 inline int Stats::getAbiFromName(const std::string& abiName) const
 {
-  return abis[laddererHelper::abiReqToInt(abiName)];
+  return abis[ladder_helper::abiReqToInt(abiName)];
 }
 
-#endif // STATS_H_
+#endif // CHARACTER_STATS_H_

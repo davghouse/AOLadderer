@@ -1,13 +1,12 @@
-#ifndef CONFIG_H_
-#define CONFIG_H_
+#ifndef IMPLANT_CONFIGURATION_H_
+#define IMPLANT_CONFIGURATION_H_
 
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
 #include <numeric>
-#include "Implant.h"
-#include "Helper.h"
+#include "implant.h"
 
 class Config{
   friend class MainWindow;
@@ -46,4 +45,4 @@ inline void Config::updateConfig(Implant imp, int qualityLevel)
   }
 }
 
-#endif // CONFIG_H_
+#endif // IMPLANT_CONFIGURATION_H_

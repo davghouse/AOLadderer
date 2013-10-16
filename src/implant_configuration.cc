@@ -1,6 +1,7 @@
-#include "Config.h"
+#include "implant_configuration.h"
+#include "ladder_helper.h"
 
-using namespace laddererHelper;
+using namespace ladder_helper;
 
 Config::Config()
 {

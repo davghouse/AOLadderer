@@ -1,4 +1,4 @@
-#include "Stats.h"
+#include "character_stats.h"
 #include <math.h>
 
 using std::string; using std::vector;

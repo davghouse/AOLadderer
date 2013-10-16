@@ -4,11 +4,11 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "Coefficients.h"
-#include "Config.h"
-#include "Implant.h"
-#include "Slot.h"
-#include "Stats.h"
+#include "interpolation_coefficients.h"
+#include "implant_configuration.h"
+#include "implant.h"
+#include "ladder_slot.h"
+#include "character_stats.h"
 
 
 class Ladder{

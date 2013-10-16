@@ -1,5 +1,5 @@
-#ifndef COEFFICIENTS_H_
-#define COEFFICIENTS_H_
+#ifndef INTERPOLATION_COEFFICIENTS_H_
+#define INTERPOLATION_COEFFICIENTS_H_
 
 // req=requirement, tre=treatment, abi=ability, ski=skill
 // implant requirements:
@@ -29,4 +29,4 @@
 #define FADABIm 0.100503
 #define FADABIc 1.899497
 
-#endif // COEFFICIENTS_H_
+#endif // INTERPOLATION_COEFFICIENTS_H_

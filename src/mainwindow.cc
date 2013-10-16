@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "Helper.h"
+#include "ladder_helper.h"
 #include "QString"
 #include <sstream>
 
@@ -8,7 +8,7 @@ using std::vector;
 using std::string;
 using std::cerr;
 using std::endl;
-using namespace laddererHelper;
+using namespace ladder_helper;
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -18,10 +18,10 @@ MainWindow::MainWindow(QWidget *parent) :
   configNotEmpty = false;
   // Database
   implantDB = QSqlDatabase::addDatabase("QSQLITE");
-  implantDB.setDatabaseName("StandardImplants.db");
+  implantDB.setDatabaseName("standard_implants.db");
   implantDB.open();
   // Ladder implants
-  std::ifstream in("ladderImplants.txt");
+  std::ifstream in("ladder_implants.txt");
   string ladderSlot, abi, shi, bri, fad;
   while(in >> abi){
     if(abi == "$"){

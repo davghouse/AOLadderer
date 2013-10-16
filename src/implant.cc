@@ -1,8 +1,8 @@
-#include "Implant.h"
-#include "Helper.h"
+#include "implant.h"
+#include "ladder_helper.h"
 
 using std::string;
-using namespace laddererHelper;
+using namespace ladder_helper;
 
 Implant::Implant() {
   Ladder = false;

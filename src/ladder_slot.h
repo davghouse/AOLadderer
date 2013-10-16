@@ -1,9 +1,9 @@
-#ifndef SLOT_H_
-#define SLOT_H_
+#ifndef LADDER_SLOT_H_
+#define LADDER_SLOT_H_
 
 #include <vector>
 #include <string>
-#include "Implant.h"
+#include "implant.h"
 
  // slot order: head, eye, ear, chest, rarm, larm, waist, rwrist, lwrist, leg, rhand, lhand, feet
 class Slot{
@@ -31,4 +31,4 @@ private:
   std::vector<std::vector <Implant> > limps;
 };
 
-#endif // SLOT_H_
+#endif // LADDER_SLOT_H_

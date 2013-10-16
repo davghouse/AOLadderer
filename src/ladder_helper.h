@@ -1,11 +1,11 @@
-#ifndef HELPER_H_
-#define HELPER_H_
+#ifndef LADDER_HELPER_H_
+#define LADDER_HELPER_H_
 
 #include <string>
 #include <vector>
-#include "Implant.h"
+#include "implant.h"
 
-namespace laddererHelper {
+namespace ladder_helper {
 
 int slotToInt(const std::string& slot);
 std::string intToSlot(int i);
@@ -17,7 +17,7 @@ std::string longSlotName(const std::string& a);
 std::string longAbiName(const std::string& a);
 bool slotTaken(const std::string&, const std::vector<Implant>&);
 
-} // namespace laddererHelper
+} // namespace ladder_helper
 
 
-#endif // HELPER_H_
+#endif // LADDER_HELPER_H_

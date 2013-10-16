@@ -6,7 +6,7 @@
 #include <QSqlQuery>
 #include <QModelIndex>
 #include <vector>
-#include "Ladder.h"
+#include "ladder.h"
 
 namespace Ui {
 class MainWindow;

@@ -1,7 +1,8 @@
-#include "Helper.h"
+#include "ladder_helper.h"
+
 using std::string; using std::vector;
 
-namespace laddererHelper {
+namespace ladder_helper {
 
 int slotToInt(const std::string& slot){
   if(slot == "head")
@@ -209,4 +210,4 @@ bool slotTaken(const string& slotName, const vector<Implant>& imps)
   return false;
 }
 
-} // namespace laddererHelper
+} // namespace ladder_helper

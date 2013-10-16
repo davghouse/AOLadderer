@@ -1,11 +1,11 @@
 #include <algorithm>
 #include <iostream>
-#include "Ladder.h"
+#include "ladder.h"
 
 using std::vector; using std::string;
 using std::endl; using std::cout;
 using std::max; using std::sort;
-using namespace laddererHelper;
+using namespace ladder_helper;
 
 Ladder::Ladder(const Config& r, const Stats& s) : fReqs(r), stats(s) {}
 
@@ -187,8 +187,7 @@ void Ladder::unequipLimps()
   Config tempConfig;
   // go through the config, removing limps in reverse order, putting in the required imp immediately
   // do not remove limps if their remove flag is false
-  //vector<int>::const_reverse_iterator
-  for(auto ri = config.rbegin(); ri != config.rend(); ++ri){
+  for(vector<int>::const_reverse_iterator ri = config.rbegin(); ri != config.rend(); ++ri){
     if(config[*ri].isLocked() && config[*ri].mustRemove()){
       limpFound = true;
       // remove it
