@@ -46,15 +46,6 @@ private:
   double treatment;
 };
 
-// inlined in Stats.cpp -- safe since this is the only cpp file using the functions
-int treToQL(double);
-int QLToTre(int);
-int QLToAbi(int QL);
-int abiToQL(int);
-int abiModFromQL(int,int);
-int skiModFromQL(int,int);
-double treTrickleFromAbiMod(int,int);
-
 inline int Stats::getAbiFromName(const std::string& abiName) const
 {
   return abis[abiReqToInt(abiName)];

@@ -3,6 +3,74 @@
 using std::string; using std::vector;
 using std::min;
 
+// anonymous namespace as only used in this .cpp file
+namespace {
+
+// rounding here is easy
+inline int QLToTre(int QL)
+{
+  return QL*TREREQm + TREREQc + .5;
+}
+
+// rounding is detailed here - be really explicit to avoid errors
+inline int treToQL(double tre)
+{
+  int QL = ceil((tre - TREREQc)/TREREQm);
+  if(QLToTre(QL + 1) <= tre)
+    return min(QL + 1, 200);
+  if(QLToTre(QL) <= tre)
+    return min(QL, 200);
+  if(QLToTre(QL - 1) <= tre)
+    return min(QL - 1, 200);
+  if(QLToTre(QL - 2) <= tre)
+    return min(QL - 2, 200);
+  return min(QL - 3, 200);
+}
+
+inline int QLToAbi(int QL)
+{
+  return QL*ABIREQm + ABIREQc + .5;
+}
+
+inline int abiToQL(int abi)
+{
+  return std::min((abi - ABIREQc)/ABIREQm, 200);
+}
+
+// 0 - shining, 1 - bright, 2 - faded
+inline int abiModFromQL(int type, int QL)
+{
+  if(type == 0)
+    return SHIABIm*QL + SHIABIc + .5;
+  if(type == 1)
+    return BRIABIm*QL + BRIABIc + .5;
+  return FADABIm*QL + FADABIc + .5;
+}
+
+inline int skiModFromQL(int type, int QL)
+{
+  if(type == 0)
+    return SHISKIm*QL + SHISKIc + .5;
+  if(type == 1)
+    return BRISKIm*QL + BRISKIc + .5;
+  return FADSKIm*QL + FADSKIc + .5;
+}
+
+inline double treTrickleFromAbiMod(int abi, int abiMod)
+{
+  // treatment trickle: (.3*agi + .5*int + .2*sen)/4
+  // strength, agility, stamina, intelligence, sense, psychic
+  // 0         1        2        3             4      5
+  if(abi == 1)
+    return (.3*abiMod)/4;
+  else if(abi == 3)
+    return (.5*abiMod)/4;
+  else if(abi == 4)
+    return (.2*abiMod)/4;
+  return 0;
+}
+
+} // namespace
 
 Stats::Stats() : treatment(0.0)
 {
@@ -88,66 +156,3 @@ int Stats::updateStats(const Implant& imp, bool inserting, int QL)
   return 0;
 }
 
-// rounding is detailed here - be really explicit to avoid errors
-inline int treToQL(double tre)
-{
-  int QL = ceil((tre - TREREQc)/TREREQm);
-  if(QLToTre(QL + 1) <= tre)
-    return min(QL + 1, 200);
-  if(QLToTre(QL) <= tre)
-    return min(QL, 200);
-  if(QLToTre(QL - 1) <= tre)
-    return min(QL - 1, 200);
-  if(QLToTre(QL - 2) <= tre)
-    return min(QL - 2, 200);
-  return min(QL - 3, 200);
-}
-
-// rounding here is easy
-inline int QLToTre(int QL)
-{
-  return QL*TREREQm + TREREQc + .5;
-}
-
-inline int QLToAbi(int QL)
-{
-  return QL*ABIREQm + ABIREQc + .5;
-}
-
-inline int abiToQL(int abi)
-{
-  return std::min((abi - ABIREQc)/ABIREQm, 200);
-}
-
-// 0 - shining, 1 - bright, 2 - faded
-inline int abiModFromQL(int type, int QL)
-{
-  if(type == 0)
-    return SHIABIm*QL + SHIABIc + .5;
-  if(type == 1)
-    return BRIABIm*QL + BRIABIc + .5;
-  return FADABIm*QL + FADABIc + .5;
-}
-
-inline int skiModFromQL(int type, int QL)
-{
-  if(type == 0)
-    return SHISKIm*QL + SHISKIc + .5;
-  if(type == 1)
-    return BRISKIm*QL + BRISKIc + .5;
-  return FADSKIm*QL + FADSKIc + .5;
-}
-
-inline double treTrickleFromAbiMod(int abi, int abiMod)
-{
-  // treatment trickle: (.3*agi + .5*int + .2*sen)/4
-  // strength, agility, stamina, intelligence, sense, psychic
-  // 0         1        2        3             4      5
-  if(abi == 1)
-    return (.3*abiMod)/4;
-  else if(abi == 3)
-    return (.5*abiMod)/4;
-  else if(abi == 4)
-    return (.2*abiMod)/4;
-  return 0;
-}
