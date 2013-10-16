@@ -1,5 +1,5 @@
-#ifndef GUARD_Coefficients_h_
-#define GUARD_Coefficients_h_
+#ifndef COEFFICIENTS_H_
+#define COEFFICIENTS_H_
 
 // req=requirement, tre=treatment, abi=ability, ski=skill
 // implant requirements:
@@ -29,4 +29,4 @@
 #define FADABIm 0.100503
 #define FADABIc 1.899497
 
-#endif
+#endif // COEFFICIENTS_H_

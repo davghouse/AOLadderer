@@ -1,5 +1,5 @@
-#ifndef GUARD_Implant_h_
-#define GUARD_Implant_h_
+#ifndef IMPLANT_H_
+#define IMPLANT_H_
 
 #include <string>
 #include <fstream>
@@ -79,4 +79,4 @@ private:
   bool remove;
 };
 
-#endif
+#endif // IMPLANT_H_

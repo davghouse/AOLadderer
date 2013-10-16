@@ -1,5 +1,5 @@
-#ifndef GUARD_Helper_h_
-#define GUARD_Helper_h_
+#ifndef HELPER_H_
+#define HELPER_H_
 #include <string>
 
 int slotToInt(const std::string& slot);
@@ -11,4 +11,4 @@ std::string convertAbiReq(const std::string& a);
 std::string longSlotName(const std::string& a);
 std::string longAbiName(const std::string& a);
 
-#endif
+#endif // HELPER_H_

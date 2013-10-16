@@ -30,6 +30,7 @@ int slotToInt(const std::string& slot){
   else
     return -2;
 }
+
 std::string intToSlot(int i){
   switch(i){
   case 0:

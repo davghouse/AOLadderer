@@ -18,7 +18,8 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     Stats.cpp \
     Ladder.cpp \
-    Helper.cpp
+    Helper.cpp \
+    Config.cpp
 
 HEADERS  += mainwindow.h \
     Stats.h \

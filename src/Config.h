@@ -1,5 +1,5 @@
-#ifndef GUARD_Config_h_
-#define GUARD_Config_h_
+#ifndef CONFIG_H_
+#define CONFIG_H_
 
 #include <fstream>
 #include <iostream>
@@ -14,37 +14,9 @@ class Config{
 public:
   typedef std::vector<Implant>::size_type size_type;
 
-  Config(){
-    config.reserve(13);
-    for(size_type i = 0; i != 13; i++)
-      config.push_back(Implant(0, intToSlot(i), "abi", "shi", "bri", "fad"));
-  }
-
-  double avgQL() const{ 
-    double avg = 0;
-    int usedImplantCount = 0;
-    for(std::vector<Implant>::size_type i = 0; i != config.size(); i++){
-      if(config[i].abi() != "abi" && config[i].ql() > 0 && config[i].mustRemove()){
-        avg += config[i].ql();
-        usedImplantCount++;
-      }
-    }
-    if(avg == 0 || usedImplantCount == 0)
-      return 0;
-    return avg/usedImplantCount;
-  }
-
-  void updateConfig(Implant imp, int qualityLevel = 0){
-    if(qualityLevel == 0){
-      config[imp.slotI()] = imp;
-      order.push_back(imp.slotI());
-    }
-    else{
-      config[imp.slotI()] = imp;
-      order.push_back(imp.slotI());
-      config[imp.slotI()].setQL(qualityLevel);
-    }
-  }
+  Config();
+  double avgQL() const;
+  void updateConfig(Implant imp, int qualityLevel = 0);
  
   size_type size() const{ return config.size(); }
   const Implant& operator[](int i) const { return config[i]; }
@@ -59,4 +31,18 @@ private:
   std::vector<Implant> config;
   std::vector<int> order; // used in zero height solution to get proper ordering
 };
-#endif
+
+inline void Config::updateConfig(Implant imp, int qualityLevel)
+{
+  if(qualityLevel == 0){
+    config[imp.slotI()] = imp;
+    order.push_back(imp.slotI());
+  }
+  else{
+    config[imp.slotI()] = imp;
+    order.push_back(imp.slotI());
+    config[imp.slotI()].setQL(qualityLevel);
+  }
+}
+
+#endif // CONFIG_H_
