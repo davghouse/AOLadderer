@@ -45,9 +45,10 @@ private:
   // added for GUI
   std::string shining_full_, bright_full_, faded_full_;
   
-  // following integers are for indexing purposes, allowing quick access in containers like 
-  // Stats and Config, where abilities and implants respectively are in a fixed order (by design).
-  // they are named to correspond with the string variables above.
+  // following integers are for indexing purposes, allowing quick access in
+  // containers like Stats and Config, where abilities and implants respectively
+  // are in a fixed order (by design). they are named to correspond with the
+  // string variables above.
   // abi order: strength, agility, stamina, intelligence, sense, psychic
   //            0         1        2        3             4      5
   // slot order: head, eye, ear, chest, rarm, larm, waist, rwrist, lwrist, leg, rhand, lhand, feet
