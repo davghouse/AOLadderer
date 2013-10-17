@@ -15,8 +15,7 @@ The abilities are:
 | **Sense**     | **Psychic**       |
 
 Implants are items that require one of the six abilities and a skill called Treatment to equip.   
-Implants have a Quality Level (QL), from 1 to 200, which determines the magnitude of the ability and Treatment required.  
-Talking about an implant usually means talking about a cluster specification, with no QL specified.
+Implants have a Quality Level (QL), which determines the amount of ability and Treatment required.  
 There are 13 slots on a character where implants of the corresponding type can be equipped:    
 
 | Eye             | Head      | Ear            |
@@ -27,6 +26,7 @@ There are 13 slots on a character where implants of the corresponding type can b
 |                 | **Feet**  |                |
 
 Implants are useful because they can contain Nano Clusters.  
+Talking about an implant usually means talking about a cluster specification, with no QL specified.  
 Clusters provide beneficial modifications; the higher the implant QL, the greater the benefits.  
 Implants have three slots for clusters, which can contain at most one cluster of the corresponding type:  
 
@@ -35,7 +35,7 @@ Implants have three slots for clusters, which can contain at most one cluster of
 
 Each type of implant has a set of Shining, a set of Bright, and a set of Faded clusters available to it.  
 Across all 13 Shining sets, a cluster for each skill and each ability occurs exactly once.    
-This is true for the 13 Bright and 13 Faded sets as well.
+This is true for the 13 Bright and 13 Faded sets as well.  
 Example implants:  
 
 | Type | QL  | Ability Req., Val. | Treatment Req. | Shining, Val.  | Bright, Val.    | Faded, Val.  |
@@ -115,7 +115,6 @@ At this stage in development I won't use the tool for full-blown twinks, but per
 Algorithm
 ---------
 
-The tool uses a pretty simple greedy algorithm.      
 There's a base solver to find the ordering over a set of type-distinct implants that maximizes their average QL.
 Such a set of implants has no more than 10 ladder implants, if every slot that can contain a ladder implant does.
 To find the ordering it looks at every possible ordering of all the ladder implants in the set (10! = 3,628,800).  
@@ -128,7 +127,7 @@ in their required ability, but modify the abilities and Treatment in the same wa
 the remaining required implants, and then removes in reverse the ladder implants, inserting a required implant
 after each removal. The implant yielding the highest average QL is chosen and locked in, and the next step proceeds.
 The algorithm stops when no more laddering slots are available, or when the average QL from one step to the next 
-doesn't change.  
+doesn't increase.  
 
 Fortunately, there aren't many laddering implants. There are 33 subsets, with implants equal (from a laddering perspective)
 up to their required ability. There are 63 total laddering implants considered by the algorithm. 
