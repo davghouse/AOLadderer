@@ -1,12 +1,12 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MAINWINDOW_H_
+#define MAINWINDOW_H_
 
 #include <QMainWindow>
 #include <QtSql/QSqlDatabase>
 #include <QSqlQuery>
 #include <QModelIndex>
 #include <vector>
-#include "Ladder.h"
+#include "ladder.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,41 +22,44 @@ public:
 
 
 private slots:
-  void buffSCE(bool);
-  void buffSFA(bool);
-  void buffCM(bool);
-  void buffCA(bool);
-  void buffES(bool);
-  void buffFG(bool);
-  void buffEOB(bool);
-  void buffICRT(bool);
-  void buffG(bool);
-  void buffEB(bool);
+  void ToggleSurgeryClinicEffect(bool);
+  void ToggleSuperiorFirstAid(bool);
+  void ToggleCompositeMedical(bool);
+  void ToggleCompositeAttribute(bool);
+  void ToggleEnhancedSenses(bool);
+  void ToggleFelineGrace(bool);
+  void ToggleEssenceOfBehemoth(bool);
+  void ToggleImprovedCutRedTape(bool);
+  void ToggleGauntlet(bool);
+  void ToggleExtruderBar(bool);
 
-  void buffIC(bool);
-  void buffPS(bool);
+  void ToggleIronCircle(bool);
+  void ToggleProdigiousStrength(bool);
 
-  void buffNS(bool);
-  void buffOME(bool);
+  void ToggleNeuronalStimulator(bool);
+  void ToggleOdinsMissingEye(bool);
 
-  void runHeightOneLaddered();
+  void RunHeightOne();
 
-  void markAsBoughtShining(QModelIndex);
-  void markAsBoughtBright(QModelIndex);
-  void markAsBoughtFaded(QModelIndex);
+  void ToggleBoughtShining(QModelIndex);
+  void ToggleBoughtBright(QModelIndex);
+  void ToggleBoughtFaded(QModelIndex);
 
 private:
-  void getConfig(Config&);
-  void getStats(Stats&);
-  void getConfigHelper(Config&, int, const std::string&, std::string&, std::string&, std::string&);
-  void showHeightOne(const Ladder&);
-  void showImplant(const Implant&, std::string&, std::string&, std::string&, int);
+  void GetConfiguration(ImplantConfiguration& required_config);
+  void GetConfigurationHelper(ImplantConfiguration& required_config,
+                              int i, const std::string& slot, std::string& shi,
+                              std::string& bri, std::string& fad);
+  void GetStats(Stats& base_stats);
+  void ShowHeightOne(const Ladder& ladder);
+  void ShowImplant(const Implant& implant, std::string& shi,
+                   std::string& bri, std::string& fad, int step);
 
 private:
   Ui::MainWindow *ui;
-  QSqlDatabase implantDB;
-  std::vector<Slot> ladderSlots;
-  bool configNotEmpty;
+  QSqlDatabase standard_implants_;
+  std::vector<LadderSlot> ladder_slots_;
+  bool config_not_empty_;
 };
 
-#endif // MAINWINDOW_H
+#endif // MAINWINDOW_H_

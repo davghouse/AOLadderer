@@ -25,5 +25,5 @@ Makefile.Debug
 Makefile.Release
 *.exe
 ui_mainwindow.h
-LadderImplants.txt
-StandardImplants.db
+ladder_implants.txt
+standard_implants.db
