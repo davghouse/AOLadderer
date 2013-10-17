@@ -5,7 +5,10 @@
 #include <string>
 #include "implant.h"
 
- // slot order: head, eye, ear, chest, rarm, larm, waist, rwrist, lwrist, leg, rhand, lhand, feet
+// Holds implants available to the algorithm for laddering for a specific slot.
+// Contains a vector of implant vectors, each implant vector containing implants
+// with different ability requirements but equal modifiers for treatment/abilities.
+// Populated from ladder_implants.txt when the application is opened.
 class LadderSlot{
 public:
   typedef std::vector<std::vector<Implant> >::size_type size_type;
@@ -26,8 +29,6 @@ public:
 
 private:
   std::string name_;
-  // this slot has a vector of implant vectors.
-  // implants within the same implant vector have the same cluster specification, but different abi reqs.
   std::vector<std::vector <Implant> > ladder_implants_;
 };
 

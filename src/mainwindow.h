@@ -46,11 +46,26 @@ private slots:
   void ToggleBoughtFaded(QModelIndex);
 
 private:
+  // Gets the configuration selected and converts it into a form usable by
+  // the HeightOne algorithm. This conversion is a carry-over from when the
+  // programming was command-line based and implant configurations were supplied
+  // in a minimal form, only specifying ability requirements and clusters which
+  // were important for laddering.
+  // The old form was, for example:
+  // head int int bri fad
+  // eye  agi shi tre fad
+  //  .
+  //  .
+  //  .
+  // feet agi shi agi fad
   void GetConfiguration(ImplantConfiguration& required_config);
+  // Does the conversion.
   void GetConfigurationHelper(ImplantConfiguration& required_config,
                               int i, const std::string& slot, std::string& shi,
                               std::string& bri, std::string& fad);
-  void GetStats(Stats& base_stats);
+  void GetStats(CharacterStats& base_stats);
+  // Fills in the other two tabs of the GUI, taking special care to
+  // print out the dashed separator line.
   void ShowHeightOne(const Ladder& ladder);
   void ShowImplant(const Implant& implant, std::string& shi,
                    std::string& bri, std::string& fad, int step);

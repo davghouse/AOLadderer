@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
       ladder_slots_[ladder_slots_.size() - 1].AddLadderImplantSubset();
     else{
       in >> shi >> bri >> fad;
-      // add a ladder implant to the most recent slot
+      // Add a ladder implant to the most recent slot
       ladder_slots_[ladder_slots_.size() - 1].AddLadderImplant(Implant(0, ladder_slot, ability, shi, bri, fad, true));
     }
   }
@@ -63,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent) :
   // Build:
   connect(ui->Build, SIGNAL(clicked()), SLOT(RunHeightOne()));
 
-  // Shopping list
+  // Shopping list:
   connect(ui->Shining, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtShining(QModelIndex)));
   connect(ui->Bright, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtBright(QModelIndex)));
   connect(ui->Faded, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtFaded(QModelIndex)));
@@ -75,9 +75,9 @@ MainWindow::~MainWindow()
   standard_implants_.close();
 }
 
-// member functions:
+// Member functions:
 
-// some better way to do this... use table widget?
+// Some better way to do this... use table widget?
 void MainWindow::GetConfiguration(ImplantConfiguration& required_config)
 {
   std::string shi, bri, fad;
@@ -220,7 +220,7 @@ void MainWindow::GetConfigurationHelper(ImplantConfiguration& required_config, i
   required_config.config_[i].used_to_ladder_ = used_to_ladder;
 }
 
-void MainWindow::GetStats(Stats& base_stats)
+void MainWindow::GetStats(CharacterStats& base_stats)
 {
   vector<int> abilities;
   abilities.resize(6);
@@ -235,16 +235,17 @@ void MainWindow::GetStats(Stats& base_stats)
 
 void MainWindow::ShowHeightOne(const Ladder & ladder)
 {
-  // for shopping list
+  // For shopping list
   vector<ShoppingItem> shining_shopping, bright_shopping, faded_shopping;
+  // Step tab:
   // Step One
-  bool done_laddering = false;
+  bool equipped_required_implant_in_step_one = false;
   int first_after_dash = 0;
   for(vector<int>::const_iterator it = ladder.process_[0].order_.begin();
       it != ladder.process_[0].order_.end(); ++it){
     Implant implant = ladder.process_[0].config_[*it];
     if(implant.ability_name() != "abi" && implant.ql() > 0){
-      // ladder implant
+      // Ladder implant; figure out how to construct it.
       if(implant.lock_){
         std::string query_text = "SELECT shining, bright, faded FROM implants ";
         query_text += "WHERE slot='" + SlotAbbrToFull(implant.slot_name()) + "' ";
@@ -294,10 +295,10 @@ void MainWindow::ShowHeightOne(const Ladder & ladder)
           faded_shopping.push_back(t);
         }
       }
-      // required implant
+      // Required implant -- already know how to construct it.
       else{
-        if(!done_laddering){
-          done_laddering = true;
+        if(!equipped_required_implant_in_step_one){
+          equipped_required_implant_in_step_one = true;
           ui->stepOne->addItem(QString::fromStdString(std::string(77, '-')));
           first_after_dash = *it;
         }
@@ -310,7 +311,7 @@ void MainWindow::ShowHeightOne(const Ladder & ladder)
     }
     ui->avgQLSpinBox->setValue(ladder.AverageQL());
   }
-  if(!done_laddering){
+  if(!equipped_required_implant_in_step_one){
     ui->stepOne->addItem(QString::fromStdString(std::string(77, '-')));
   }
   // Step Two
@@ -318,7 +319,7 @@ void MainWindow::ShowHeightOne(const Ladder & ladder)
       it != ladder.process_[1].order_.end(); ++it){
     Implant implant = ladder.process_[1].config_[*it];
     if(implant.ability_name() != "abi" && implant.ql() > 0 && implant.remove()){
-      if(done_laddering){
+      if(equipped_required_implant_in_step_one){
         if(*it == first_after_dash){
           ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
         }
@@ -345,8 +346,9 @@ void MainWindow::ShowHeightOne(const Ladder & ladder)
       }
     }
   }
-  if(!done_laddering)
+  if(!equipped_required_implant_in_step_one)
     ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
+  // Shopping list tab:
   std::sort(shining_shopping.begin(), shining_shopping.end());
   std::sort(bright_shopping.begin(), bright_shopping.end());
   std::sort(faded_shopping.begin(), faded_shopping.end());
@@ -405,7 +407,7 @@ void MainWindow::RunHeightOne()
   ui->Faded->clear();
   config_not_empty_ = false;
   ImplantConfiguration requiredConfig;
-  Stats baseStats;
+  CharacterStats baseStats;
   GetConfiguration(requiredConfig);
   GetStats(baseStats);
   // height one

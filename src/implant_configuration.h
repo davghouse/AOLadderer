@@ -8,14 +8,18 @@
 #include <numeric>
 #include "implant.h"
 
+// An ImplantConfiguration is a set of up to 13 implants, with an order of insertion.
+// The implants are stored in a vector, with a predetermined order.
 class ImplantConfiguration{
   friend class MainWindow;
 
 public:
   typedef std::vector<Implant>::size_type size_type;
 
+  // Create an empty configuration.
   ImplantConfiguration();
   double AverageQL() const;
+  // Insert an implant into the configuration, noting the order of its insertion.
   void UpdateConfig(Implant implant, int ql = 0);
  
   size_type size() const{ return config_.size(); }
@@ -29,7 +33,8 @@ private:
   // slot order: head, eye, ear, chest, rarm, larm, waist, rwrist, lwrist, leg, rhand, lhand, feet
   //             0     1    2    3      4     5     6      7       8       9    10     11     12
   std::vector<Implant> config_;
-  std::vector<int> order_; // used in zero height solution to get proper ordering
+  // Order of insertion.
+  std::vector<int> order_;
 };
 
 inline void ImplantConfiguration::UpdateConfig(Implant implant, int ql)
