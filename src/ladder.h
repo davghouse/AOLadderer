@@ -17,18 +17,18 @@ public:
   typedef unsigned int uint;
 
   Ladder() {}
-  Ladder(const ImplantConfiguration&, const Stats&);
-  void HeightOne(const std::vector<LadderSlot>&);
+  Ladder(const ImplantConfiguration& required_config, const Stats& stats);
+  void HeightOne(const std::vector<LadderSlot>& ladder_slots);
   double AverageQL() const;
 
 private:
-  void EquipLadderImplants(const std::vector<Implant>&);
+  void EquipLadderImplants(const std::vector<Implant>& ladder_implants);
   void HeightZero();
   void FindLadderImplants();
-  void Ordering(std::vector<uint>&);
-  void RunOrdering(std::vector<uint>&, std::vector<uint>&);
-  bool Compare(const std::vector<uint> &, const std::vector<uint> &) const;
-  double AverageQLFromOrdering(const std::vector<uint> &) const;
+  void Ordering(std::vector<uint>& order);
+  void RunOrdering(std::vector<uint>& best, std::vector<uint>& current);
+  bool Compare(const std::vector<uint> & best, const std::vector<uint> & current) const;
+  double AverageQLFromOrdering(const std::vector<uint>& order) const;
   void UnequipLadderImplants();
 
   // Disallow copy and assign

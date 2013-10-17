@@ -4,13 +4,13 @@
 // abbreviations:
 // req=requirement, tre=treatment, abi=ability, ski=skill
 // shi=shining,     bri=bright,    fad=faded
-// implant requirements/modifiers increase linearly with QL:
+// implant requirements/modifiers increase linearly with ql:
 // implant requirements:
-// y = m*QL + c;
-// tre req = tre_req_m*QL + tre_req_c
-// abi req = abi_req_m*QL + abi_req_c
+// y = m*ql + c;
+// tre req = tre_req_m*ql + tre_req_c
+// abi req = abi_req_m*ql + abi_req_c
 // implant modifiers:
-// shi ski = shi_ski_m*QL + shi_ski_c
+// shi ski = shi_ski_m*ql + shi_ski_c
 // bri ski, fad ski are similar, as are shi abi, bri abi, fad abi except:
 // clusters don't add as much to abilities as they do to skills
 // there are some clusters that add to non-skill, non-abilities, but don't matter here

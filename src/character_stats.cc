@@ -10,66 +10,66 @@ using namespace interpolation_coefficients;
 namespace {
 
 // rounding here is easy
-inline int QLToTreatment(int QL)
+inline int QLToTreatment(int ql)
 {
-  return QL*kTreReqM + kTreReqC + .5;
+  return ql*kTreReqM + kTreReqC + .5;
 }
 
 // rounding is detailed here - be really explicit to avoid errors
-inline int TreatmentToQL(double tre)
+inline int TreatmentToQL(double treatment)
 {
-  int QL = ceil((tre - kTreReqC)/kTreReqM);
-  if(QLToTreatment(QL + 1) <= tre)
-    return min(QL + 1, 200);
-  if(QLToTreatment(QL) <= tre)
-    return min(QL, 200);
-  if(QLToTreatment(QL - 1) <= tre)
-    return min(QL - 1, 200);
-  if(QLToTreatment(QL - 2) <= tre)
-    return min(QL - 2, 200);
-  return min(QL - 3, 200);
+  int ql = ceil((treatment - kTreReqC)/kTreReqM);
+  if(QLToTreatment(ql + 1) <= treatment)
+    return min(ql + 1, 200);
+  if(QLToTreatment(ql) <= treatment)
+    return min(ql, 200);
+  if(QLToTreatment(ql - 1) <= treatment)
+    return min(ql - 1, 200);
+  if(QLToTreatment(ql - 2) <= treatment)
+    return min(ql - 2, 200);
+  return min(ql - 3, 200);
 }
 
-inline int QLToAbility(int QL)
+inline int QLToAbility(int ql)
 {
-  return QL*kAbiReqM + kAbiReqC + .5;
+  return ql*kAbiReqM + kAbiReqC + .5;
 }
 
-inline int AbilityToQL(int abi)
+inline int AbilityToQL(int ability_int)
 {
-  return std::min((abi - kAbiReqC)/kAbiReqM, 200);
+  return std::min((ability_int - kAbiReqC)/kAbiReqM, 200);
 }
 
 // 0 - shining, 1 - bright, 2 - faded
-inline int AbilityModifierFromQL(int type, int QL)
+inline int AbilityModifierFromQL(int type, int ql)
 {
   if(type == 0)
-    return kShiAbiM*QL + kShiAbiC + .5;
+    return kShiAbiM*ql + kShiAbiC + .5;
   if(type == 1)
-    return kBriAbiM*QL + kBriAbiC + .5;
-  return kFadAbiM*QL + kFadAbiC + .5;
+    return kBriAbiM*ql + kBriAbiC + .5;
+  return kFadAbiM*ql + kFadAbiC + .5;
 }
 
-inline int SkillModifierFromQL(int type, int QL)
+inline int SkillModifierFromQL(int type, int ql)
 {
   if(type == 0)
-    return kShiSkiM*QL + kShiSkiC + .5;
+    return kShiSkiM*ql + kShiSkiC + .5;
   if(type == 1)
-    return kBriSkiM*QL + kBriSkiC + .5;
-  return kFadSkiM*QL + kFadSkiC + .5;
+    return kBriSkiM*ql + kBriSkiC + .5;
+  return kFadSkiM*ql + kFadSkiC + .5;
 }
 
-inline double TreatmentTrickleFromAbilityModifier(int abi, int abiMod)
+inline double TreatmentTrickleFromAbilityModifier(int ability_int, int ability_modifier)
 {
   // treatment trickle: (.3*agi + .5*int + .2*sen)/4
   // strength, agility, stamina, intelligence, sense, psychic
   // 0         1        2        3             4      5
-  if(abi == 1)
-    return (.3*abiMod)/4;
-  else if(abi == 3)
-    return (.5*abiMod)/4;
-  else if(abi == 4)
-    return (.2*abiMod)/4;
+  if(ability_int == 1)
+    return (.3*ability_modifier)/4;
+  else if(ability_int == 3)
+    return (.5*ability_modifier)/4;
+  else if(ability_int == 4)
+    return (.2*ability_modifier)/4;
   return 0;
 }
 
@@ -80,80 +80,80 @@ Stats::Stats() : treatment_(0.0)
   abilities_.reserve(6);
 }
 
-void Stats::UpdateStats(const vector<int>& abisHolder, double treatmentHolder)
+void Stats::UpdateStats(const vector<int>& abilities, double treatment)
 {
   for(std::vector<int>::size_type i = 0; i != 6; ++i)
-    abilities_.push_back(abisHolder[i]);
-  treatment_ = treatmentHolder;
+    abilities_.push_back(abilities[i]);
+  treatment_ = treatment;
 }
 
-int Stats::UpdateStats(const Implant& imp, bool inserting, int QL)
+int Stats::UpdateStats(const Implant& implant, bool inserting, int ql)
 {
   if(inserting){
-    // find out what QL imp to put in
-    if(QL == 0){
-      QL = std::min(TreatmentToQL(treatment_), AbilityToQL(abilities_[imp.ability_int()]));
+    // find out what ql implant to put in
+    if(ql == 0){
+      ql = std::min(TreatmentToQL(treatment_), AbilityToQL(abilities_[implant.ability_int()]));
     }
     // update stats
-    if(imp.used_to_ladder()){
-      if(imp.shining_abbr() != "shi"){
-        if(imp.shining_int() <= 5 && imp.shining_int() >= 0){
-          int abiMod = AbilityModifierFromQL(0,QL);
-          abilities_[imp.shining_int()] += abiMod;
-          treatment_ += TreatmentTrickleFromAbilityModifier(imp.shining_int(), abiMod);
+    if(implant.used_to_ladder()){
+      if(implant.shining_abbr() != "shi"){
+        if(implant.shining_int() <= 5 && implant.shining_int() >= 0){
+          int ability_modifier = AbilityModifierFromQL(0,ql);
+          abilities_[implant.shining_int()] += ability_modifier;
+          treatment_ += TreatmentTrickleFromAbilityModifier(implant.shining_int(), ability_modifier);
         }
-        else if(imp.shining_int() == 6)
-          treatment_ += SkillModifierFromQL(0,QL);
+        else if(implant.shining_int() == 6)
+          treatment_ += SkillModifierFromQL(0,ql);
       }
-      if(imp.bright_abbr() != "bri"){
-        if(imp.bright_int() <= 5 && imp.bright_int() >= 0){
-          int abiMod = AbilityModifierFromQL(1,QL);
-          abilities_[imp.bright_int()] += abiMod;
-          treatment_ += TreatmentTrickleFromAbilityModifier(imp.bright_int(), abiMod);
+      if(implant.bright_abbr() != "bri"){
+        if(implant.bright_int() <= 5 && implant.bright_int() >= 0){
+          int ability_modifier = AbilityModifierFromQL(1,ql);
+          abilities_[implant.bright_int()] += ability_modifier;
+          treatment_ += TreatmentTrickleFromAbilityModifier(implant.bright_int(), ability_modifier);
         }
-        else if(imp.bright_int() == 6)
-          treatment_ += SkillModifierFromQL(1,QL);
+        else if(implant.bright_int() == 6)
+          treatment_ += SkillModifierFromQL(1,ql);
       }
-      if(imp.faded_abbr() != "fad"){
-        if(imp.faded_int() <= 5 && imp.faded_int() >= 0){
-          int abiMod = AbilityModifierFromQL(2,QL);
-          abilities_[imp.faded_int()] += abiMod;
-          treatment_ += TreatmentTrickleFromAbilityModifier(imp.faded_int(), abiMod);
+      if(implant.faded_abbr() != "fad"){
+        if(implant.faded_int() <= 5 && implant.faded_int() >= 0){
+          int ability_modifier = AbilityModifierFromQL(2,ql);
+          abilities_[implant.faded_int()] += ability_modifier;
+          treatment_ += TreatmentTrickleFromAbilityModifier(implant.faded_int(), ability_modifier);
         }
-        else if(imp.faded_int() == 6)
-          treatment_ += SkillModifierFromQL(2,QL);
+        else if(implant.faded_int() == 6)
+          treatment_ += SkillModifierFromQL(2,ql);
       }
     }
-    return QL;
+    return ql;
   }
   else{
-    int QL = imp.ql();
-    if(imp.shining_abbr() != "shi"){
-      if(imp.shining_int() <= 5 && imp.shining_int() >= 0){
-        int abiMod = AbilityModifierFromQL(0, QL);
-        abilities_[imp.shining_int()] -= abiMod;
-        treatment_ -= TreatmentTrickleFromAbilityModifier(imp.shining_int(), abiMod);
+    int ql = implant.ql();
+    if(implant.shining_abbr() != "shi"){
+      if(implant.shining_int() <= 5 && implant.shining_int() >= 0){
+        int ability_modifier = AbilityModifierFromQL(0, ql);
+        abilities_[implant.shining_int()] -= ability_modifier;
+        treatment_ -= TreatmentTrickleFromAbilityModifier(implant.shining_int(), ability_modifier);
       }
-      else if(imp.shining_int() == 6)
-        treatment_ -= SkillModifierFromQL(0,QL);
+      else if(implant.shining_int() == 6)
+        treatment_ -= SkillModifierFromQL(0,ql);
     }
-    if(imp.bright_abbr() != "bri"){
-      if(imp.bright_int() <= 5 && imp.bright_int() >= 0){
-        int abiMod = AbilityModifierFromQL(1,QL);
-        abilities_[imp.bright_int()] -= abiMod;
-        treatment_ -= TreatmentTrickleFromAbilityModifier(imp.bright_int(), abiMod);
+    if(implant.bright_abbr() != "bri"){
+      if(implant.bright_int() <= 5 && implant.bright_int() >= 0){
+        int ability_modifier = AbilityModifierFromQL(1,ql);
+        abilities_[implant.bright_int()] -= ability_modifier;
+        treatment_ -= TreatmentTrickleFromAbilityModifier(implant.bright_int(), ability_modifier);
       }
-      else if(imp.bright_int() == 6)
-        treatment_ -= SkillModifierFromQL(1,QL);
+      else if(implant.bright_int() == 6)
+        treatment_ -= SkillModifierFromQL(1,ql);
     }
-    if(imp.faded_abbr() != "fad"){
-      if(imp.faded_int() <= 5 && imp.faded_int() >= 0){
-        int abiMod = AbilityModifierFromQL(2,QL);
-        abilities_[imp.faded_int()] -= abiMod;
-        treatment_ -= TreatmentTrickleFromAbilityModifier(imp.faded_int(), abiMod);
+    if(implant.faded_abbr() != "fad"){
+      if(implant.faded_int() <= 5 && implant.faded_int() >= 0){
+        int ability_modifier = AbilityModifierFromQL(2,ql);
+        abilities_[implant.faded_int()] -= ability_modifier;
+        treatment_ -= TreatmentTrickleFromAbilityModifier(implant.faded_int(), ability_modifier);
       }
-      else if(imp.faded_int() == 6)
-        treatment_ -= SkillModifierFromQL(2,QL);
+      else if(implant.faded_int() == 6)
+        treatment_ -= SkillModifierFromQL(2,ql);
     }
   }
   return 0;

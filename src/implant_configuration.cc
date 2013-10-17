@@ -13,15 +13,15 @@ ImplantConfiguration::ImplantConfiguration()
 double ImplantConfiguration::AverageQL() const
 {
   double avg = 0;
-  int usedImplantCount = 0;
+  int used_implant_count = 0;
   for(std::vector<Implant>::size_type i = 0; i != config_.size(); ++i){
     if(config_[i].ability_name() != "abi" && config_[i].ql() > 0 && config_[i].remove()){
       avg += config_[i].ql();
-      ++usedImplantCount;
+      ++used_implant_count;
     }
   }
-  if(avg == 0 || usedImplantCount == 0)
+  if(avg == 0 || used_implant_count == 0)
     return 0;
-  return avg/usedImplantCount;
+  return avg/used_implant_count;
 }
 

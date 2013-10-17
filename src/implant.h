@@ -11,9 +11,9 @@ class Implant{
 public:
   Implant();
 
-  Implant(int ql, std::string slot_name, std::string ability_name_,
-          std::string shining_abbr_, std::string bright_abbr_,
-          std::string faded_abbr_, bool locked = false, bool removed = true);
+  Implant(int ql, std::string slot_name, std::string ability_name,
+          std::string shining_abbr, std::string bright_abbr,
+          std::string faded_abbr, bool lock = false, bool remove = true);
 
   bool used_to_ladder() const{ return used_to_ladder_; }
   int ql() const { return ql_; }
@@ -31,8 +31,8 @@ public:
   bool lock() const { return lock_; }
   bool remove() const { return remove_; }
 
-  void set_ql(int QL){ ql_ = QL; }
-  void set_remove(bool removeBool){ remove_ = removeBool; }
+  void set_ql(int ql){ ql_ = ql; }
+  void set_remove(bool remove){ remove_ = remove; }
 
 private:
   // quality_level_

@@ -4,32 +4,32 @@ using std::string; using std::vector;
 
 namespace ladder_helper {
 
-int SlotNameToInt(const std::string& slot){
-  if(slot == "head")
+int SlotNameToInt(const std::string& slot_name){
+  if(slot_name == "head")
     return 0;
-  else if(slot == "eye")
+  else if(slot_name == "eye")
     return 1;
-  else if(slot == "ear")
+  else if(slot_name == "ear")
     return 2;
-  else if(slot == "chest")
+  else if(slot_name == "chest")
     return 3;
-  else if(slot == "rarm")
+  else if(slot_name == "rarm")
     return 4;
-  else if(slot == "larm")
+  else if(slot_name == "larm")
     return 5;
-  else if(slot == "waist")
+  else if(slot_name == "waist")
     return 6;
-  else if(slot == "rwrist")
+  else if(slot_name == "rwrist")
     return 7;
-  else if(slot == "lwrist")
+  else if(slot_name == "lwrist")
     return 8;
-  else if(slot == "leg")
+  else if(slot_name == "leg")
     return 9;
-  else if(slot == "rhand")
+  else if(slot_name == "rhand")
     return 10;
-  else if(slot == "lhand")
+  else if(slot_name == "lhand")
     return 11;
-  else if(slot == "feet")
+  else if(slot_name == "feet")
     return 12;
   else
     return -2;
@@ -68,64 +68,64 @@ std::string IntToSlotName(int i){
   }
 }
 
-int AbilityToInt(const std::string& a){
-  if(a == "str" || a == "Strength"){
+int AbilityToInt(const std::string& ability_name){
+  if(ability_name == "str" || ability_name == "Strength"){
     return 0;
   }
-  else if(a == "agi" || a == "Agility"){
+  else if(ability_name == "agi" || ability_name == "Agility"){
     return 1;
   }
-  else if(a == "sta" || a == "Stamina"){
+  else if(ability_name == "sta" || ability_name == "Stamina"){
     return 2;
   }
-  else if(a == "int" || a == "Intelligence"){
+  else if(ability_name == "int" || ability_name == "Intelligence"){
     return 3;
   }
-  else if(a == "sen" || a == "Sense"){
+  else if(ability_name == "sen" || ability_name == "Sense"){
     return 4;
   }
-  else if(a == "psy" || a == "Psychic"){
+  else if(ability_name == "psy" || ability_name == "Psychic"){
     return 5;
   }
-  else if(a == "Treatment"){
+  else if(ability_name == "Treatment"){
     return 6;
   }
-  else if(a == "abi")
+  else if(ability_name == "abi")
     return -1;
   else
     return -2;
 }
 
-int AbilityToIntAndMakeFull(std::string& a){
-  if(a == "str" || a == "Strength"){
-    a = "str";
+int AbilityToIntAndMakeFull(std::string& ability_name){
+  if(ability_name == "str" || ability_name == "Strength"){
+    ability_name = "str";
     return 0;
   }
-  else if(a == "agi" || a == "Agility"){
-    a = "agi";
+  else if(ability_name == "agi" || ability_name == "Agility"){
+    ability_name = "agi";
     return 1;
   }
-  else if(a == "sta" || a == "Stamina"){
-    a = "sta";
+  else if(ability_name == "sta" || ability_name == "Stamina"){
+    ability_name = "sta";
     return 2;
   }
-  else if(a == "int" || a == "Intelligence"){
-      a = "int";
+  else if(ability_name == "int" || ability_name == "Intelligence"){
+      ability_name = "int";
     return 3;
   }
-  else if(a == "sen" || a == "Sense"){
-    a = "sen";
+  else if(ability_name == "sen" || ability_name == "Sense"){
+    ability_name = "sen";
     return 4;
   }
-  else if(a == "psy" || a == "Psychic"){
-    a = "psy";
+  else if(ability_name == "psy" || ability_name == "Psychic"){
+    ability_name = "psy";
     return 5;
   }
-  else if(a == "Treatment"){
-    a = "tre";
+  else if(ability_name == "Treatment"){
+    ability_name = "tre";
     return 6;
   }
-  else if(a == "abi")
+  else if(ability_name == "abi")
     return -1;
   else
     return -2;
@@ -153,59 +153,59 @@ int ClusterToInt(const std::string& cluster){
     return -2;
 }
 
-std::string AbilityFullToAbbr(const std::string& a)
+std::string AbilityFullToAbbr(const std::string& ability_name)
 {
-  if(a == "Strength")
+  if(ability_name == "Strength")
     return "str";
-  if(a == "Agility")
+  if(ability_name == "Agility")
     return "agi";
-  if(a == "Stamina")
+  if(ability_name == "Stamina")
     return "sta";
-  if(a == "Intelligence")
+  if(ability_name == "Intelligence")
     return "int";
-  if(a == "Sense")
+  if(ability_name == "Sense")
     return "sen";
-  if(a == "Psychic")
+  if(ability_name == "Psychic")
     return "psy";
   return "xxxx";
 }
 
-std::string SlotAbbrToFull(const std::string& a)
+std::string SlotAbbrToFull(const std::string& slot_name)
 {
-  if(a == "head") return "Head";
-  if(a == "eye") return "Eye";
-  if(a == "ear") return "Ear";
-  if(a == "chest") return "Chest";
-  if(a == "rarm") return "Right-Arm";
-  if(a == "larm") return "Left-Arm";
-  if(a == "waist") return "Waist";
-  if(a == "rwrist") return "Right-Wrist";
-  if(a == "lwrist") return "Left-Wrist";
-  if(a == "leg") return "Leg";
-  if(a == "rhand") return "Right-Hand";
-  if(a == "lhand") return "Left-Hand";
-  if(a == "feet") return "Feet";
+  if(slot_name == "head") return "Head";
+  if(slot_name == "eye") return "Eye";
+  if(slot_name == "ear") return "Ear";
+  if(slot_name == "chest") return "Chest";
+  if(slot_name == "rarm") return "Right-Arm";
+  if(slot_name == "larm") return "Left-Arm";
+  if(slot_name == "waist") return "Waist";
+  if(slot_name == "rwrist") return "Right-Wrist";
+  if(slot_name == "lwrist") return "Left-Wrist";
+  if(slot_name == "leg") return "Leg";
+  if(slot_name == "rhand") return "Right-Hand";
+  if(slot_name == "lhand") return "Left-Hand";
+  if(slot_name == "feet") return "Feet";
   return "xxxx";
 }
 
-std::string AbilityAndTreatmentAbbrToFull(const std::string& a)
+std::string AbilityAndTreatmentAbbrToFull(const std::string& skill)
 {
-  if(a == "str") return "Strength";
-  if(a == "agi") return "Agility";
-  if(a == "sta") return "Stamina";
-  if(a == "int") return "Intelligence";
-  if(a == "sen") return "Sense";
-  if(a == "psy") return "Psychic";
-  if(a == "tre") return "Treatment";
+  if(skill == "str") return "Strength";
+  if(skill == "agi") return "Agility";
+  if(skill == "sta") return "Stamina";
+  if(skill == "int") return "Intelligence";
+  if(skill == "sen") return "Sense";
+  if(skill == "psy") return "Psychic";
+  if(skill == "tre") return "Treatment";
   return "xxxx";
 }
 
-bool SlotTaken(const string& slotName, const vector<Implant>& imps)
+bool SlotTaken(const string& slot_name, const vector<Implant>& implants)
 {
-  for(vector<Implant>::const_iterator it = imps.begin(); it != imps.end(); ++it)
-    if(slotName == it->slot_name())
+  for(vector<Implant>::const_iterator it = implants.begin(); it != implants.end(); ++it)
+    if(slot_name == it->slot_name())
       return true;
-  if(slotName == "lwrist" || slotName == "rwrist" || slotName == "lhand")
+  if(slot_name == "lwrist" || slot_name == "rwrist" || slot_name == "lhand")
     return true;
   return false;
 }

@@ -7,15 +7,15 @@
 
 namespace ladder_helper {
 
-int SlotNameToInt(const std::string& slot);
+int SlotNameToInt(const std::string& slot_name);
 std::string IntToSlotName(int i);
-int AbilityToInt(const std::string& a);
+int AbilityToInt(const std::string& ability_name);
 int ClusterToInt(const std::string& cluster);
-int AbilityToIntAndMakeFull(std::string& a);
-std::string AbilityFullToAbbr(const std::string& a);
-std::string SlotAbbrToFull(const std::string& a);
-std::string AbilityAndTreatmentAbbrToFull(const std::string& a);
-bool SlotTaken(const std::string&, const std::vector<Implant>&);
+int AbilityToIntAndMakeFull(std::string& ability_name);
+std::string AbilityFullToAbbr(const std::string& ability_name);
+std::string SlotAbbrToFull(const std::string& slot_name);
+std::string AbilityAndTreatmentAbbrToFull(const std::string& skill);
+bool SlotTaken(const std::string& slot_name, const std::vector<Implant>& implants);
 
 } // namespace ladder_helper
 

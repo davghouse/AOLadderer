@@ -46,11 +46,14 @@ private slots:
   void ToggleBoughtFaded(QModelIndex);
 
 private:
-  void GetConfiguration(ImplantConfiguration&);
-  void GetConfigurationHelper(ImplantConfiguration&, int, const std::string&, std::string&, std::string&, std::string&);
-  void GetStats(Stats&);
-  void ShowHeightOne(const Ladder&);
-  void ShowImplant(const Implant&, std::string&, std::string&, std::string&, int);
+  void GetConfiguration(ImplantConfiguration& required_config);
+  void GetConfigurationHelper(ImplantConfiguration& required_config,
+                              int i, const std::string& slot, std::string& shi,
+                              std::string& bri, std::string& fad);
+  void GetStats(Stats& base_stats);
+  void ShowHeightOne(const Ladder& ladder);
+  void ShowImplant(const Implant& implant, std::string& shi,
+                   std::string& bri, std::string& fad, int step);
 
 private:
   Ui::MainWindow *ui;

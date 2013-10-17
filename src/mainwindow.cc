@@ -28,18 +28,18 @@ MainWindow::MainWindow(QWidget *parent) :
   standard_implants_.open();
   // Ladder implants
   std::ifstream in("ladder_implants.txt");
-  string ladderSlot, abi, shi, bri, fad;
-  while(in >> abi){
-    if(abi == "$"){
-      in >> ladderSlot;
-      ladder_slots_.push_back(LadderSlot(ladderSlot));
+  string ladder_slot, ability, shi, bri, fad;
+  while(in >> ability){
+    if(ability == "$"){
+      in >> ladder_slot;
+      ladder_slots_.push_back(LadderSlot(ladder_slot));
     }
-    else if(abi == "#")
+    else if(ability == "#")
       ladder_slots_[ladder_slots_.size() - 1].AddLadderImplantSubset();
     else{
       in >> shi >> bri >> fad;
-      // add a ladder imp to the most recent slot
-      ladder_slots_[ladder_slots_.size() - 1].AddLadderImplant(Implant(0, ladderSlot, abi, shi, bri, fad, true));
+      // add a ladder implant to the most recent slot
+      ladder_slots_[ladder_slots_.size() - 1].AddLadderImplant(Implant(0, ladder_slot, ability, shi, bri, fad, true));
     }
   }
   // Buffs:
@@ -78,7 +78,7 @@ MainWindow::~MainWindow()
 // member functions:
 
 // some better way to do this... use table widget?
-void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
+void MainWindow::GetConfiguration(ImplantConfiguration& required_config)
 {
   std::string shi, bri, fad;
   // head 0 Head
@@ -87,7 +87,7 @@ void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
   fad = ui->headFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    GetConfigurationHelper(requiredConfig, 0,"Head", shi, bri, fad);
+    GetConfigurationHelper(required_config, 0,"Head", shi, bri, fad);
   }
   // eye 1 Eye
   shi = ui->eyeShi->currentText().toStdString();
@@ -95,7 +95,7 @@ void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
   fad = ui->eyeFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    GetConfigurationHelper(requiredConfig, 1,"Eye", shi, bri, fad);
+    GetConfigurationHelper(required_config, 1,"Eye", shi, bri, fad);
   }
   // ear 2 Ear
   shi = ui->earShi->currentText().toStdString();
@@ -103,7 +103,7 @@ void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
   fad = ui->earFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    GetConfigurationHelper(requiredConfig,2 ,"Ear", shi, bri, fad);
+    GetConfigurationHelper(required_config,2 ,"Ear", shi, bri, fad);
   }
   // chest 3 Chest
   shi = ui->chestShi->currentText().toStdString();
@@ -111,7 +111,7 @@ void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
   fad = ui->chestFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    GetConfigurationHelper(requiredConfig, 3,"Chest", shi, bri, fad);
+    GetConfigurationHelper(required_config, 3,"Chest", shi, bri, fad);
   }
   // rarm 4 Right-Arm
   shi = ui->rarmShi->currentText().toStdString();
@@ -119,7 +119,7 @@ void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
   fad = ui->rarmFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    GetConfigurationHelper(requiredConfig, 4,"Right-Arm", shi, bri, fad);
+    GetConfigurationHelper(required_config, 4,"Right-Arm", shi, bri, fad);
   }
   // larm 5 Left-Arm
   shi = ui->larmShi->currentText().toStdString();
@@ -127,7 +127,7 @@ void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
   fad = ui->larmFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    GetConfigurationHelper(requiredConfig, 5,"Left-Arm", shi, bri, fad);
+    GetConfigurationHelper(required_config, 5,"Left-Arm", shi, bri, fad);
   }
   // waist 6 Waist
   shi = ui->waistShi->currentText().toStdString();
@@ -135,7 +135,7 @@ void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
   fad = ui->waistFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    GetConfigurationHelper(requiredConfig, 6,"Waist", shi, bri, fad);
+    GetConfigurationHelper(required_config, 6,"Waist", shi, bri, fad);
   }
   // rwrist 7 Right-Wrist
   shi = ui->rwristShi->currentText().toStdString();
@@ -143,7 +143,7 @@ void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
   fad = ui->rwristFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    GetConfigurationHelper(requiredConfig, 7,"Right-Wrist", shi, bri, fad);
+    GetConfigurationHelper(required_config, 7,"Right-Wrist", shi, bri, fad);
   }
   // lwrist 8 Left-Wrist
   shi = ui->lwristShi->currentText().toStdString();
@@ -151,7 +151,7 @@ void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
   fad = ui->lwristFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    GetConfigurationHelper(requiredConfig, 8,"Left-Wrist", shi, bri, fad);
+    GetConfigurationHelper(required_config, 8,"Left-Wrist", shi, bri, fad);
   }
   // leg 9 Leg
   shi = ui->legShi->currentText().toStdString();
@@ -159,7 +159,7 @@ void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
   fad = ui->legFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    GetConfigurationHelper(requiredConfig, 9,"Leg", shi, bri, fad);
+    GetConfigurationHelper(required_config, 9,"Leg", shi, bri, fad);
   }
   // rhand 10 Right-Hand
   shi = ui->rhandShi->currentText().toStdString();
@@ -167,7 +167,7 @@ void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
   fad = ui->rhandFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    GetConfigurationHelper(requiredConfig, 10,"Right-Hand", shi, bri, fad);
+    GetConfigurationHelper(required_config, 10,"Right-Hand", shi, bri, fad);
   }
   // lhand 11 Left-Hand
   shi = ui->lhandShi->currentText().toStdString();
@@ -175,7 +175,7 @@ void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
   fad = ui->lhandFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    GetConfigurationHelper(requiredConfig, 11,"Left-Hand", shi, bri, fad);
+    GetConfigurationHelper(required_config, 11,"Left-Hand", shi, bri, fad);
   }
   // feet 12 Feet
   shi = ui->feetShi->currentText().toStdString();
@@ -183,54 +183,216 @@ void MainWindow::GetConfiguration(ImplantConfiguration& requiredConfig)
   fad = ui->feetFad->currentText().toStdString();
   if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
   if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
-    GetConfigurationHelper(requiredConfig, 12,"Feet", shi, bri, fad);
+    GetConfigurationHelper(required_config, 12,"Feet", shi, bri, fad);
   }
 }
 
-void MainWindow::GetConfigurationHelper(ImplantConfiguration& requiredConfig, int i, const string& slot, string& shi, string& bri, string& fad)
+void MainWindow::GetConfigurationHelper(ImplantConfiguration& required_config, int i,
+                                        const string& slot, string& shi, string& bri, string& fad)
 {
   config_not_empty_ = true;
-  requiredConfig.config_[i].shining_full_ = shi;
-  requiredConfig.config_[i].bright_full_ = bri;
-  requiredConfig.config_[i].faded_full_ = fad;
-  std::string qBegin = "SELECT req FROM implants WHERE slot='" + slot + "'";
-  string qText = qBegin + " AND Shining='"+shi+"' AND Bright='"+bri+"' AND Faded='"+fad+"'";
-  QSqlQuery q;
-  q.exec(QString::fromStdString(qText));
-  q.next();
-  requiredConfig.config_[i].ability_name_ = AbilityFullToAbbr(q.value(0).toString().toStdString());
-  requiredConfig.config_[i].ability_int_ = AbilityToInt(requiredConfig.config_[i].ability_name_);
-  bool usedToLadder = false;
+  required_config.config_[i].shining_full_ = shi;
+  required_config.config_[i].bright_full_ = bri;
+  required_config.config_[i].faded_full_ = fad;
+  std::string query_begin = "SELECT req FROM implants WHERE slot='" + slot + "'";
+  string query_text = query_begin + " AND Shining='"+shi+"' AND Bright='"+bri+"' AND Faded='"+fad+"'";
+  QSqlQuery query;
+  query.exec(QString::fromStdString(query_text));
+  query.next();
+  required_config.config_[i].ability_name_ = AbilityFullToAbbr(query.value(0).toString().toStdString());
+  required_config.config_[i].ability_int_ = AbilityToInt(required_config.config_[i].ability_name_);
+  bool used_to_ladder = false;
   if(AbilityToIntAndMakeFull(shi) >= 0){
-    requiredConfig.config_[i].shining_abbr_ = shi;
-    requiredConfig.config_[i].shining_int_ = ClusterToInt(requiredConfig.config_[i].shining_abbr_);
-    usedToLadder = true;
+    required_config.config_[i].shining_abbr_ = shi;
+    required_config.config_[i].shining_int_ = ClusterToInt(required_config.config_[i].shining_abbr_);
+    used_to_ladder = true;
   }
   if(AbilityToIntAndMakeFull(bri) >= 0){
-    requiredConfig.config_[i].bright_abbr_ = bri;
-    requiredConfig.config_[i].bright_int_ = ClusterToInt(requiredConfig.config_[i].bright_abbr_);
-    usedToLadder = true;
+    required_config.config_[i].bright_abbr_ = bri;
+    required_config.config_[i].bright_int_ = ClusterToInt(required_config.config_[i].bright_abbr_);
+    used_to_ladder = true;
   }
   if(AbilityToIntAndMakeFull(fad) >= 0){
-    requiredConfig.config_[i].faded_abbr_ = fad;
-    requiredConfig.config_[i].faded_int_ = ClusterToInt(requiredConfig.config_[i].faded_abbr_);
-    usedToLadder = true;
+    required_config.config_[i].faded_abbr_ = fad;
+    required_config.config_[i].faded_int_ = ClusterToInt(required_config.config_[i].faded_abbr_);
+    used_to_ladder = true;
   }
-  requiredConfig.config_[i].used_to_ladder_ = usedToLadder;
+  required_config.config_[i].used_to_ladder_ = used_to_ladder;
 }
 
-void MainWindow::GetStats(Stats& baseStats)
+void MainWindow::GetStats(Stats& base_stats)
 {
-  vector<int> abisHolder;
-  abisHolder.resize(6);
-  abisHolder[0] = ui->Strength->value();
-  abisHolder[1] = ui->Agility->value();
-  abisHolder[2] = ui->Stamina->value();
-  abisHolder[3] = ui->Intelligence->value();
-  abisHolder[4] = ui->Sense->value();
-  abisHolder[5] = ui->Psychic->value();
-  baseStats.UpdateStats(abisHolder, ui->Treatment->value());
+  vector<int> abilities;
+  abilities.resize(6);
+  abilities[0] = ui->Strength->value();
+  abilities[1] = ui->Agility->value();
+  abilities[2] = ui->Stamina->value();
+  abilities[3] = ui->Intelligence->value();
+  abilities[4] = ui->Sense->value();
+  abilities[5] = ui->Psychic->value();
+  base_stats.UpdateStats(abilities, ui->Treatment->value());
 }
+
+void MainWindow::ShowHeightOne(const Ladder & ladder)
+{
+  // for shopping list
+  vector<ShoppingItem> shining_shopping, bright_shopping, faded_shopping;
+  // Step One
+  bool done_laddering = false;
+  int first_after_dash = 0;
+  for(vector<int>::const_iterator it = ladder.process_[0].order_.begin();
+      it != ladder.process_[0].order_.end(); ++it){
+    Implant implant = ladder.process_[0].config_[*it];
+    if(implant.ability_name() != "abi" && implant.ql() > 0){
+      // ladder implant
+      if(implant.lock_){
+        std::string query_text = "SELECT shining, bright, faded FROM implants ";
+        query_text += "WHERE slot='" + SlotAbbrToFull(implant.slot_name()) + "' ";
+        query_text += "and req='" + AbilityAndTreatmentAbbrToFull(implant.ability_name()) + "' ";
+        if(implant.shining_abbr() != "shi"){
+          query_text += "and Shining='" + AbilityAndTreatmentAbbrToFull(implant.shining_abbr()) + "' ";
+        }
+        if(implant.bright_abbr() != "bri"){
+          query_text += "and Bright='" + AbilityAndTreatmentAbbrToFull(implant.bright_abbr()) + "' ";
+        }
+        if(implant.faded_abbr() != "fad"){
+          query_text += "and Faded='" + AbilityAndTreatmentAbbrToFull(implant.faded_abbr()) + "' ";
+        }
+        QSqlQuery q;
+        q.exec(QString::fromStdString(query_text));
+        int most_empties = -1;
+        std::string shi, bri, fad;
+        while(q.next()){
+          int emptyCount = 0;
+          string s = q.value(0).toString().toStdString();
+          string b = q.value(1).toString().toStdString();
+          string f = q.value(2).toString().toStdString();
+          if(s == "Empty") ++emptyCount;
+          if(b == "Empty") ++emptyCount;
+          if(f == "Empty") ++emptyCount;
+          if(emptyCount > most_empties || (emptyCount == most_empties && s == "Empty")){
+            most_empties = emptyCount;
+            shi = s;
+            bri = b;
+            fad = f;
+          }
+        }
+        ShowImplant(implant, shi, bri, fad, 1);
+        if(shi != "-----"){
+          ShoppingItem t;
+          t.cluster_ = shi; t.ql_ = implant.ql();
+          shining_shopping.push_back(t);
+        }
+        if(bri != "-----"){
+          ShoppingItem t;
+          t.cluster_ = bri; t.ql_ = implant.ql();
+          bright_shopping.push_back(t);
+        }
+        if(fad != "-----"){
+          ShoppingItem t;
+          t.cluster_ = fad; t.ql_ = implant.ql();
+          faded_shopping.push_back(t);
+        }
+      }
+      // required implant
+      else{
+        if(!done_laddering){
+          done_laddering = true;
+          ui->stepOne->addItem(QString::fromStdString(std::string(77, '-')));
+          first_after_dash = *it;
+        }
+        std::string shi, bri, fad;
+        shi = ladder.required_config_[*it].shining_full_;
+        bri = ladder.required_config_[*it].bright_full_;
+        fad = ladder.required_config_[*it].faded_full_;
+        ShowImplant(implant, shi, bri, fad, 1);
+      }
+    }
+    ui->avgQLSpinBox->setValue(ladder.AverageQL());
+  }
+  if(!done_laddering){
+    ui->stepOne->addItem(QString::fromStdString(std::string(77, '-')));
+  }
+  // Step Two
+  for(vector<int>::const_iterator it = ladder.process_[1].order_.begin();
+      it != ladder.process_[1].order_.end(); ++it){
+    Implant implant = ladder.process_[1].config_[*it];
+    if(implant.ability_name() != "abi" && implant.ql() > 0 && implant.remove()){
+      if(done_laddering){
+        if(*it == first_after_dash){
+          ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
+        }
+      }
+      std::string shi, bri, fad;
+      shi = ladder.required_config_[*it].shining_full_;
+      bri = ladder.required_config_[*it].bright_full_;
+      fad = ladder.required_config_[*it].faded_full_;
+      ShowImplant(implant, shi, bri, fad, 2);
+      if(shi != "-----"){
+        ShoppingItem t;
+        t.cluster_ = shi; t.ql_ = implant.ql();
+        shining_shopping.push_back(t);
+      }
+      if(bri != "-----"){
+        ShoppingItem t;
+        t.cluster_ = bri; t.ql_ = implant.ql();
+        bright_shopping.push_back(t);
+      }
+      if(fad != "-----"){
+        ShoppingItem t;
+        t.cluster_ = fad; t.ql_ = implant.ql();
+        faded_shopping.push_back(t);
+      }
+    }
+  }
+  if(!done_laddering)
+    ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
+  std::sort(shining_shopping.begin(), shining_shopping.end());
+  std::sort(bright_shopping.begin(), bright_shopping.end());
+  std::sort(faded_shopping.begin(), faded_shopping.end());
+  for(vector<ShoppingItem>::iterator it = shining_shopping.begin(); it != shining_shopping.end(); ++it){
+    int cluster_ql = .86*(it->ql_) + .01;
+    std::stringstream t;
+    t << "ql " << cluster_ql << " " << it->cluster_;
+    ui->Shining->addItem(QString::fromStdString(t.str()));
+  }
+  for(vector<ShoppingItem>::iterator it = bright_shopping.begin(); it != bright_shopping.end(); ++it){
+    int cluster_ql = .84*(it->ql_) + .01;
+    std::stringstream t;
+    t << "ql " << cluster_ql << " " << it->cluster_;
+    ui->Bright->addItem(QString::fromStdString(t.str()));
+  }
+  for(vector<ShoppingItem>::iterator it = faded_shopping.begin(); it != faded_shopping.end(); ++it){
+    int cluster_ql = .82*(it->ql_) + .01;
+    std::stringstream t;
+    t << "ql " << cluster_ql << " " << it->cluster_;
+    ui->Faded->addItem(QString::fromStdString(t.str()));
+  }
+}
+
+void MainWindow::ShowImplant(const Implant& implant, std::string& shi, std::string& bri, std::string& fad, int step)
+{
+  if(shi == "Empty") shi = "-----";
+  if(bri == "Empty") bri = "-----";
+  if(fad == "Empty") fad = "-----";
+  string temp;
+  temp += "[" + implant.ability_name() + "] ";
+  std::stringstream ss;
+  ss << implant.ql();
+  temp += "ql " + ss.str() + " " + SlotAbbrToFull(implant.slot_name()) + ":";
+  temp += std::string(26 - temp.size(), ' ');
+  temp += shi + "," + std::string(16 - shi.size(), ' ');
+  temp += bri + "," + std::string(16 - bri.size(), ' ');
+  temp += fad;
+  if(step == 1){
+    ui->stepOne->addItem(QString::fromStdString(temp));
+  }
+  if(step == 2){
+    ui->stepTwo->addItem(QString::fromStdString(temp));
+  }
+}
+
+
 
 // slots:
 void MainWindow::RunHeightOne()
@@ -252,167 +414,6 @@ void MainWindow::RunHeightOne()
     ladder.HeightOne(ladder_slots_);
     ShowHeightOne(ladder);
     ui->tabWidget->setCurrentWidget(ui->resultsTab);
-  }
-}
-
-
-void MainWindow::ShowHeightOne(const Ladder & ladder)
-{
-
-  // for shopping list
-  vector<ShoppingItem> shining, bright, faded;
-  // Step One
-  bool doneWithLaddering = false;
-  int firstAfterDash = 0;
-  for(vector<int>::const_iterator it = ladder.process_[0].order_.begin();
-      it != ladder.process_[0].order_.end(); ++it){
-    Implant imp = ladder.process_[0].config_[*it];
-    if(imp.ability_name() != "abi" && imp.ql() > 0){
-      // ladder implant
-      if(imp.lock_){
-        std::string qText = "SELECT shining, bright, faded FROM implants ";
-        qText += "WHERE slot='" + SlotAbbrToFull(imp.slot_name()) + "' ";
-        qText += "and req='" + AbilityAndTreatmentAbbrToFull(imp.ability_name()) + "' ";
-        if(imp.shining_abbr() != "shi"){
-          qText += "and Shining='" + AbilityAndTreatmentAbbrToFull(imp.shining_abbr()) + "' ";
-        }
-        if(imp.bright_abbr() != "bri"){
-          qText += "and Bright='" + AbilityAndTreatmentAbbrToFull(imp.bright_abbr()) + "' ";
-        }
-        if(imp.faded_abbr() != "fad"){
-          qText += "and Faded='" + AbilityAndTreatmentAbbrToFull(imp.faded_abbr()) + "' ";
-        }
-        QSqlQuery q;
-        q.exec(QString::fromStdString(qText));
-        int mostEmpties = -1;
-        std::string shi, bri, fad;
-        while(q.next()){
-          int emptyCount = 0;
-          string s = q.value(0).toString().toStdString();
-          string b = q.value(1).toString().toStdString();
-          string f = q.value(2).toString().toStdString();
-          if(s == "Empty") ++emptyCount;
-          if(b == "Empty") ++emptyCount;
-          if(f == "Empty") ++emptyCount;
-          if(emptyCount > mostEmpties || (emptyCount == mostEmpties && s == "Empty")){
-            mostEmpties = emptyCount;
-            shi = s;
-            bri = b;
-            fad = f;
-          }
-        }
-        ShowImplant(imp, shi, bri, fad, 1);
-        if(shi != "-----"){
-          ShoppingItem t;
-          t.cluster_ = shi; t.ql_ = imp.ql();
-          shining.push_back(t);
-        }
-        if(bri != "-----"){
-          ShoppingItem t;
-          t.cluster_ = bri; t.ql_ = imp.ql();
-          bright.push_back(t);
-        }
-        if(fad != "-----"){
-          ShoppingItem t;
-          t.cluster_ = fad; t.ql_ = imp.ql();
-          faded.push_back(t);
-        }
-      }
-      // required implant
-      else{
-        if(!doneWithLaddering){
-          doneWithLaddering = true;
-          ui->stepOne->addItem(QString::fromStdString(std::string(77, '-')));
-          firstAfterDash = *it;
-        }
-        std::string shi, bri, fad;
-        shi = ladder.required_config_[*it].shining_full_;
-        bri = ladder.required_config_[*it].bright_full_;
-        fad = ladder.required_config_[*it].faded_full_;
-        ShowImplant(imp, shi, bri, fad, 1);
-      }
-    }
-    ui->avgQLSpinBox->setValue(ladder.AverageQL());
-  }
-  if(!doneWithLaddering){
-    ui->stepOne->addItem(QString::fromStdString(std::string(77, '-')));
-  }
-  // Step Two
-  for(vector<int>::const_iterator it = ladder.process_[1].order_.begin();
-      it != ladder.process_[1].order_.end(); ++it){
-    Implant imp = ladder.process_[1].config_[*it];
-    if(imp.ability_name() != "abi" && imp.ql() > 0 && imp.remove()){
-      if(doneWithLaddering){
-        if(*it == firstAfterDash){
-          ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
-        }
-      }
-      std::string shi, bri, fad;
-      shi = ladder.required_config_[*it].shining_full_;
-      bri = ladder.required_config_[*it].bright_full_;
-      fad = ladder.required_config_[*it].faded_full_;
-      ShowImplant(imp, shi, bri, fad, 2);
-      if(shi != "-----"){
-        ShoppingItem t;
-        t.cluster_ = shi; t.ql_ = imp.ql();
-        shining.push_back(t);
-      }
-      if(bri != "-----"){
-        ShoppingItem t;
-        t.cluster_ = bri; t.ql_ = imp.ql();
-        bright.push_back(t);
-      }
-      if(fad != "-----"){
-        ShoppingItem t;
-        t.cluster_ = fad; t.ql_ = imp.ql();
-        faded.push_back(t);
-      }
-    }
-  }
-  if(!doneWithLaddering)
-    ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
-  std::sort(shining.begin(), shining.end());
-  std::sort(bright.begin(), bright.end());
-  std::sort(faded.begin(), faded.end());
-  for(vector<ShoppingItem>::iterator it = shining.begin(); it != shining.end(); ++it){
-    int clusterQL = .86*(it->ql_) + .01;
-    std::stringstream t;
-    t << "QL " << clusterQL << " " << it->cluster_;
-    ui->Shining->addItem(QString::fromStdString(t.str()));
-  }
-  for(vector<ShoppingItem>::iterator it = bright.begin(); it != bright.end(); ++it){
-    int clusterQL = .84*(it->ql_) + .01;
-    std::stringstream t;
-    t << "QL " << clusterQL << " " << it->cluster_;
-    ui->Bright->addItem(QString::fromStdString(t.str()));
-  }
-  for(vector<ShoppingItem>::iterator it = faded.begin(); it != faded.end(); ++it){
-    int clusterQL = .82*(it->ql_) + .01;
-    std::stringstream t;
-    t << "QL " << clusterQL << " " << it->cluster_;
-    ui->Faded->addItem(QString::fromStdString(t.str()));
-  }
-}
-
-void MainWindow::ShowImplant(const Implant& imp, std::string& shi, std::string& bri, std::string& fad, int step)
-{
-  if(shi == "Empty") shi = "-----";
-  if(bri == "Empty") bri = "-----";
-  if(fad == "Empty") fad = "-----";
-  string temp;
-  temp += "[" + imp.ability_name() + "] ";
-  std::stringstream ss;
-  ss << imp.ql();
-  temp += "QL " + ss.str() + " " + SlotAbbrToFull(imp.slot_name()) + ":";
-  temp += std::string(26 - temp.size(), ' ');
-  temp += shi + "," + std::string(16 - shi.size(), ' ');
-  temp += bri + "," + std::string(16 - bri.size(), ' ');
-  temp += fad;
-  if(step == 1){
-    ui->stepOne->addItem(QString::fromStdString(temp));
-  }
-  if(step == 2){
-    ui->stepTwo->addItem(QString::fromStdString(temp));
   }
 }
 
