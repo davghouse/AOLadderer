@@ -6,16 +6,20 @@ using std::string; using std::vector;
 using std::min;
 using namespace interpolation_coefficients;
 
-// anonymous namespace as only used in this .cpp file
+// Anonymous namespace with inline functions as only used in this .cpp file
+// Has functions for determining requirements and modifiers from implant QLs.
+// See interpolation_coefficients.h
 namespace {
 
-// rounding here is easy
+// Treatment requirements round up.
 inline int QLToTreatment(int ql)
 {
   return ql*kTreReqM + kTreReqC + .5;
 }
 
-// rounding is detailed here - be really explicit to avoid errors
+// Be careful with rounding errors here;
+// Find the ql close to the true ql that can be used, then compare nearby
+// qls until the first one requiring <= the given treatment is found.
 inline int TreatmentToQL(double treatment)
 {
   int ql = ceil((treatment - kTreReqC)/kTreReqM);
@@ -30,16 +34,19 @@ inline int TreatmentToQL(double treatment)
   return min(ql - 3, 200);
 }
 
+// kAbiReqM, kAbiReqC are integers, so no rounding necessary here.
 inline int QLToAbility(int ql)
 {
-  return ql*kAbiReqM + kAbiReqC + .5;
+  return ql*kAbiReqM + kAbiReqC;
 }
 
-inline int AbilityToQL(int ability_int)
+// Odd ability values yield fractional qls which are truncated correctly.
+inline int AbilityToQL(int ability_modifier)
 {
-  return std::min((ability_int - kAbiReqC)/kAbiReqM, 200);
+  return std::min((ability_modifier - kAbiReqC)/kAbiReqM, 200);
 }
 
+// Uses type to determine which interpolation_coefficients to use
 // 0 - shining, 1 - bright, 2 - faded
 inline int AbilityModifierFromQL(int type, int ql)
 {
@@ -50,6 +57,8 @@ inline int AbilityModifierFromQL(int type, int ql)
   return kFadAbiM*ql + kFadAbiC + .5;
 }
 
+// Uses type to determine which interpolation_coefficients to use
+// 0 - shining, 1 - bright, 2 - faded
 inline int SkillModifierFromQL(int type, int ql)
 {
   if(type == 0)
@@ -59,11 +68,12 @@ inline int SkillModifierFromQL(int type, int ql)
   return kFadSkiM*ql + kFadSkiC + .5;
 }
 
+// Treatment trickle-down follows the following formula:
+// .3*agi + .5*int + .2*sen
+// where agi, int, sen are abilities modifiers.
+// ability_int determines what ability is being modified; see character_stats.h
 inline double TreatmentTrickleFromAbilityModifier(int ability_int, int ability_modifier)
 {
-  // treatment trickle: (.3*agi + .5*int + .2*sen)/4
-  // strength, agility, stamina, intelligence, sense, psychic
-  // 0         1        2        3             4      5
   if(ability_int == 1)
     return (.3*ability_modifier)/4;
   else if(ability_int == 3)
@@ -75,33 +85,37 @@ inline double TreatmentTrickleFromAbilityModifier(int ability_int, int ability_m
 
 } // namespace
 
-Stats::Stats() : treatment_(0.0)
+CharacterStats::CharacterStats() : treatment_(0.0)
 {
   abilities_.reserve(6);
 }
 
-void Stats::UpdateStats(const vector<int>& abilities, double treatment)
+void CharacterStats::UpdateStats(const vector<int>& abilities, double treatment)
 {
   for(std::vector<int>::size_type i = 0; i != 6; ++i)
     abilities_.push_back(abilities[i]);
   treatment_ = treatment;
 }
 
-int Stats::UpdateStats(const Implant& implant, bool inserting, int ql)
+int CharacterStats::UpdateStats(const Implant& implant, bool inserting, int ql)
 {
+  // If inserting, add to abilities and treatment.
   if(inserting){
-    // find out what ql implant to put in
     if(ql == 0){
+      // Determines implant ql by using helper functions in this .cc file
+      // implant.ability_int() returns the int corresponding to the ability the implant requires.
       ql = std::min(TreatmentToQL(treatment_), AbilityToQL(abilities_[implant.ability_int()]));
     }
-    // update stats
     if(implant.used_to_ladder()){
+      // If shining cluster is important for laddering:
       if(implant.shining_abbr() != "shi"){
+        // If shining cluster adds to an ability:
         if(implant.shining_int() <= 5 && implant.shining_int() >= 0){
           int ability_modifier = AbilityModifierFromQL(0,ql);
           abilities_[implant.shining_int()] += ability_modifier;
           treatment_ += TreatmentTrickleFromAbilityModifier(implant.shining_int(), ability_modifier);
         }
+        // Else, if it adds to treatment:
         else if(implant.shining_int() == 6)
           treatment_ += SkillModifierFromQL(0,ql);
       }
@@ -126,6 +140,7 @@ int Stats::UpdateStats(const Implant& implant, bool inserting, int ql)
     }
     return ql;
   }
+  // If removing, subtract from abilities and treatment.
   else{
     int ql = implant.ql();
     if(implant.shining_abbr() != "shi"){

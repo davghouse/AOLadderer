@@ -15,6 +15,7 @@ double ImplantConfiguration::AverageQL() const
   double avg = 0;
   int used_implant_count = 0;
   for(std::vector<Implant>::size_type i = 0; i != config_.size(); ++i){
+    // If the implant is non-empty, non-zero, and not a leftover ladder implant:
     if(config_[i].ability_name() != "abi" && config_[i].ql() > 0 && config_[i].remove()){
       avg += config_[i].ql();
       ++used_implant_count;

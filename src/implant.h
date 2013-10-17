@@ -4,8 +4,8 @@
 #include <string>
 #include <fstream>
 
+// Holds information about an implant.
 class Implant{
-  // added for GUI
   friend class MainWindow;
 
 public:
@@ -15,7 +15,6 @@ public:
           std::string shining_abbr, std::string bright_abbr,
           std::string faded_abbr, bool lock = false, bool remove = true);
 
-  bool used_to_ladder() const{ return used_to_ladder_; }
   int ql() const { return ql_; }
   const std::string& slot_name() const { return slot_name_; }
   const std::string& ability_name() const { return ability_name_; }
@@ -28,6 +27,7 @@ public:
   int bright_int() const { return bright_int_; }
   int faded_int() const { return faded_int_; }
 
+  bool used_to_ladder() const{ return used_to_ladder_; }
   bool lock() const { return lock_; }
   bool remove() const { return remove_; }
 
@@ -35,33 +35,37 @@ public:
   void set_remove(bool remove){ remove_ = remove; }
 
 private:
-  // quality_level_
+  // Quality level.
   int ql_;
   
+  // Slot that this implant occupies.
   std::string slot_name_;
+  // Name of required ability; "abi" if the implant is empty
   std::string ability_name_;
+
+  // Abbreviations for the clusters;
+  // tre for treatment, str/agi/sta/int/sen/psy for abilities,
+  // and shi/bri/fad to represent not used_to_ladder.
+  // Used within the ladder algorithm.
   std::string shining_abbr_, bright_abbr_, faded_abbr_;
 
-  // added for GUI
+  // Full name for the clusters, used for GUI output.
   std::string shining_full_, bright_full_, faded_full_;
   
-  // following integers are for indexing purposes, allowing quick access in
-  // containers like Stats and Config, where abilities and implants respectively
-  // are in a fixed order (by design). they are named to correspond with the
-  // string variables above.
-  // abi order: strength, agility, stamina, intelligence, sense, psychic
-  //            0         1        2        3             4      5
-  // slot order: head, eye, ear, chest, rarm, larm, waist, rwrist, lwrist, leg, rhand, lhand, feet
+  // Indexing integers for quick access from CharacterStats and ImplantConfiguration objects.
+  // Slot order: head, eye, ear, chest, rarm, larm, waist, rwrist, lwrist, leg, rhand, lhand, feet
   //             0     1    2    3      4     5     6      7       8       9    10     11     12
+  // Skill order: strength, agility, stamina, intelligence, sense, psychic, treatment, else
+  //              0         1        2        3             4      5        6          -1
   int slot_int_;
   int ability_int_;
   int shining_int_, bright_int_, faded_int_;
 
-  // if clusters contain tre or one of the abis
+  // True if clusters contain treatment or one of the abilities.
   bool used_to_ladder_;
-  // used to prevent laddering implants from being moved
+  // Prevents laddering implants from being moved during algorithm stages.
   bool lock_;
-  // used to allow ladder implants to avoid removal if no final implant occupies their slot
+  //  Allows ladder implants to avoid reverse-removal if no final implant occupies their slot
   bool remove_;
 };
 

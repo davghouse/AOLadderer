@@ -1,20 +1,23 @@
 #ifndef INTERPOLATION_COEFFICIENTS_H_
 #define INTERPOLATION_COEFFICIENTS_H_
 
-// abbreviations:
+// Abbreviations:
 // req=requirement, tre=treatment, abi=ability, ski=skill
 // shi=shining,     bri=bright,    fad=faded
-// implant requirements/modifiers increase linearly with ql:
-// implant requirements:
+//
+// Implant requirements/modifiers increase linearly with ql:
+// Implant requirements:
 // y = m*ql + c;
 // tre req = tre_req_m*ql + tre_req_c
 // abi req = abi_req_m*ql + abi_req_c
-// implant modifiers:
+//
+// Implant modifiers:
+// Shining, bright, and faded clusters have their own rules.
+// At a given ql shining adds the most, then bright, then faded.
+// The abilities grow more slowly than other skills, like treatment.
+//
 // shi ski = shi_ski_m*ql + shi_ski_c
-// bri ski, fad ski are similar, as are shi abi, bri abi, fad abi except:
-// clusters don't add as much to abilities as they do to skills
-// there are some clusters that add to non-skill, non-abilities, but don't matter here
-// (treatment is the only skill that does matter)
+// bri ski, fad ski are similar, as are shi abi, bri abi, fad abi.
 
 namespace interpolation_coefficients {
 
