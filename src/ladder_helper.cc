@@ -131,7 +131,6 @@ int AbilityToIntAndMakeFull(std::string& ability_name){
     return -2;
 }
 
-// added for GUI
 int ClusterToInt(const std::string& cluster){
   if(cluster == "str")
     return 0;

@@ -247,11 +247,7 @@ void MainWindow::ShowHeightOne(const Ladder & ladder)
 {
   // For shopping list
   vector<ShoppingItem> shining_shopping, bright_shopping, faded_shopping;
-<<<<<<< HEAD
-  // Step tab:
-=======
   // Results tab:
->>>>>>> origin/develop
   // Step One
   bool equipped_required_implant_in_step_one = false;
   int first_after_dash = 0;
@@ -362,11 +358,7 @@ void MainWindow::ShowHeightOne(const Ladder & ladder)
   }
   if(!equipped_required_implant_in_step_one)
     ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
-<<<<<<< HEAD
-  // Shopping list tab:
-=======
   // Shopping tab:
->>>>>>> origin/develop
   std::sort(shining_shopping.begin(), shining_shopping.end());
   std::sort(bright_shopping.begin(), bright_shopping.end());
   std::sort(faded_shopping.begin(), faded_shopping.end());

@@ -6,7 +6,7 @@
 #include "implant.h"
 
 // Helper functions, converting from strings to ints, ints to strings,
-// and back a forth between abbreviations and full names.
+// and back and forth between abbreviations and full names.
 // TODO: Redesign so most of this isn't necessary
 namespace ladder_helper {
 
