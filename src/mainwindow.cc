@@ -1,7 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "ladder_helper.h"
-#include "QString"
+#include "QFile"
+#include "QMessageBox"
+#include "QFileDialog"
+#include <iostream>
 #include <sstream>
 
 using std::vector;
@@ -18,7 +21,8 @@ struct ShoppingItem{
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
-  ui(new Ui::MainWindow)
+  ui(new Ui::MainWindow),
+  current_file_("")
 {
   ui->setupUi(this);
   config_not_empty_ = false;
@@ -67,6 +71,12 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->Shining, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtShining(QModelIndex)));
   connect(ui->Bright, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtBright(QModelIndex)));
   connect(ui->Faded, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtFaded(QModelIndex)));
+
+  // File menu:
+  connect(ui->actionOpen, SIGNAL(triggered()), SLOT(Open()));
+  connect(ui->actionSave, SIGNAL(triggered()), SLOT(Save()));
+  connect(ui->actionSave_as, SIGNAL(triggered()), SLOT(SaveAs()));
+  connect(ui->actionExport_to_Auno, SIGNAL(triggered()), SLOT(ExportToAuno()));
 }
 
 MainWindow::~MainWindow()
@@ -237,7 +247,11 @@ void MainWindow::ShowHeightOne(const Ladder & ladder)
 {
   // For shopping list
   vector<ShoppingItem> shining_shopping, bright_shopping, faded_shopping;
+<<<<<<< HEAD
   // Step tab:
+=======
+  // Results tab:
+>>>>>>> origin/develop
   // Step One
   bool equipped_required_implant_in_step_one = false;
   int first_after_dash = 0;
@@ -348,7 +362,11 @@ void MainWindow::ShowHeightOne(const Ladder & ladder)
   }
   if(!equipped_required_implant_in_step_one)
     ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
+<<<<<<< HEAD
   // Shopping list tab:
+=======
+  // Shopping tab:
+>>>>>>> origin/develop
   std::sort(shining_shopping.begin(), shining_shopping.end());
   std::sort(bright_shopping.begin(), bright_shopping.end());
   std::sort(faded_shopping.begin(), faded_shopping.end());
@@ -394,9 +412,9 @@ void MainWindow::ShowImplant(const Implant& implant, std::string& shi, std::stri
   }
 }
 
+// Slots:
 
-
-// slots:
+// Build:
 void MainWindow::RunHeightOne()
 {
   ui->stepOne->clear();
@@ -413,13 +431,20 @@ void MainWindow::RunHeightOne()
   // height one
   if(config_not_empty_){
     Ladder ladder(requiredConfig,baseStats);
+#ifndef QT_NO_CURSOR
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+#endif
     ladder.HeightOne(ladder_slots_);
     ShowHeightOne(ladder);
+#ifndef QT_NO_CURSOR
+    QApplication::restoreOverrideCursor();
+#endif
     ui->tabWidget->setCurrentWidget(ui->resultsTab);
   }
 }
 
 
+// Buffs:
 void MainWindow::ToggleSurgeryClinicEffect(bool add)
 {
   int val = add ? 100 : -100;
@@ -563,6 +588,7 @@ void MainWindow::ToggleOdinsMissingEye(bool add)
   ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
+// Shopping list:
 void MainWindow::ToggleBoughtShining(QModelIndex i)
 {
   QString temp = ui->Shining->item(i.row())->text();
@@ -602,3 +628,313 @@ void MainWindow::ToggleBoughtFaded(QModelIndex i)
   }
 }
 
+// File menu slots:
+void MainWindow::Open()
+{
+  QString file_name = QFileDialog::getOpenFileName(this);
+  if(!file_name.isEmpty())
+    LoadFile(file_name);
+}
+
+void MainWindow::Save()
+{
+  if(current_file_.isEmpty())
+    return SaveAs();
+  return SaveFile(current_file_);
+}
+
+void MainWindow::SaveAs()
+{
+  QString file_name = QFileDialog::getSaveFileName(this, "", "",
+                                                   tr("ao-ladderer (*.lad);;All Files (*)"));
+  if(file_name.isEmpty())
+    return;
+  SaveFile(file_name);
+}
+
+void MainWindow::ExportToAuno()
+{
+
+}
+
+// File menu functions:
+void MainWindow::LoadFile(QString& file_name)
+{
+  QFile file(file_name);
+  if(!file.open(QFile::ReadOnly | QFile::Text)){
+    QMessageBox::warning(this, tr("ao-ladderer"),
+                         tr("Cannot read this file %1:\n%2.").arg(file_name).arg(file.errorString()));
+    return;
+  }
+  QTextStream in(&file);
+  LoadBuildTab(in);
+  LoadResultsTab(in);
+  LoadShoppingTab(in);
+  current_file_ = file_name;
+  ui->statusBar->showMessage(tr("File loaded"), 1000);
+}
+
+void MainWindow::SaveFile(QString& file_name)
+{
+  QFile file(file_name);
+  if(!file.open(QFile::WriteOnly | QFile::Text)){
+    QMessageBox::warning(this, tr("ao-ladderer"),
+                         tr("Cannot write this file %1:\n%2.").arg(file_name).arg(file.errorString()));
+    return;
+  }
+  QTextStream out(&file);
+  SaveBuildTab(out);
+  SaveResultsTab(out);
+  SaveShoppingTab(out);
+  current_file_ = file_name;
+  ui->statusBar->showMessage(tr("File saved"), 1000);
+}
+
+void MainWindow::SaveBuildTab(QTextStream& out)
+{
+  // Implant configuration:
+  // head
+  out << QString::number(ui->headShi->currentIndex()) << " ";
+  out << QString::number(ui->headBri->currentIndex()) << " ";
+  out << QString::number(ui->headFad->currentIndex()) << "\n";
+  // eye
+  out << QString::number(ui->eyeShi->currentIndex()) << " ";
+  out << QString::number(ui->eyeBri->currentIndex()) << " ";
+  out << QString::number(ui->eyeFad->currentIndex()) << "\n";
+  // ear
+  out << QString::number(ui->earShi->currentIndex()) << " ";
+  out << QString::number(ui->earBri->currentIndex()) << " ";
+  out << QString::number(ui->earFad->currentIndex()) << "\n";
+  // chest
+  out << QString::number(ui->chestShi->currentIndex()) << " ";
+  out << QString::number(ui->chestBri->currentIndex()) << " ";
+  out << QString::number(ui->chestFad->currentIndex()) << "\n";
+  // rarm
+  out << QString::number(ui->rarmShi->currentIndex()) << " ";
+  out << QString::number(ui->rarmBri->currentIndex()) << " ";
+  out << QString::number(ui->rarmFad->currentIndex()) << "\n";
+  // larm
+  out << QString::number(ui->larmShi->currentIndex()) << " ";
+  out << QString::number(ui->larmBri->currentIndex()) << " ";
+  out << QString::number(ui->larmFad->currentIndex()) << "\n";
+  // waist
+  out << QString::number(ui->waistShi->currentIndex()) << " ";
+  out << QString::number(ui->waistBri->currentIndex()) << " ";
+  out << QString::number(ui->waistFad->currentIndex()) << "\n";
+  // rwrist
+  out << QString::number(ui->rwristShi->currentIndex()) << " ";
+  out << QString::number(ui->rwristBri->currentIndex()) << " ";
+  out << QString::number(ui->rwristFad->currentIndex()) << "\n";
+  // lwrist
+  out << QString::number(ui->lwristShi->currentIndex()) << " ";
+  out << QString::number(ui->lwristBri->currentIndex()) << " ";
+  out << QString::number(ui->lwristFad->currentIndex()) << "\n";
+  // leg
+  out << QString::number(ui->legShi->currentIndex()) << " ";
+  out << QString::number(ui->legBri->currentIndex()) << " ";
+  out << QString::number(ui->legFad->currentIndex()) << "\n";
+  // rhand
+  out << QString::number(ui->rhandShi->currentIndex()) << " ";
+  out << QString::number(ui->rhandBri->currentIndex()) << " ";
+  out << QString::number(ui->rhandFad->currentIndex()) << "\n";
+  // lhand
+  out << QString::number(ui->lhandShi->currentIndex()) << " ";
+  out << QString::number(ui->lhandBri->currentIndex()) << " ";
+  out << QString::number(ui->lhandFad->currentIndex()) << "\n";
+  // feet
+  out << QString::number(ui->feetShi->currentIndex()) << " ";
+  out << QString::number(ui->feetBri->currentIndex()) << " ";
+  out << QString::number(ui->feetFad->currentIndex()) << "\n";
+
+  // Buffs:
+  out << (ui->SCE->isChecked() ? "1" : "0") << " ";
+  out << (ui->SFA->isChecked() ? "1" : "0") << " ";
+  out << (ui->CM->isChecked() ? "1" : "0") << " ";
+  out << (ui->CA->isChecked() ? "1" : "0") << " ";
+  out << (ui->ES->isChecked() ? "1" : "0") << " ";
+  out << (ui->FG->isChecked() ? "1" : "0") << " ";
+  out << (ui->EOB->isChecked() ? "1" : "0") << " ";
+  out << (ui->ICRT->isChecked() ? "1" : "0") << " ";
+  out << (ui->G->isChecked() ? "1" : "0") << " ";
+  out << (ui->EB->isChecked() ? "1" : "0") << " ";
+  out << (ui->IC->isChecked() ? "1" : "0") << " ";
+  out << (ui->PS->isChecked() ? "1" : "0") << " ";
+  out << (ui->NS->isChecked() ? "1" : "0") << " ";
+  out << (ui->OME->isChecked() ? "1" : "0") << " ";
+  out << "\n";
+
+  // Abilities and Treatment:
+  out << QString::number(ui->Strength->value()) << " ";
+  out << QString::number(ui->Agility->value()) << " ";
+  out << "\n";
+  out << QString::number(ui->Stamina->value()) << " ";
+  out << QString::number(ui->Intelligence->value()) << " ";
+  out << "\n";
+  out << QString::number(ui->Sense->value()) << " ";
+  out << QString::number(ui->Psychic->value()) << " ";
+  out << "\n";
+  out << QString::number(ui->Treatment->value()) << " ";
+  out << "\n";
+}
+
+void MainWindow::LoadBuildTab(QTextStream& in)
+{
+  int i;
+  // head
+  in >> i; ui->headShi->setCurrentIndex(i);
+  in >> i; ui->headBri->setCurrentIndex(i);
+  in >> i; ui->headFad->setCurrentIndex(i);
+  // eye
+  in >> i; ui->eyeShi->setCurrentIndex(i);
+  in >> i; ui->eyeBri->setCurrentIndex(i);
+  in >> i; ui->eyeFad->setCurrentIndex(i);
+  // ear
+  in >> i; ui->earShi->setCurrentIndex(i);
+  in >> i; ui->earBri->setCurrentIndex(i);
+  in >> i; ui->earFad->setCurrentIndex(i);
+  // chest
+  in >> i; ui->chestShi->setCurrentIndex(i);
+  in >> i; ui->chestBri->setCurrentIndex(i);
+  in >> i; ui->chestFad->setCurrentIndex(i);
+  // rarm
+  in >> i; ui->rarmShi->setCurrentIndex(i);
+  in >> i; ui->rarmBri->setCurrentIndex(i);
+  in >> i; ui->rarmFad->setCurrentIndex(i);
+  // larm
+  in >> i; ui->larmShi->setCurrentIndex(i);
+  in >> i; ui->larmBri->setCurrentIndex(i);
+  in >> i; ui->larmFad->setCurrentIndex(i);
+  // waist
+  in >> i; ui->waistShi->setCurrentIndex(i);
+  in >> i; ui->waistBri->setCurrentIndex(i);
+  in >> i; ui->waistFad->setCurrentIndex(i);
+  // rwrist
+  in >> i; ui->rwristShi->setCurrentIndex(i);
+  in >> i; ui->rwristBri->setCurrentIndex(i);
+  in >> i; ui->rwristFad->setCurrentIndex(i);
+  // lwrist
+  in >> i; ui->lwristShi->setCurrentIndex(i);
+  in >> i; ui->lwristBri->setCurrentIndex(i);
+  in >> i; ui->lwristFad->setCurrentIndex(i);
+  // leg
+  in >> i; ui->legShi->setCurrentIndex(i);
+  in >> i; ui->legBri->setCurrentIndex(i);
+  in >> i; ui->legFad->setCurrentIndex(i);
+  // rhand
+  in >> i; ui->rhandShi->setCurrentIndex(i);
+  in >> i; ui->rhandBri->setCurrentIndex(i);
+  in >> i; ui->rhandFad->setCurrentIndex(i);
+  // lhand
+  in >> i; ui->lhandShi->setCurrentIndex(i);
+  in >> i; ui->lhandBri->setCurrentIndex(i);
+  in >> i; ui->lhandFad->setCurrentIndex(i);
+  // feet
+  in >> i; ui->feetShi->setCurrentIndex(i);
+  in >> i; ui->feetBri->setCurrentIndex(i);
+  in >> i; ui->feetFad->setCurrentIndex(i);
+
+  // Buffs:
+  in >> i; ui->SCE->setChecked(i);
+  in >> i; ui->SFA->setChecked(i);
+  in >> i; ui->CM->setChecked(i);
+  in >> i; ui->CA->setChecked(i);
+  in >> i; ui->ES->setChecked(i);
+  in >> i; ui->FG->setChecked(i);
+  in >> i; ui->EOB->setChecked(i);
+  in >> i; ui->ICRT->setChecked(i);
+  in >> i; ui->G->setChecked(i);
+  in >> i; ui->EB->setChecked(i);
+  in >> i; ui->IC->setChecked(i);
+  in >> i; ui->PS->setChecked(i);
+  in >> i; ui->NS->setChecked(i);
+  in >> i; ui->OME->setChecked(i);
+
+  // Abilities and Treatment:
+  in >> i; ui->Strength->setValue(i);
+  in >> i; ui->Agility->setValue(i);
+  in >> i; ui->Stamina->setValue(i);
+  in >> i; ui->Intelligence->setValue(i);
+  in >> i; ui->Sense->setValue(i);
+  in >> i; ui->Psychic->setValue(i);
+  double d;
+  in >> d; ui->Treatment->setValue(d);
+
+}
+
+void MainWindow::SaveResultsTab(QTextStream& out)
+{
+  out << QString::number(ui->avgQLSpinBox->value()) << "\n";
+
+  out << "Step One:\n";
+  for(int i = 0; i != ui->stepOne->count(); ++i)
+    out << ui->stepOne->item(i)->text() << "\n";
+  out << "Step Two:\n";
+  for(int i = 0; i != ui->stepTwo->count(); ++i)
+    out << ui->stepTwo->item(i)->text() << "\n";;
+
+}
+
+void MainWindow::LoadResultsTab(QTextStream& in)
+{
+  double d;
+  in >> d;
+  ui->avgQLSpinBox->setValue(d);
+
+  // Clear current results tab
+  ui->stepOne->clear();
+  ui->stepTwo->clear();
+
+  in.readLine(); // Remove trailing newline.
+  QString line = in.readLine(); // Line should now be "Step One:"
+  line = in.readLine();
+  bool on_step_one = true;
+  while(line != "Shining:"){
+    if(line == "Step Two:"){
+      on_step_one = false;
+      line = in.readLine();
+      continue;
+    }
+    if(on_step_one)
+      ui->stepOne->addItem(line);
+    else
+      ui->stepTwo->addItem(line);
+    line  = in.readLine();
+  }
+}
+
+void MainWindow::SaveShoppingTab(QTextStream& out)
+{
+  out << "Shining:\n";
+  for(int i = 0; i != ui->Shining->count(); ++i)
+    out << ui->Shining->item(i)->text() << "\n";
+  out << "Bright:\n";
+  for(int i = 0; i != ui->Bright->count(); ++i)
+    out << ui->Bright->item(i)->text() << "\n";;
+  // Avoid trailing newline
+  out << "Faded:";
+  for(int i = 0; i != ui->Faded->count(); ++i)
+    out << "\n" << ui->Faded->item(i)->text();
+}
+
+void MainWindow::LoadShoppingTab(QTextStream& in)
+{
+  // Clear current shopping tab
+  ui->Shining->clear();
+  ui->Bright->clear();
+  ui->Faded->clear();
+
+  QString line = in.readLine();
+  while(line != "Bright:"){
+    ui->Shining->addItem(line);
+    line = in.readLine();
+  }
+  line = in.readLine();
+  while(line != "Faded:"){
+    ui->Bright->addItem(line);
+    line = in.readLine();
+  }
+  while(!in.atEnd()){
+    line = in.readLine();
+    ui->Faded->addItem(line);
+  }
+}
