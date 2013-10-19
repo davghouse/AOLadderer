@@ -139,7 +139,7 @@ To-do
 * ~~Try out conforming to~~ [~~Google C++ S~~tyle Guide] (http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml)
 * ~~Refac~~tor/rearchitecture code 
 * Allow exporting configurations to [Auno] (http://auno.org)
-* Allow saving and loading configurations
+* ~~Allow saving and loading configurations~~
 * Add support for Jobe clusters
 * ~~Consider adding support for refined implants~~
 * Redesign UI so it uses a table widget and works under magnification
