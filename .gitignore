@@ -27,3 +27,4 @@ Makefile.Release
 ui_mainwindow.h
 ladder_implants.txt
 standard_implants.db
+*.lad

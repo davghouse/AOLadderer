@@ -5,6 +5,8 @@
 #include <QtSql/QSqlDatabase>
 #include <QSqlQuery>
 #include <QModelIndex>
+#include "QString"
+#include "QTextStream"
 #include <vector>
 #include "ladder.h"
 
@@ -20,8 +22,8 @@ public:
   explicit MainWindow(QWidget *parent = 0);
   ~MainWindow();
 
-
 private slots:
+  // Buffs:
   void ToggleSurgeryClinicEffect(bool);
   void ToggleSuperiorFirstAid(bool);
   void ToggleCompositeMedical(bool);
@@ -39,11 +41,30 @@ private slots:
   void ToggleNeuronalStimulator(bool);
   void ToggleOdinsMissingEye(bool);
 
+  // Build:
   void RunHeightOne();
 
+  // Shopping list:
   void ToggleBoughtShining(QModelIndex);
   void ToggleBoughtBright(QModelIndex);
   void ToggleBoughtFaded(QModelIndex);
+
+  // File menu:
+  void Open();
+  void Save();
+  void SaveAs();
+  void ExportToAuno();
+
+private:
+  // File menu:
+  void SaveFile(QString&);
+  void LoadFile(QString&);
+  void SaveBuildTab(QTextStream&);
+  void LoadBuildTab(QTextStream&);
+  void SaveResultsTab(QTextStream&);
+  void LoadResultsTab(QTextStream&);
+  void SaveShoppingTab(QTextStream&);
+  void LoadShoppingTab(QTextStream&);
 
 private:
   // Gets the configuration selected and converts it into a form usable by
@@ -75,6 +96,7 @@ private:
   QSqlDatabase standard_implants_;
   std::vector<LadderSlot> ladder_slots_;
   bool config_not_empty_;
+  QString current_file_;
 };
 
 #endif // MAINWINDOW_H_
