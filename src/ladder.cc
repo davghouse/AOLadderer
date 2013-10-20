@@ -89,7 +89,8 @@ void Ladder::EquipLadderImplants(const vector<Implant>& ladder_implants)
     int ql = stats_.UpdateStats(ladder_implants[i]);
     working_config_.UpdateConfig(Implant(ql, ladder_implants[i].slot_name(), ladder_implants[i].ability_name(),
                                          ladder_implants[i].shining_abbr(), ladder_implants[i].bright_abbr(),
-                                         ladder_implants[i].faded_abbr(), true, ladder_implants[i].remove()));
+                                         ladder_implants[i].faded_abbr(), true, ladder_implants[i].remove(),
+                                         ladder_implants[i].aoid()));
   }
 }
 
@@ -105,7 +106,9 @@ void Ladder::HeightZero()
                                          required_ladder_implants_[j].ability_name(),
                                          required_ladder_implants_[j].shining_abbr(),
                                          required_ladder_implants_[j].bright_abbr(),
-                                         required_ladder_implants_[j].faded_abbr()));
+                                         required_ladder_implants_[j].faded_abbr(),
+                                         false, true,
+                                         required_ladder_implants_[j].aoid()));
   }
   for(ImplantConfiguration::size_type i = 0; i != required_config_.size(); ++i){
     if(!required_config_[i].used_to_ladder() && !working_config_[i].lock()){
@@ -114,7 +117,9 @@ void Ladder::HeightZero()
                                            required_config_[i].ability_name(),
                                            required_config_[i].shining_abbr(),
                                            required_config_[i].bright_abbr(),
-                                           required_config_[i].faded_abbr()));
+                                           required_config_[i].faded_abbr(),
+                                           false, true,
+                                           required_config_[i].aoid()));
     }
   }
   UnequipLadderImplants();
@@ -203,7 +208,9 @@ void Ladder::UnequipLadderImplants()
                               required_config_[*ri].ability_name(),
                               required_config_[*ri].shining_abbr(),
                               required_config_[*ri].bright_abbr(),
-                              required_config_[*ri].faded_abbr()));
+                              required_config_[*ri].faded_abbr(),
+                              false, true,
+                              required_config_[*ri].aoid()));
     }
   }
   // Include the implants equipped previously for use in GUI's Step Two output.

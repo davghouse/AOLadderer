@@ -96,7 +96,7 @@ int AbilityToInt(const std::string& ability_name){
     return -2;
 }
 
-int AbilityToIntAndMakeFull(std::string& ability_name){
+int AbilityToIntAndAbbreviate(std::string& ability_name){
   if(ability_name == "str" || ability_name == "Strength"){
     ability_name = "str";
     return 0;

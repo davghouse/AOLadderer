@@ -4,20 +4,18 @@
 #include "QFile"
 #include "QMessageBox"
 #include "QFileDialog"
+#include "QDesktopServices"
+#include "QUrl"
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 
 using std::vector;
 using std::string;
-using std::cerr;
-using std::endl;
+using std::cerr; using std::endl;
+using std::find_if;
 using namespace ladder_helper;
 
-struct ShoppingItem{
-  std::string cluster_;
-  int ql_;
-  bool operator<(const ShoppingItem& r) const{ return cluster_ < r.cluster_; }
-};
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -204,25 +202,27 @@ void MainWindow::GetConfigurationHelper(ImplantConfiguration& required_config, i
   required_config.config_[i].shining_full_ = shi;
   required_config.config_[i].bright_full_ = bri;
   required_config.config_[i].faded_full_ = fad;
-  std::string query_begin = "SELECT req FROM implants WHERE slot='" + slot + "'";
+  std::string query_begin = "SELECT req, aoid FROM implants WHERE slot='" + slot + "'";
   string query_text = query_begin + " AND Shining='"+shi+"' AND Bright='"+bri+"' AND Faded='"+fad+"'";
   QSqlQuery query;
   query.exec(QString::fromStdString(query_text));
   query.next();
   required_config.config_[i].ability_name_ = AbilityFullToAbbr(query.value(0).toString().toStdString());
   required_config.config_[i].ability_int_ = AbilityToInt(required_config.config_[i].ability_name_);
+  required_config.config_[i].aoid_ = query.value(1).toInt();
+  cerr << " " << required_config.config_[i].aoid_;
   bool used_to_ladder = false;
-  if(AbilityToIntAndMakeFull(shi) >= 0){
+  if(AbilityToIntAndAbbreviate(shi) >= 0){
     required_config.config_[i].shining_abbr_ = shi;
     required_config.config_[i].shining_int_ = ClusterToInt(required_config.config_[i].shining_abbr_);
     used_to_ladder = true;
   }
-  if(AbilityToIntAndMakeFull(bri) >= 0){
+  if(AbilityToIntAndAbbreviate(bri) >= 0){
     required_config.config_[i].bright_abbr_ = bri;
     required_config.config_[i].bright_int_ = ClusterToInt(required_config.config_[i].bright_abbr_);
     used_to_ladder = true;
   }
-  if(AbilityToIntAndMakeFull(fad) >= 0){
+  if(AbilityToIntAndAbbreviate(fad) >= 0){
     required_config.config_[i].faded_abbr_ = fad;
     required_config.config_[i].faded_int_ = ClusterToInt(required_config.config_[i].faded_abbr_);
     used_to_ladder = true;
@@ -324,7 +324,7 @@ void MainWindow::ShowHeightOne(const Ladder & ladder)
   if(!equipped_required_implant_in_step_one){
     ui->stepOne->addItem(QString::fromStdString(std::string(77, '-')));
   }
-  // Step Two
+  // Step Two:
   for(vector<int>::const_iterator it = ladder.process_[1].order_.begin();
       it != ladder.process_[1].order_.end(); ++it){
     Implant implant = ladder.process_[1].config_[*it];
@@ -416,13 +416,12 @@ void MainWindow::RunHeightOne()
   ui->Bright->clear();
   ui->Faded->clear();
   config_not_empty_ = false;
-  ImplantConfiguration requiredConfig;
-  CharacterStats baseStats;
-  GetConfiguration(requiredConfig);
-  GetStats(baseStats);
-  // height one
+  ImplantConfiguration required_config;
+  CharacterStats base_stats;
+  GetConfiguration(required_config);
+  GetStats(base_stats);
   if(config_not_empty_){
-    Ladder ladder(requiredConfig,baseStats);
+    Ladder ladder(required_config, base_stats);
 #ifndef QT_NO_CURSOR
     QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
@@ -431,6 +430,8 @@ void MainWindow::RunHeightOne()
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
 #endif
+    final_config_ = ladder.process_[1];
+    CreateAunoLink();
     ui->tabWidget->setCurrentWidget(ui->resultsTab);
   }
 }
@@ -646,10 +647,12 @@ void MainWindow::SaveAs()
 
 void MainWindow::ExportToAuno()
 {
-
+  if(auno_link_.isEmpty())
+    return;
+  QDesktopServices::openUrl(QUrl(auno_link_));
 }
 
-// File menu functions:
+// File menu helper functions:
 void MainWindow::LoadFile(QString& file_name)
 {
   QFile file(file_name);
@@ -662,6 +665,7 @@ void MainWindow::LoadFile(QString& file_name)
   LoadBuildTab(in);
   LoadResultsTab(in);
   LoadShoppingTab(in);
+  LoadAunoLink(in);
   current_file_ = file_name;
   ui->statusBar->showMessage(tr("File loaded"), 1000);
 }
@@ -678,6 +682,7 @@ void MainWindow::SaveFile(QString& file_name)
   SaveBuildTab(out);
   SaveResultsTab(out);
   SaveShoppingTab(out);
+  SaveAunoLink(out);
   current_file_ = file_name;
   ui->statusBar->showMessage(tr("File saved"), 1000);
 }
@@ -927,6 +932,80 @@ void MainWindow::LoadShoppingTab(QTextStream& in)
   }
   while(!in.atEnd()){
     line = in.readLine();
+    if(line == "Auno link:")
+      break;
     ui->Faded->addItem(line);
   }
+}
+
+void MainWindow::SaveAunoLink(QTextStream& out)
+{
+  if(auno_link_.isEmpty())
+    return;
+  out << "\n" << "Auno link:";
+  out << "\n" << auno_link_;
+
+}
+
+void MainWindow::LoadAunoLink(QTextStream& in)
+{
+  if(!in.atEnd())
+     auno_link_ = in.readLine();
+}
+
+void MainWindow::CreateAunoLink()
+{
+  QString s = "http://auno.org/ao/equip.php?noedit=1";
+  if(config_not_empty_){
+    for(vector<int>::const_iterator it = final_config_.order_.begin();
+        it != final_config_.order_.end(); ++it){
+      Implant implant = final_config_.config_[*it];
+      if(implant.ability_name() != "abi" && implant.ql() > 0 && implant.remove()){
+        s.append("&id3-");
+        QString temp = ConvertSlotToAuno(implant.slot_name_);
+        s.append(temp);
+        s.append("=");
+        std::cerr << " " << implant.aoid_;
+        s.append(QString::number(implant.aoid_));
+        s.append("&ql3-");
+        s.append(temp);
+        s.append("=");
+        s.append(QString::number(implant.ql_));
+      }
+    }
+  }
+  auno_link_ = s;
+}
+
+// Auno uses powers of 2 to differentiate implant slots, from 2 to 8196.
+QString MainWindow::ConvertSlotToAuno(const std::string& slot_name)
+{
+  std::string slot_name_full = SlotAbbrToFull(slot_name);
+  if(slot_name_full == "Eye")
+    return "2";
+  if(slot_name_full == "Head")
+    return "4";
+  if(slot_name_full == "Ear")
+    return "8";
+  if(slot_name_full == "Right-Arm")
+    return "16";
+  if(slot_name_full == "Chest")
+    return "32";
+  if(slot_name_full == "Left-Arm")
+    return "64";
+  if(slot_name_full == "Right-Wrist")
+    return "128";
+  if(slot_name_full == "Waist")
+    return "256";
+  if(slot_name_full == "Left-Wrist")
+    return "512";
+  if(slot_name_full == "Right-Hand")
+    return "1024";
+  if(slot_name_full == "Leg")
+    return "2048";
+  if(slot_name_full == "Left-Hand")
+     return "4096";
+  if(slot_name_full == "Feet")
+     return "8192";
+  return "0";
 }

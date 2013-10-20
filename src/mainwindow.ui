@@ -3653,6 +3653,9 @@
    <property name="text">
     <string>Open...</string>
    </property>
+   <property name="whatsThis">
+    <string notr="true"/>
+   </property>
   </action>
   <action name="actionSave">
    <property name="text">
@@ -3665,8 +3668,17 @@
    </property>
   </action>
   <action name="actionExport_to_Auno">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Export to Auno</string>
+   </property>
+   <property name="statusTip">
+    <string notr="true"/>
+   </property>
+   <property name="whatsThis">
+    <string notr="true"/>
    </property>
   </action>
  </widget>

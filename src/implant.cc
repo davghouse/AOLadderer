@@ -17,7 +17,8 @@ Implant::Implant(int ql,
                  string bright_abbr,
                  string faded_abbr,
                  bool lock,
-                 bool remove)
+                 bool remove,
+                 int aoid)
   : ql_(ql),
     slot_name_(slot_name),
     ability_name_(ability_name),
@@ -36,4 +37,5 @@ Implant::Implant(int ql,
   faded_int_ = ClusterToInt(faded_abbr);
   lock_ = lock;
   remove_ = remove;
+  aoid_ = aoid;
 }

@@ -13,7 +13,8 @@ public:
 
   Implant(int ql, std::string slot_name, std::string ability_name,
           std::string shining_abbr, std::string bright_abbr,
-          std::string faded_abbr, bool lock = false, bool remove = true);
+          std::string faded_abbr, bool lock = false, bool remove = true,
+          int aoid = 0);
 
   int ql() const { return ql_; }
   const std::string& slot_name() const { return slot_name_; }
@@ -31,8 +32,12 @@ public:
   bool lock() const { return lock_; }
   bool remove() const { return remove_; }
 
+  int aoid() const { return aoid_; }
+
   void set_ql(int ql){ ql_ = ql; }
   void set_remove(bool remove){ remove_ = remove; }
+
+
 
 private:
   // Quality level.
@@ -67,6 +72,8 @@ private:
   bool lock_;
   //  Allows ladder implants to avoid reverse-removal if no final implant occupies their slot
   bool remove_;
+  // Allows exporting configurations to Auno.org
+  int aoid_;
 };
 
 #endif // IMPLANT_H_

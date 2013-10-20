@@ -10,6 +10,8 @@
 #include <vector>
 #include "ladder.h"
 
+struct AunoItem;
+
 namespace Ui {
 class MainWindow;
 }
@@ -56,7 +58,7 @@ private slots:
   void ExportToAuno();
 
 private:
-  // File menu:
+  // File menu helper functions:
   void SaveFile(QString&);
   void LoadFile(QString&);
   void SaveBuildTab(QTextStream&);
@@ -65,6 +67,12 @@ private:
   void LoadResultsTab(QTextStream&);
   void SaveShoppingTab(QTextStream&);
   void LoadShoppingTab(QTextStream&);
+  void SaveAunoLink(QTextStream&);
+  void LoadAunoLink(QTextStream&);
+
+  // Creates Auno.org link to most recently built/loaded configuration.
+  void CreateAunoLink();
+  static QString ConvertSlotToAuno(const std::string&);
 
 private:
   // Gets the configuration selected and converts it into a form usable by
@@ -93,10 +101,22 @@ private:
 
 private:
   Ui::MainWindow *ui;
+  // From standard_implants.db
   QSqlDatabase standard_implants_;
+  // From ladder_implants.txt
   std::vector<LadderSlot> ladder_slots_;
   bool config_not_empty_;
   QString current_file_;
+  // Final implant configuration found by the most recent build
+  ImplantConfiguration final_config_;
+  QString auno_link_;
+};
+
+// Holds information for displaying items in the Shopping tab.
+struct ShoppingItem{
+  std::string cluster_;
+  int ql_;
+  bool operator<(const ShoppingItem& r) const{ return cluster_ < r.cluster_; }
 };
 
 #endif // MAINWINDOW_H_

@@ -14,7 +14,7 @@ int SlotNameToInt(const std::string& slot_name);
 std::string IntToSlotName(int i);
 int AbilityToInt(const std::string& ability_name);
 int ClusterToInt(const std::string& cluster);
-int AbilityToIntAndMakeFull(std::string& ability_name);
+int AbilityToIntAndAbbreviate(std::string& ability_name);
 std::string AbilityFullToAbbr(const std::string& ability_name);
 std::string SlotAbbrToFull(const std::string& slot_name);
 std::string AbilityAndTreatmentAbbrToFull(const std::string& skill);
