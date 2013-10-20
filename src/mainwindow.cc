@@ -210,7 +210,6 @@ void MainWindow::GetConfigurationHelper(ImplantConfiguration& required_config, i
   required_config.config_[i].ability_name_ = AbilityFullToAbbr(query.value(0).toString().toStdString());
   required_config.config_[i].ability_int_ = AbilityToInt(required_config.config_[i].ability_name_);
   required_config.config_[i].aoid_ = query.value(1).toInt();
-  cerr << " " << required_config.config_[i].aoid_;
   bool used_to_ladder = false;
   if(AbilityToIntAndAbbreviate(shi) >= 0){
     required_config.config_[i].shining_abbr_ = shi;
@@ -965,7 +964,6 @@ void MainWindow::CreateAunoLink()
         QString temp = ConvertSlotToAuno(implant.slot_name_);
         s.append(temp);
         s.append("=");
-        std::cerr << " " << implant.aoid_;
         s.append(QString::number(implant.aoid_));
         s.append("&ql3-");
         s.append(temp);
