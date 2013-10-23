@@ -7,14 +7,12 @@
 // Holds information about an implant.
 class Implant{
   friend class MainWindow;
-
+private:
+  typedef std::string string;
 public:
   Implant();
-
-  Implant(int ql, std::string slot_name, std::string ability_name,
-          std::string shining_abbr, std::string bright_abbr,
-          std::string faded_abbr, bool lock = false, bool remove = true,
-          int aoid = 0);
+  Implant(int ql, string slot_name, string ability_name,
+          string shining_abbr, string bright_abbr, string faded_abbr);
 
   int ql() const { return ql_; }
   const std::string& slot_name() const { return slot_name_; }
@@ -35,9 +33,8 @@ public:
   int aoid() const { return aoid_; }
 
   void set_ql(int ql){ ql_ = ql; }
+  void set_lock(bool lock){ lock_ = lock; }
   void set_remove(bool remove){ remove_ = remove; }
-
-
 
 private:
   // Quality level.

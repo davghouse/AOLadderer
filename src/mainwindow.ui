@@ -3434,7 +3434,7 @@
        <item>
         <widget class="QLabel" name="label_30">
          <property name="text">
-          <string notr="true">       Click to mark as bought </string>
+          <string notr="true">       Click on an entry to mark as bought. The number is the minimum allowed QL.</string>
          </property>
         </widget>
        </item>

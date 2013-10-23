@@ -41,7 +41,8 @@ MainWindow::MainWindow(QWidget *parent) :
     else{
       in >> shi >> bri >> fad;
       // Add a ladder implant to the most recent slot
-      ladder_slots_[ladder_slots_.size() - 1].AddLadderImplant(Implant(0, ladder_slot, ability, shi, bri, fad, true));
+      ladder_slots_[ladder_slots_.size() - 1].AddLadderImplant(Implant(0, ladder_slot,
+                                                                       ability, shi, bri, fad));
     }
   }
   // Buffs:
@@ -364,19 +365,19 @@ void MainWindow::ShowHeightOne(const Ladder & ladder)
   for(vector<ShoppingItem>::iterator it = shining_shopping.begin(); it != shining_shopping.end(); ++it){
     int cluster_ql = .86*(it->ql_) + .01;
     std::stringstream t;
-    t << "ql " << cluster_ql << " " << it->cluster_;
+    t << cluster_ql << " " << it->cluster_;
     ui->Shining->addItem(QString::fromStdString(t.str()));
   }
   for(vector<ShoppingItem>::iterator it = bright_shopping.begin(); it != bright_shopping.end(); ++it){
     int cluster_ql = .84*(it->ql_) + .01;
     std::stringstream t;
-    t << "ql " << cluster_ql << " " << it->cluster_;
+    t << cluster_ql << " " << it->cluster_;
     ui->Bright->addItem(QString::fromStdString(t.str()));
   }
   for(vector<ShoppingItem>::iterator it = faded_shopping.begin(); it != faded_shopping.end(); ++it){
     int cluster_ql = .82*(it->ql_) + .01;
     std::stringstream t;
-    t << "ql " << cluster_ql << " " << it->cluster_;
+    t << cluster_ql << " " << it->cluster_;
     ui->Faded->addItem(QString::fromStdString(t.str()));
   }
 }
@@ -584,12 +585,12 @@ void MainWindow::ToggleOdinsMissingEye(bool add)
 void MainWindow::ToggleBoughtShining(QModelIndex i)
 {
   QString temp = ui->Shining->item(i.row())->text();
-  if(temp[0] == '~'){
+  if(temp[0] == '-'){
     temp = temp.right(temp.size() - 1);
     ui->Shining->item(i.row())->setText(temp);
   }
   else{
-    temp.prepend('~');
+    temp.prepend('-');
     ui->Shining->item(i.row())->setText(temp);
   }
 }
@@ -597,12 +598,12 @@ void MainWindow::ToggleBoughtShining(QModelIndex i)
 void MainWindow::ToggleBoughtBright(QModelIndex i)
 {
   QString temp = ui->Bright->item(i.row())->text();
-  if(temp[0] == '~'){
+  if(temp[0] == '-'){
     temp = temp.right(temp.size() - 1);
     ui->Bright->item(i.row())->setText(temp);
   }
   else{
-    temp.prepend('~');
+    temp.prepend('-');
     ui->Bright->item(i.row())->setText(temp);
   }
 }
@@ -610,12 +611,12 @@ void MainWindow::ToggleBoughtBright(QModelIndex i)
 void MainWindow::ToggleBoughtFaded(QModelIndex i)
 {
   QString temp = ui->Faded->item(i.row())->text();
-  if(temp[0] == '~'){
+  if(temp[0] == '-'){
     temp = temp.right(temp.size() - 1);
     ui->Faded->item(i.row())->setText(temp);
   }
   else{
-    temp.prepend('~');
+    temp.prepend('-');
     ui->Faded->item(i.row())->setText(temp);
   }
 }

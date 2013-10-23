@@ -20,10 +20,11 @@ public:
   ImplantConfiguration();
   double AverageQL() const;
   // Insert an implant into the configuration, noting the order of its insertion.
-  void UpdateConfig(Implant implant, int ql = 0);
+  void UpdateConfig(Implant implant);
  
   size_type size() const{ return config_.size(); }
-  const Implant& operator[](int i) const { return config_[i]; }
+  const Implant& operator[](int i) const{ return config_[i]; }
+  Implant& operator[](int i){ return config_[i]; }
   std::vector<int>::const_reverse_iterator rbegin() const{ return order_.rbegin(); }
   std::vector<int>::const_reverse_iterator rend() const{ return order_.rend(); }
   std::vector<int>::const_iterator begin() const{ return order_.begin(); }
@@ -37,17 +38,10 @@ private:
   std::vector<int> order_;
 };
 
-inline void ImplantConfiguration::UpdateConfig(Implant implant, int ql)
+inline void ImplantConfiguration::UpdateConfig(Implant implant)
 {
-  if(ql == 0){
-    config_[implant.slot_int()] = implant;
-    order_.push_back(implant.slot_int());
-  }
-  else{
-    config_[implant.slot_int()] = implant;
-    order_.push_back(implant.slot_int());
-    config_[implant.slot_int()].set_ql(ql);
-  }
+  config_[implant.slot_int()] = implant;
+  order_.push_back(implant.slot_int());
 }
 
 #endif // IMPLANT_CONFIGURATION_H_

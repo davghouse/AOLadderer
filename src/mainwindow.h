@@ -88,7 +88,7 @@ private:
   //  .
   // feet agi shi agi fad
   void GetConfiguration(ImplantConfiguration& required_config);
-  // Does the conversion.
+  // Performs the mentioned conversion.
   void GetConfigurationHelper(ImplantConfiguration& required_config,
                               int i, const std::string& slot, std::string& shi,
                               std::string& bri, std::string& fad);

@@ -17,7 +17,7 @@ public:
   LadderSlot();
   explicit LadderSlot(std::string n) : name_(n) {}
 
-  void AddLadderImplant(Implant i){ ladder_implants_[ladder_implants_.size() - 1].push_back(i); }
+  void AddLadderImplant(const Implant& implant);
   void AddLadderImplantSubset(){ ladder_implants_.push_back(std::vector<Implant>()); }
   const std::string& name() const { return name_; }
   size_type size() const { return ladder_implants_.size(); }
@@ -31,5 +31,12 @@ private:
   std::string name_;
   std::vector<std::vector <Implant> > ladder_implants_;
 };
+
+inline void LadderSlot::AddLadderImplant(const Implant& implant){
+  ladder_implants_[ladder_implants_.size() - 1].push_back(implant);
+  int index = ladder_implants_[ladder_implants_.size() - 1].size() - 1;
+  ladder_implants_[ladder_implants_.size() - 1][index].set_lock(true);
+}
+
 
 #endif // LADDER_SLOT_H_

@@ -46,10 +46,10 @@ private:
 
   // Finds optimal (highest average QL) order of insertion of a set of implants,
   // storing the result in the order vector passed by reference.
-  void Ordering(std::vector<uint>& order);
+  void Order(std::vector<uint>& order);
 
   // Runs Ordering.
-  void RunOrdering(std::vector<uint>& best, std::vector<uint>& current);
+  void RunOrder(std::vector<uint>& best, std::vector<uint>& current);
 
   // Compares two orderings to determine the better one, return true if the
   // best found so far is better than the one being considered.

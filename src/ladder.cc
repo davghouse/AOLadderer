@@ -86,61 +86,60 @@ void Ladder::HeightOne(const vector<LadderSlot>& ladder_slots)
 void Ladder::EquipLadderImplants(const vector<Implant>& ladder_implants)
 {
   for(vector<Implant>::size_type i = 0; i != ladder_implants.size(); ++i){
+    int slot_int = ladder_implants[i].slot_int();
     int ql = stats_.UpdateStats(ladder_implants[i]);
-    working_config_.UpdateConfig(Implant(ql, ladder_implants[i].slot_name(), ladder_implants[i].ability_name(),
-                                         ladder_implants[i].shining_abbr(), ladder_implants[i].bright_abbr(),
-                                         ladder_implants[i].faded_abbr(), true, ladder_implants[i].remove(),
-                                         ladder_implants[i].aoid()));
+    working_config_.UpdateConfig(ladder_implants[i]);
+    working_config_[slot_int].set_ql(ql);
+    // Lock the implant (close the slot). To be removed during UnequipLadderImplants.
+    working_config_[slot_int].set_lock(true);
   }
 }
 
+// When this function is called, EquipLadderImplants has already been called from HeightOne,
+// populating this Ladder's working_config_ with the accessory ladder implants.
 void Ladder::HeightZero()
 {
   FindRequiredLadderImplants();
   vector<uint> ordered;
-  Ordering(ordered);
+  // Find optimal ordering of the required ladder implants.
+  Order(ordered);
+  // Equip those implants.
   for(vector<uint>::size_type i = 0; i != ordered.size(); ++i){
     int j = ordered[i];
+    int slot_int = required_ladder_implants_[j].slot_int();
     int ql = stats_.UpdateStats(required_ladder_implants_[j]);
-    working_config_.UpdateConfig(Implant(ql, required_ladder_implants_[j].slot_name(),
-                                         required_ladder_implants_[j].ability_name(),
-                                         required_ladder_implants_[j].shining_abbr(),
-                                         required_ladder_implants_[j].bright_abbr(),
-                                         required_ladder_implants_[j].faded_abbr(),
-                                         false, true,
-                                         required_ladder_implants_[j].aoid()));
+    working_config_.UpdateConfig(required_ladder_implants_[j]);
+    working_config_[slot_int].set_ql(ql);
   }
+  // Equip the remaining required implants whose slots are unoccupied.
   for(ImplantConfiguration::size_type i = 0; i != required_config_.size(); ++i){
     if(!required_config_[i].used_to_ladder() && !working_config_[i].lock()){
+      int slot_int = required_config_[i].slot_int();
       int ql = stats_.UpdateStats(required_config_[i]);
-      working_config_.UpdateConfig(Implant(ql, required_config_[i].slot_name(),
-                                           required_config_[i].ability_name(),
-                                           required_config_[i].shining_abbr(),
-                                           required_config_[i].bright_abbr(),
-                                           required_config_[i].faded_abbr(),
-                                           false, true,
-                                           required_config_[i].aoid()));
+      working_config_.UpdateConfig(required_config_[i]);
+      working_config_[slot_int].set_ql(ql);
     }
   }
-  UnequipLadderImplants();
+  UnequipLadderImplants(); // And equip the required implants that go in their spots.
 }
 
 void Ladder::FindRequiredLadderImplants()
 {
   for(ImplantConfiguration::size_type i = 0; i != required_config_.size(); ++i)
+    // Implant must be required, used for laddering, and slot must be free.
     if(required_config_[i].used_to_ladder() && !working_config_[i].lock())
       required_ladder_implants_.push_back(required_config_[i]);
 }
 
-void Ladder::Ordering(vector<uint>& order)
+void Ladder::Order(vector<uint>& order)
 {
   for(vector<Implant>::size_type i = 0; i != required_ladder_implants_.size(); ++i)
     order.push_back(i);
   vector<uint> current;
-  RunOrdering(order, current);
+  RunOrder(order, current);
 }
 
-void Ladder::RunOrdering(vector<uint>& best, vector<uint>& current)
+void Ladder::RunOrder(vector<uint>& best, vector<uint>& current)
 {
   if(current.size() == required_ladder_implants_.size()){
     if(!Compare(best, current))
@@ -159,8 +158,8 @@ void Ladder::RunOrdering(vector<uint>& best, vector<uint>& current)
     if(slot_empty){
       vector<uint>::size_type old_size = current.size();
       current.push_back(i);
-      // RECURSE -- current becomes current plus next available
-      RunOrdering(best, current);
+      // RECURSE -- current becomes current plus next available.
+      RunOrder(best, current);
       // Pass by reference, then resize when done to continue recursing at this level.
       current.resize(old_size);
     }
@@ -202,15 +201,11 @@ void Ladder::UnequipLadderImplants()
       ladder_implant_found = true;
       // remove it
       stats_.UpdateStats(working_config_[*ri], false);
-      // update stats/config with required implant
+      // Update stats/config with required implant.
+      int slot_int = required_config_[*ri].slot_int();
       int ql = stats_.UpdateStats(required_config_[*ri]);
-      temp_config.UpdateConfig(Implant(ql, required_config_[*ri].slot_name(),
-                              required_config_[*ri].ability_name(),
-                              required_config_[*ri].shining_abbr(),
-                              required_config_[*ri].bright_abbr(),
-                              required_config_[*ri].faded_abbr(),
-                              false, true,
-                              required_config_[*ri].aoid()));
+      temp_config.UpdateConfig(required_config_[*ri]);
+      temp_config[slot_int].set_ql(ql);
     }
   }
   // Include the implants equipped previously for use in GUI's Step Two output.
