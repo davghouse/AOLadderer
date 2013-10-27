@@ -3,7 +3,7 @@
 #include "ladder.h"
 
 using std::vector; using std::string;
-using std::endl; using std::cout;
+using std::endl;
 using std::max; using std::sort;
 using namespace ladder_helper;
 

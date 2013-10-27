@@ -7,19 +7,18 @@
 // Holds information about an implant.
 class Implant{
   friend class MainWindow;
-private:
   typedef std::string string;
 public:
   Implant();
-  Implant(int ql, string slot_name, string ability_name,
-          string shining_abbr, string bright_abbr, string faded_abbr);
+  Implant(int ql, const string& slot_name, const string& ability_name,
+          const string& shining_abbr, const string& bright_abbr, const string& faded_abbr);
 
   int ql() const { return ql_; }
-  const std::string& slot_name() const { return slot_name_; }
-  const std::string& ability_name() const { return ability_name_; }
-  const std::string& shining_abbr() const { return shining_abbr_; }
-  const std::string& bright_abbr() const { return bright_abbr_; }
-  const std::string& faded_abbr() const { return faded_abbr_; }
+  const string& slot_name() const { return slot_name_; }
+  const string& ability_name() const { return ability_name_; }
+  const string& shining_abbr() const { return shining_abbr_; }
+  const string& bright_abbr() const { return bright_abbr_; }
+  const string& faded_abbr() const { return faded_abbr_; }
   int slot_int() const { return slot_int_; }
   int ability_int() const { return ability_int_; }
   int shining_int() const { return shining_int_; }
@@ -41,18 +40,18 @@ private:
   int ql_;
   
   // Slot that this implant occupies.
-  std::string slot_name_;
+  string slot_name_;
   // Name of required ability; "abi" if the implant is empty
-  std::string ability_name_;
+  string ability_name_;
 
   // Abbreviations for the clusters;
   // tre for treatment, str/agi/sta/int/sen/psy for abilities,
   // and shi/bri/fad to represent not used_to_ladder.
   // Used within the ladder algorithm.
-  std::string shining_abbr_, bright_abbr_, faded_abbr_;
+  string shining_abbr_, bright_abbr_, faded_abbr_;
 
   // Full name for the clusters, used for GUI output.
-  std::string shining_full_, bright_full_, faded_full_;
+  string shining_full_, bright_full_, faded_full_;
   
   // Indexing integers for quick access from CharacterStats and ImplantConfiguration objects.
   // Slot order: head, eye, ear, chest, rarm, larm, waist, rwrist, lwrist, leg, rhand, lhand, feet

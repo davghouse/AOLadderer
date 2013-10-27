@@ -12,15 +12,13 @@
 // The implants are stored in a vector, with a predetermined order.
 class ImplantConfiguration{
   friend class MainWindow;
-
 public:
   typedef std::vector<Implant>::size_type size_type;
-
   // Create an empty configuration.
   ImplantConfiguration();
   double AverageQL() const;
   // Insert an implant into the configuration, noting the order of its insertion.
-  void UpdateConfig(Implant implant);
+  void UpdateConfig(const Implant& implant);
  
   size_type size() const{ return config_.size(); }
   const Implant& operator[](int i) const{ return config_[i]; }
@@ -38,7 +36,7 @@ private:
   std::vector<int> order_;
 };
 
-inline void ImplantConfiguration::UpdateConfig(Implant implant)
+inline void ImplantConfiguration::UpdateConfig(const Implant& implant)
 {
   config_[implant.slot_int()] = implant;
   order_.push_back(implant.slot_int());

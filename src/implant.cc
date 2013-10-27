@@ -2,17 +2,16 @@
 #include "ladder_helper.h"
 
 using namespace ladder_helper;
-using std::string;
+
 Implant::Implant() {
   used_to_ladder_ = false;
   ql_ = 0;
   remove_ = true;
 }
 
-Implant::Implant(int ql, string slot_name, string ability_name,
-                 string shining_abbr, string bright_abbr, string faded_abbr)
-  : ql_(ql),
-    slot_name_(slot_name), ability_name_(ability_name),
+Implant::Implant(int ql, const string& slot_name, const string& ability_name,
+                 const string& shining_abbr, const string& bright_abbr, const string& faded_abbr)
+  : ql_(ql), slot_name_(slot_name), ability_name_(ability_name),
     shining_abbr_(shining_abbr), bright_abbr_(bright_abbr), faded_abbr_(faded_abbr) {
 
   if((shining_abbr != "shi" || bright_abbr != "bri" || faded_abbr != "fad") && ability_name != "abi")

@@ -13,9 +13,8 @@
 // Algorithm class, carries out the laddering process described in the readme.
 class Ladder{
   friend class MainWindow;
-
-public:
   typedef unsigned int uint;
+public:
   Ladder() {}
   Ladder(const ImplantConfiguration& required_config, const CharacterStats& stats);
 

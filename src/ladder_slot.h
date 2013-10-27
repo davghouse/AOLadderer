@@ -15,7 +15,7 @@ public:
   typedef std::vector<std::vector<Implant> >::const_iterator const_iterator;
 
   LadderSlot();
-  explicit LadderSlot(std::string n) : name_(n) {}
+  explicit LadderSlot(const std::string& n) : name_(n) {}
 
   void AddLadderImplant(const Implant& implant);
   void AddLadderImplantSubset(){ ladder_implants_.push_back(std::vector<Implant>()); }
