@@ -67,8 +67,8 @@ void Ladder::HeightOne(const vector<LadderSlot>& ladder_slots)
     }
   }
   if(!increasing_avg_ql){
-    // Didn't find a useful ladder implant last time, so remove
-    ladder_implants.resize(ladder_implants.size() - 1);
+    // Didn't find a useful ladder implant last time, so remove last added.
+    ladder_implants.pop_back();
   }
 
   Ladder final_ladder(required_config_,stats_);
@@ -156,12 +156,11 @@ void Ladder::RunOrder(vector<uint>& best, vector<uint>& current)
       }
     }
     if(slot_empty){
-      vector<uint>::size_type old_size = current.size();
       current.push_back(i);
       // RECURSE -- current becomes current plus next available.
       RunOrder(best, current);
-      // Pass by reference, then resize when done to continue recursing at this level.
-      current.resize(old_size);
+      // Pass by reference, then pop_back when done to continue recursing at this level.
+      current.pop_back();
     }
   }
 }
