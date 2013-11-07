@@ -37,12 +37,11 @@ MainWindow::MainWindow(QWidget *parent) :
       ladder_slots_.push_back(LadderSlot(ladder_slot));
     }
     else if(ability == "#")
-      ladder_slots_[ladder_slots_.size() - 1].AddLadderImplantSubset();
+      ladder_slots_.back().AddLadderImplantSubset();
     else{
       in >> shi >> bri >> fad;
       // Add a ladder implant to the most recent slot
-      ladder_slots_[ladder_slots_.size() - 1].AddLadderImplant(Implant(0, ladder_slot,
-                                                                       ability, shi, bri, fad));
+      ladder_slots_.back().AddLadderImplant(Implant(0, ladder_slot, ability, shi, bri, fad));
     }
   }
   // Buffs:

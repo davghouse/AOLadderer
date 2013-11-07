@@ -54,7 +54,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="buildTab">
      <attribute name="title">
@@ -3336,7 +3336,7 @@
            <item>
             <widget class="QLabel" name="label_16">
              <property name="text">
-              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step two: &lt;/span&gt;Insert remaining final implants (above the dashed line) in order, removing ladder implants &lt;span style=&quot; font-style:italic;&quot;&gt;when necessary&lt;/span&gt;.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step two: &lt;/span&gt;Insert remaining final implants (above the dashed line) in order, removing ladder implants when necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>

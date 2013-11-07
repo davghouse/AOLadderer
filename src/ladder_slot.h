@@ -33,9 +33,8 @@ private:
 };
 
 inline void LadderSlot::AddLadderImplant(const Implant& implant){
-  ladder_implants_[ladder_implants_.size() - 1].push_back(implant);
-  int index = ladder_implants_[ladder_implants_.size() - 1].size() - 1;
-  ladder_implants_[ladder_implants_.size() - 1][index].set_lock(true);
+  ladder_implants_.back().push_back(implant);
+  ladder_implants_.back().back().set_lock(true);
 }
 
 

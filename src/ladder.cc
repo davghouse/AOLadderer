@@ -45,8 +45,8 @@ void Ladder::HeightOne(const vector<LadderSlot>& ladder_slots)
           }
         }
         // Test implant.
-        ladder_implants[ladder_implants.size() - 1] = (*it)[i][best];
-        ladder_implants[ladder_implants.size() - 1].set_remove(remove);
+        ladder_implants.back() = (*it)[i][best];
+        ladder_implants.back().set_remove(remove);
         Ladder trial_ladder(required_config_, stats_);
         trial_ladder.EquipLadderImplants(ladder_implants);
         trial_ladder.HeightZero();
@@ -61,9 +61,9 @@ void Ladder::HeightOne(const vector<LadderSlot>& ladder_slots)
         }
       }
     }
-    ladder_implants[ladder_implants.size() - 1] = (*slot_pos)[subset_pos][implant_pos];
+    ladder_implants.back() = (*slot_pos)[subset_pos][implant_pos];
     if(required_config_[SlotNameToInt(slot_pos->name())].ability_name() == "abi"){
-      ladder_implants[ladder_implants.size() - 1].set_remove(false);
+      ladder_implants.back().set_remove(false);
     }
   }
   if(!increasing_avg_ql){
@@ -222,5 +222,5 @@ double Ladder::AverageQL() const
 {
   if(!process_.size())
     return 0;
-  return process_[process_.size() - 1].AverageQL();
+  return process_.back().AverageQL();
 }
