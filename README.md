@@ -125,7 +125,7 @@ Continuing the above example of the 48 Nano-Technician:
 
 | Strategy     | Average QL | Link                                       | Matter Crea |
 | ------------ | ---------- | ------------------------------------------ | ----------- |
-| ao-ladderer + Explosifs | 140.62 | http://auno.org/ao/equip.php?saveid=193165 | 145 |
+| ao-ladderer + swap | 140.62 | http://auno.org/ao/equip.php?saveid=193165 | 145 |
 
 That's a big difference. The average QL is greater than the natural twink's, though the Matter Crea is still lower.
 For a swap as simple as Explosifs, it's worth it. Equipping the implants isn't quite as easy, 
