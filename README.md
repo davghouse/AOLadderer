@@ -85,13 +85,13 @@ Comparing implant configurations for a level 48 froob Nano-Technician:
 | Strategy     | Average QL | Link                                       | Matter Crea |
 | ------------ | ---------- | ------------------------------------------ | ----------- |
 | Twink        | 140.46     | http://auno.org/ao/equip.php?saveid=192647 | 147         |
-| Tool         | 134.54     | http://auno.org/ao/equip.php?saveid=192648 | 145         |
+| ao-ladderer  | 134.54     | http://auno.org/ao/equip.php?saveid=192648 | 145         |
 | Direct       | 125.00     | http://auno.org/ao/equip.php?saveid=192649 | 138         |
-| Tool + extra | 135.39     | http://auno.org/ao/equip.php?saveid=192650 | 145         |  
+| ao-ladderer+ | 135.39     | http://auno.org/ao/equip.php?saveid=192650 | 145         |  
 
 The first strategy was done by hand, twinking naturally. The second uses the tool.
 The third uses no ladder implants, just equipping required implants in the order which maximizes the average QL.
-The last strategy modifies the tool in a simple way, but uses many more laddering implants.
+The last strategy modifies the current algorithm in a simple way, but uses many more laddering implants.
 It always performs better, but in practice the gains aren't worth the extra laddering implants.  
    
 This tool provides a decent approximation for people wanting to equip a low to mid-level character.
@@ -109,8 +109,27 @@ At this stage in development I won't use the tool for full-blown twinks, but per
 * Knows nothing about perks
 * Maximizes over average QL, but some implants matter more and some less
 * Requires implants of exact QLs, which is an annoying process and an infeasible one for some players
-* Getting implants of exact QLs might be annoying enough to just go ahead and twink naturally
 
+Tips
+----
+Swapping items isn't supported by the tool, but it's easy to modify the inputs a bit to partially simulate that. For instance,
+on low level characters I almost always twink with Explosifs. These can be equipped on most characters with zero implant support.
+For this reason, and because implants only require a single ability, it's fine to pretend we have a pair of Explosifs
+that adds +20 to every ability, rather than just Agi/Sen, Str/Sta, or Int/Psy. There is one caveat; the Str/Sta 
+combination doesn't provide any treatment trickle, so either don't add +20 to Str/Sta, or subtract 3 from your treatment.
+
+This same strategy can be applied to any equipment slots not being used for treatment buffing.
+Just be able to equip the swaps without implant support, and don't overcount treatment trickle.
+
+Continuing the above example of the 48 Nano-Technician:
+
+| Strategy     | Average QL | Link                                       | Matter Crea |
+| ------------ | ---------- | ------------------------------------------ | ----------- |
+| ao-ladderer with Explosifs swap | 140.62 | http://auno.org/ao/equip.php?saveid=193165 | 145 |
+
+That's a big difference. The average QL is greater than the natural twink's, though the Matter Crea is still lower.
+For a swap as simple as Explosifs, it's worth it. Equipping the implants isn't quite as easy, 
+but it will be obvious when changing the type of the Explosifs is necessary.
 
 Algorithm
 ---------
@@ -125,7 +144,7 @@ available to it. This set is broken down into subsets, where implants within the
 in their required ability, but modify the abilities and Treatment in the same way. From each subset the best implant
 (the one requiring the ability we have the most of) is inserted, and tested. Testing runs the base solver on
 the remaining required implants, and then removes in reverse the ladder implants, inserting a required implant
-after each removal. The implant yielding the highest average QL is chosen and locked in, and the next step proceeds.
+after each removal. The implant yielding the highest average QL is chosen and locked in, and the next step proceeds recursively.
 The algorithm stops when no more laddering slots are available, or when the average QL from one step to the next 
 doesn't increase.  
 
