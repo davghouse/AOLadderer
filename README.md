@@ -100,9 +100,6 @@ The third uses no ladder implants, just equipping required implants in the order
 The last strategy modifies the current algorithm in a simple way, but uses many more laddering implants.
 It always performs better, but in practice the gains aren't worth the extra laddering implants.  
    
-This tool provides a decent approximation for people wanting to equip a low to mid-level character.
-At this stage in development I won't use the tool for full-blown twinks, but perhaps some will.
-
 **Good things:**  
 * Just one of each type of laddering implant can be used
 * As a result, no more than 10 laddering implants will be used
@@ -115,6 +112,10 @@ At this stage in development I won't use the tool for full-blown twinks, but per
 * Knows nothing about perks
 * Maximizes over average QL, but some implants matter more and some less
 * Requires implants of exact QLs, which is an annoying process and an infeasible one for some players
+
+
+This tool provides a decent approximation for people wanting to equip a low to mid-level character.
+At this stage in development I will use the tool for full blown twinks only when applying the ideas from the Tips section below.
 
 Tips
 ----
