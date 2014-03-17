@@ -150,7 +150,7 @@ This is done by considering each unoccupied laddering slot in turn. Each slot ha
 available to it. This set is broken down into subsets, where implants within the same subset differ
 in their required ability, but modify the abilities and Treatment in the same way. From each subset the best implant
 (the one requiring the ability we have the most of) is inserted, and tested. Testing runs the base solver on
-the remaining required implants, and then removes in reverse the ladder implants, inserting a required implant
+the remaining required implants, and then removes in reverse the ladder implants equipped thus far, inserting a required implant
 after each removal. The implant yielding the highest average QL is chosen and locked in, and the next step proceeds recursively.
 The algorithm stops when no more laddering slots are available, or when the average QL from one step to the next 
 doesn't increase.  
