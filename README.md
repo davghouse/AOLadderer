@@ -162,7 +162,7 @@ Some ladder implants aren't included -- if their cluster specification is a subs
 To-do
 ------------
 * ~~Remove unused code~~
-* ~~Try out conforming to~~ [~~Google~~ C++ Style Guide] (http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml)
+* ~~Try out conforming to~~ [~~Google C++ S~~tyle Guide] (http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml)
 * ~~Allow exporting configurations to~~ [~~Auno~~] (http://auno.org)
 * ~~Allow saving and loading configurations~~
 * Add support for Jobe clusters
