@@ -77,8 +77,9 @@ Usage
 
 For Windows 7 or 8 users, download the latest release, unzip, and double-click on Ladderer.exe.
 
-Choose your implant configuration and input the abilities and Treatment you'll have at the time of equipping. You don't need to tell it the actual abilities you see in your skill window: see the Tips section below for more details.
+Choose your implant configuration and input the abilities and Treatment you'll have at the time of equipping. 
 I do this by having an actual character and equipping it with gear I think will be good for implant laddering.
+You don't need to tell it the actual abilities you see in your skill window: see the Tips section below for more details.
 Make sure there are no important implant slots full; it's assumed all slots are empty, but R/L-Wrist and L-Hand don't matter.
 There are options to cast buffs on yourself if you don't want to get them in-game beforehand. Be careful not to double-count.
 Then press build and follow the steps from there. Don't remove ladder implants until absolutely necessary.
