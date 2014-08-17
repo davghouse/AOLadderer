@@ -101,10 +101,11 @@ The last strategy modifies the current algorithm in a simple way, but uses many 
 It always performs better, but in practice the gains aren't worth the extra laddering implants.  
    
 **Good things:**  
-* No more than one of each type of laddering implant is necessary
+* Just one of each type of laddering implant can be used
+* As a result, no more than 10 laddering implants will be used
 * No more than 23 implant insertions
 * No more than 10 implant removals
-* Two simple steps; equipping and reverse-removal
+* Two simply-described, simply-presented steps; equipping, and reverse-removal
   
 **Bad things:** 
 * Knows nothing about non-implant equipment (main reason for lower average QL)
