@@ -57,7 +57,7 @@ Equivalent representation of the above implants:
 | 200 | Chemistry   | Nano Pool    | Tutoring |
 
 **Implant laddering** is the process of using implants (and other items) to equip higher QL implants.  
-Neither of the implants above is useful for laddering, since neither adds to any abilities or Treatment.  
+Neither of the implants above is directly useful for laddering, since neither adds to any abilities or Treatment.  
 The following ladder implants might be useful in a laddering process:  
 
 | Type  | QL  | Ability Req. | Shining   | Bright    | Faded    |
