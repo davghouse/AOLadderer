@@ -31,6 +31,10 @@ private:
   // conditionally as removable, if there is a final implant occupying the slot.
   void EquipLadderImplants(const std::vector<Implant>& ladder_implants);
 
+  // Finds the changes to abilities and treatment incurred by equipping a set of implants.
+  // This is a helper method and should probably be moved to ladder_helper.h.
+  void UpdateStatsFromLadderImplants(const std::vector<Implant> &ladder_implants, CharacterStats& stats);
+
   // Finds any required ladder implants which can be equipped. Then,
   // finds the optimal ordering of equipping these ladder implants by
   // exploring all possibilities. Equips the implants in that order, then

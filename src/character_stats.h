@@ -17,6 +17,8 @@ public:
   // Reserves size for holding the abilities.
   CharacterStats();
 
+  CharacterStats(const CharacterStats& stats);
+
   // Gets value of ability from name of ability.
   int ability_from_name(const std::string& ability_name) const;
 
