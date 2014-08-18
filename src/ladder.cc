@@ -17,6 +17,9 @@ void Ladder::HeightOne(const vector<LadderSlot>& ladder_slots)
   vector<Implant> ladder_implants;
   // Look for ladder implants.
   while(increasing_avg_ql && ladder_implants.size() != 10){
+    // Load stats that would result from equipping the current ladder implants into a new stats object.
+    CharacterStats laddered_stats(stats_);
+    UpdateStatsFromLadderImplants(ladder_implants, laddered_stats);
     increasing_avg_ql = false;
     ladder_implants.push_back(Implant());
     vector<LadderSlot>::const_iterator slot_pos = ladder_slots.begin();
@@ -40,7 +43,7 @@ void Ladder::HeightOne(const vector<LadderSlot>& ladder_slots)
         // Choose implant for which our ability is highest.
         int best = 0;
         for(vector<Implant>::size_type j = 0; j != (*it)[i].size(); ++j){
-          if(stats_.ability_from_name((*it)[i][j].ability_name()) > stats_.ability_from_name((*it)[i][best].ability_name())){
+          if(laddered_stats.ability_from_name((*it)[i][j].ability_name()) > laddered_stats.ability_from_name((*it)[i][best].ability_name())){
             best = j;
           }
         }
@@ -92,6 +95,13 @@ void Ladder::EquipLadderImplants(const vector<Implant>& ladder_implants)
     working_config_[slot_int].set_ql(ql);
     // Lock the implant (close the slot). To be removed during UnequipLadderImplants.
     working_config_[slot_int].set_lock(true);
+  }
+}
+
+void Ladder::UpdateStatsFromLadderImplants(const std::vector<Implant> &ladder_implants, CharacterStats& stats)
+{
+  for(vector<Implant>::size_type i = 0; i != ladder_implants.size(); ++i){
+    stats.UpdateStats(ladder_implants[i]);
   }
 }
 

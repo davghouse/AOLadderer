@@ -90,6 +90,13 @@ CharacterStats::CharacterStats() : treatment_(0.0)
   abilities_.reserve(6);
 }
 
+CharacterStats::CharacterStats(const CharacterStats &stats)
+{
+  this->abilities_ = stats.abilities_;
+  this->treatment_ = stats.treatment_;
+}
+
+
 void CharacterStats::UpdateStats(const vector<int>& abilities, double treatment)
 {
   for(std::vector<int>::size_type i = 0; i != 6; ++i)
