@@ -12,6 +12,7 @@
 // The implants are stored in a vector, with a predetermined order.
 class ImplantConfiguration{
   friend class MainWindow;
+  friend class Ladder;
 public:
   typedef std::vector<Implant>::size_type size_type;
   // Create an empty configuration.
