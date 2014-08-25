@@ -1080,6 +1080,10 @@ void MainWindow::LoadBuildTab(QTextStream& in)
     in >> i; ui->Explosifs->setChecked(i);
     in >> i; ui->ICPS->setChecked(i);
   }
+  else{
+    ui->Explosifs->setChecked(false);
+    ui->ICPS->setChecked(false);
+  }
 
   // Abilities and Treatment:
   in >> i; ui->Strength->setValue(i);
