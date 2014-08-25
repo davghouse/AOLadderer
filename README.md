@@ -75,7 +75,7 @@ For many characters, laddering implants is a part of this process.
 Usage
 -----
 
-For Windows 7 or 8 users, download the latest release, unzip, and double-click on Ladderer.exe.
+For Windows 7 or 8 users, download the latest release, unzip, and double-click on Ladderer.exe. It looks good in Windows Classic theme and bad elsewhere.
 
 Choose your implant configuration and input the abilities and Treatment you'll have at the time of equipping. 
 I do this by having an actual character and equipping it with gear I think will be good for implant laddering.
