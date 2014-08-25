@@ -7,12 +7,14 @@
 // Holds information about an implant.
 class Implant{
   friend class MainWindow;
+  friend class Ladder;
   typedef std::string string;
 public:
   Implant();
   Implant(int ql, const string& slot_name, const string& ability_name,
           const string& shining_abbr, const string& bright_abbr, const string& faded_abbr);
-
+  Implant(const Implant& implant);
+  bool operator==(const Implant& rhs) const;
   int ql() const { return ql_; }
   const string& slot_name() const { return slot_name_; }
   const string& ability_name() const { return ability_name_; }

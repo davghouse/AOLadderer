@@ -9,6 +9,13 @@
 #include "implant.h"
 #include "ladder_slot.h"
 #include "character_stats.h"
+#include <QMainWindow>
+#include <QtSql/QSqlDatabase>
+#include <QSqlQuery>
+#include <QModelIndex>
+#include "QString"
+#include "QTextStream"
+#include <vector>
 
 // Algorithm class, carries out the laddering process described in the readme.
 class Ladder{
@@ -22,6 +29,10 @@ public:
   // there are no more laddering slots available, or there is no beneift to selecting
   // more. Uses HeightZero after selecting the next ladder implant to try.
   void HeightOne(const std::vector<LadderSlot>& ladder_slots);
+
+  // Uses HeightOne; finds the laddering set used by height one then ladders that set
+  // (using height one) before equipping the required implants.
+  void HeightTwo(const std::vector<LadderSlot>& ladder_slots);
 
   // Computes the average QL of a final implant configuration
   double AverageQL() const;
@@ -46,6 +57,9 @@ private:
   // Finds required implants useful for laddering whose slots are not already
   // occupied by other laddering implants.
   void FindRequiredLadderImplants();
+
+  // Convert an implant in the shorthand ladder notation into a full fleding implant with an aoid.
+  void ConvertLadderImplantToFullImplant(Implant& imp, bool resetQl);
 
   // Finds optimal (highest average QL) order of insertion of a set of implants,
   // storing the result in the order vector passed by reference.

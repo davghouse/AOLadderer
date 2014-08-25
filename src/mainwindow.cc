@@ -55,26 +55,33 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->ICRT, SIGNAL(clicked(bool)), this, SLOT(ToggleImprovedCutRedTape(bool)));
   connect(ui->G, SIGNAL(clicked(bool)), this, SLOT(ToggleGauntlet(bool)));
   connect(ui->EB, SIGNAL(clicked(bool)), this, SLOT(ToggleExtruderBar(bool)));
+  connect(ui->Explosifs, SIGNAL(clicked(bool)), this, SLOT(ToggleExplosifs(bool)));
 
   connect(ui->IC, SIGNAL(clicked(bool)), this, SLOT(ToggleIronCircle(bool)));
   connect(ui->PS, SIGNAL(clicked(bool)), this, SLOT(ToggleProdigiousStrength(bool)));
+  connect(ui->ICPS, SIGNAL(clicked(bool)), this, SLOT(ToggleICPS(bool)));
 
   connect(ui->NS, SIGNAL(clicked(bool)), this, SLOT(ToggleNeuronalStimulator(bool)));
-  connect(ui->OME, SIGNAL(clicked(bool)), this, SLOT(ToggleOdinsMissingEye(bool)));
 
   // Build:
   connect(ui->Build, SIGNAL(clicked()), SLOT(RunHeightOne()));
+  connect(ui->Build_2, SIGNAL(clicked()), SLOT(RunHeightTwo()));
 
   // Shopping list:
   connect(ui->Shining, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtShining(QModelIndex)));
   connect(ui->Bright, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtBright(QModelIndex)));
   connect(ui->Faded, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtFaded(QModelIndex)));
 
+  connect(ui->Shining_2, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtShining2(QModelIndex)));
+  connect(ui->Bright_2, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtBright2(QModelIndex)));
+  connect(ui->Faded_2, SIGNAL(clicked(QModelIndex)), SLOT(ToggleBoughtFaded2(QModelIndex)));
+
   // File menu:
   connect(ui->actionOpen, SIGNAL(triggered()), SLOT(Open()));
   connect(ui->actionSave, SIGNAL(triggered()), SLOT(Save()));
   connect(ui->actionSave_as, SIGNAL(triggered()), SLOT(SaveAs()));
   connect(ui->actionExport_to_Auno, SIGNAL(triggered()), SLOT(ExportToAuno()));
+  connect(ui->actionExport_to_Auno_2, SIGNAL(triggered()), SLOT(ExportToAuno2()));
 }
 
 MainWindow::~MainWindow()
@@ -242,6 +249,88 @@ void MainWindow::GetStats(CharacterStats& base_stats)
   base_stats.UpdateStats(abilities, ui->Treatment->value());
 }
 
+void MainWindow::ShowHeightTwo(const Ladder & ladder)
+{
+  // For shopping list
+  vector<ShoppingItem> shining_shopping, bright_shopping, faded_shopping;
+  for(int i = 0; i <= 1; ++i){
+    for(vector<int>::const_iterator it = ladder.process_[i].order_.begin();
+        it != ladder.process_[i].order_.end(); ++it){
+      const Implant& implant = ladder.process_[i].config_[*it];
+      if(implant.ability_name() != "abi"){
+        if(i == 1 && ladder.process_[1].config_[*it] == ladder.process_[0].config_[*it])
+        {
+          continue;
+        }
+        ShowImplant2(implant, i + 1);
+        std::string shi = implant.shining_full_;
+        std::string bri = implant.bright_full_;
+        std::string fad = implant.faded_full_;
+        if(shi != "Empty"){
+          ShoppingItem t;
+          t.cluster_ = shi; t.ql_ = implant.ql();
+          shining_shopping.push_back(t);
+        }
+        if(bri != "Empty"){
+          ShoppingItem t;
+          t.cluster_ = bri; t.ql_ = implant.ql();
+          bright_shopping.push_back(t);
+        }
+        if(fad != "Empty"){
+          ShoppingItem t;
+          t.cluster_ = fad; t.ql_ = implant.ql();
+          faded_shopping.push_back(t);
+        }
+      }
+    }
+  }
+  for(unsigned int i = 0; i < ladder.process_[2].config_.size(); ++i){
+    const Implant& implant = ladder.process_[2].config_[i];
+    ShowImplant2(implant, 3);
+    std::string shi = implant.shining_full_;
+    std::string bri = implant.bright_full_;
+    std::string fad = implant.faded_full_;
+    if(shi != "Empty"){
+      ShoppingItem t;
+      t.cluster_ = shi; t.ql_ = implant.ql();
+      shining_shopping.push_back(t);
+    }
+    if(bri != "Empty"){
+      ShoppingItem t;
+      t.cluster_ = bri; t.ql_ = implant.ql();
+      bright_shopping.push_back(t);
+    }
+    if(fad != "Empty"){
+      ShoppingItem t;
+      t.cluster_ = fad; t.ql_ = implant.ql();
+      faded_shopping.push_back(t);
+    }
+  }
+  ui->avgQLSpinBox_2->setValue(ladder.AverageQL());
+  // Shopping tab:
+  std::sort(shining_shopping.begin(), shining_shopping.end());
+  std::sort(bright_shopping.begin(), bright_shopping.end());
+  std::sort(faded_shopping.begin(), faded_shopping.end());
+  for(vector<ShoppingItem>::iterator it = shining_shopping.begin(); it != shining_shopping.end(); ++it){
+    int cluster_ql = .86*(it->ql_) + .01;
+    std::stringstream t;
+    t << cluster_ql << " " << it->cluster_;
+    ui->Shining_2->addItem(QString::fromStdString(t.str()));
+  }
+  for(vector<ShoppingItem>::iterator it = bright_shopping.begin(); it != bright_shopping.end(); ++it){
+    int cluster_ql = .84*(it->ql_) + .01;
+    std::stringstream t;
+    t << cluster_ql << " " << it->cluster_;
+    ui->Bright_2->addItem(QString::fromStdString(t.str()));
+  }
+  for(vector<ShoppingItem>::iterator it = faded_shopping.begin(); it != faded_shopping.end(); ++it){
+    int cluster_ql = .82*(it->ql_) + .01;
+    std::stringstream t;
+    t << cluster_ql << " " << it->cluster_;
+    ui->Faded_2->addItem(QString::fromStdString(t.str()));
+  }
+}
+
 void MainWindow::ShowHeightOne(const Ladder & ladder)
 {
   // For shopping list
@@ -381,6 +470,36 @@ void MainWindow::ShowHeightOne(const Ladder & ladder)
   }
 }
 
+void MainWindow::ShowImplant2(const Implant& implant, int step)
+{
+  std::string shi, bri, fad;
+  shi = implant.shining_full_;
+  bri = implant.bright_full_;
+  fad = implant.faded_full_;
+  if(shi == "Empty") shi = "-----";
+  if(bri == "Empty") bri = "-----";
+  if(fad == "Empty") fad = "-----";
+  string temp;
+  temp += "[" + implant.ability_name() + "] ";
+  std::stringstream ss;
+  ss << implant.ql();
+  temp += "ql " + ss.str() + " " + SlotAbbrToFull(implant.slot_name()) + ":";
+  temp += std::string(26 - temp.size(), ' ');
+  temp += shi + "," + std::string(16 - shi.size(), ' ');
+  temp += bri + "," + std::string(16 - bri.size(), ' ');
+  temp += fad;
+  if(step == 1){
+    ui->stepOne_2->addItem(QString::fromStdString(temp));
+  }
+  if(step == 2){
+    ui->stepTwo_2->addItem(QString::fromStdString(temp));
+  }
+  if(step == 3){
+    ui->stepThree_2->addItem(QString::fromStdString(temp));
+  }
+}
+
+
 void MainWindow::ShowImplant(const Implant& implant, std::string& shi, std::string& bri, std::string& fad, int step)
 {
   if(shi == "Empty") shi = "-----";
@@ -403,7 +522,42 @@ void MainWindow::ShowImplant(const Implant& implant, std::string& shi, std::stri
   }
 }
 
+
 // Slots:
+
+void MainWindow::RunHeightTwo()
+{
+  ui->stepOne_2->clear();
+  ui->stepTwo_2->clear();
+  ui->stepThree_2->clear();
+  ui->avgQLSpinBox_2->setValue(0);
+  ui->Shining_2->clear();
+  ui->Bright_2->clear();
+  ui->Faded_2->clear();
+  config_not_empty_ = false;
+  ImplantConfiguration required_config;
+  CharacterStats base_stats;
+  GetConfiguration(required_config);
+  GetStats(base_stats);
+  if(config_not_empty_){
+    Ladder ladder(required_config, base_stats);
+#ifndef QT_NO_CURSOR
+    QApplication::setOverrideCursor(Qt::WaitCursor);
+#endif
+    ladder.HeightTwo(ladder_slots_);
+    if(ladder.process_.size() == 3){
+      ShowHeightTwo(ladder);
+    }
+#ifndef QT_NO_CURSOR
+    QApplication::restoreOverrideCursor();
+#endif
+    if(ladder.process_.size() == 3){
+      final_config_2 = ladder.process_[2];
+      CreateAunoLink2(ladder.process_[2].config_);
+    }
+    ui->tabWidget->setCurrentWidget(ui->resultsTab2);
+  }
+}
 
 // Build:
 void MainWindow::RunHeightOne()
@@ -429,7 +583,8 @@ void MainWindow::RunHeightOne()
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
 #endif
-    final_config_ = ladder.process_[1];
+    if(ladder.process_.size() == 2)
+      final_config_ = ladder.process_[1];
     CreateAunoLink();
     ui->tabWidget->setCurrentWidget(ui->resultsTab);
   }
@@ -533,6 +688,19 @@ void MainWindow::ToggleExtruderBar(bool add)
   ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
+void MainWindow::ToggleExplosifs(bool add)
+{
+  int val = add ? 20 : -20;
+  double trickle = (.3*val + .5*val + .2*val)/4;
+  ui->Agility->setValue(ui->Agility->value() + val);
+  ui->Intelligence->setValue(ui->Intelligence->value() + val);
+  ui->Psychic->setValue(ui->Psychic->value() + val);
+  ui->Sense->setValue(ui->Sense->value() + val);
+  ui->Stamina->setValue(ui->Stamina->value() + val);
+  ui->Strength->setValue(ui->Strength->value() + val);
+  ui->Treatment->setValue(ui->Treatment->value() + trickle);
+}
+
 void MainWindow::ToggleIronCircle(bool add)
 {
   int val = add ? 20 : -20;
@@ -541,6 +709,11 @@ void MainWindow::ToggleIronCircle(bool add)
   if(add && ui->PS->isChecked()){
     ui->PS->setChecked(false);
     ToggleProdigiousStrength(false);
+  }
+  if(add && ui->ICPS->isChecked())
+  {
+    ui->ICPS->setChecked(false);
+    ToggleICPS(false);
   }
 }
 
@@ -552,6 +725,26 @@ void MainWindow::ToggleProdigiousStrength(bool add)
     ui->IC->setChecked(false);
     ToggleIronCircle(false);
   }
+  if(add && ui->ICPS->isChecked()){
+    ui->ICPS->setChecked(false);
+    ToggleICPS(false);
+  }
+}
+
+void MainWindow::ToggleICPS(bool add)
+{
+  int val_str = add ? 40 : -40;
+  int val_sta = add ? 20 : -20;
+  ui->Strength->setValue(ui->Strength->value() + val_str);
+  ui->Stamina->setValue(ui->Stamina->value() + val_sta);
+  if(add && ui->IC->isChecked()){
+    ui->IC->setChecked(false);
+    ToggleIronCircle(false);
+  }
+  if(add && ui->PS->isChecked()){
+    ui->PS->setChecked(false);
+    ToggleProdigiousStrength(false);
+  }
 }
 
 void MainWindow::ToggleNeuronalStimulator(bool add)
@@ -560,23 +753,6 @@ void MainWindow::ToggleNeuronalStimulator(bool add)
   double trickle = (.5*val)/4;
   ui->Intelligence->setValue(ui->Intelligence->value() + val);
   ui->Psychic->setValue(ui->Psychic->value() + val);
-  if(add && ui->OME->isChecked()){
-    ui->OME->setChecked(false);
-    ToggleOdinsMissingEye(false);
-  }
-  ui->Treatment->setValue(ui->Treatment->value() + trickle);
-}
-
-void MainWindow::ToggleOdinsMissingEye(bool add)
-{
-  int val = add ? 40 : -40;
-  double trickle = (.5*val)/4;
-  ui->Intelligence->setValue(ui->Intelligence->value() + val);
-  ui->Psychic->setValue(ui->Psychic->value() + val);
-  if(add && ui->NS->isChecked()){
-    ui->NS->setChecked(false);
-    ToggleNeuronalStimulator(false);
-  }
   ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
@@ -620,6 +796,45 @@ void MainWindow::ToggleBoughtFaded(QModelIndex i)
   }
 }
 
+void MainWindow::ToggleBoughtShining2(QModelIndex i)
+{
+  QString temp = ui->Shining_2->item(i.row())->text();
+  if(temp[0] == '-'){
+    temp = temp.right(temp.size() - 1);
+    ui->Shining_2->item(i.row())->setText(temp);
+  }
+  else{
+    temp.prepend('-');
+    ui->Shining_2->item(i.row())->setText(temp);
+  }
+}
+
+void MainWindow::ToggleBoughtBright2(QModelIndex i)
+{
+  QString temp = ui->Bright_2->item(i.row())->text();
+  if(temp[0] == '-'){
+    temp = temp.right(temp.size() - 1);
+    ui->Bright_2->item(i.row())->setText(temp);
+  }
+  else{
+    temp.prepend('-');
+    ui->Bright_2->item(i.row())->setText(temp);
+  }
+}
+
+void MainWindow::ToggleBoughtFaded2(QModelIndex i)
+{
+  QString temp = ui->Faded_2->item(i.row())->text();
+  if(temp[0] == '-'){
+    temp = temp.right(temp.size() - 1);
+    ui->Faded_2->item(i.row())->setText(temp);
+  }
+  else{
+    temp.prepend('-');
+    ui->Faded_2->item(i.row())->setText(temp);
+  }
+}
+
 // File menu slots:
 void MainWindow::Open()
 {
@@ -644,11 +859,15 @@ void MainWindow::SaveAs()
   SaveFile(file_name);
 }
 
+void MainWindow::ExportToAuno2()
+{
+  if(!auno_link_2.isEmpty())
+    QDesktopServices::openUrl(QUrl(auno_link_2));
+}
 void MainWindow::ExportToAuno()
 {
-  if(auno_link_.isEmpty())
-    return;
-  QDesktopServices::openUrl(QUrl(auno_link_));
+  if(!auno_link_.isEmpty())
+    QDesktopServices::openUrl(QUrl(auno_link_));
 }
 
 // File menu helper functions:
@@ -665,6 +884,11 @@ void MainWindow::LoadFile(QString& file_name)
   LoadResultsTab(in);
   LoadShoppingTab(in);
   LoadAunoLink(in);
+  if(!in.atEnd()){
+    LoadResultsTab2(in);
+    LoadShoppingTab2(in);
+    LoadAunoLink2(in);
+  }
   current_file_ = file_name;
   ui->statusBar->showMessage(tr("File loaded"), 1000);
 }
@@ -682,6 +906,9 @@ void MainWindow::SaveFile(QString& file_name)
   SaveResultsTab(out);
   SaveShoppingTab(out);
   SaveAunoLink(out);
+  SaveResultsTab2(out);
+  SaveShoppingTab2(out);
+  SaveAunoLink2(out);
   current_file_ = file_name;
   ui->statusBar->showMessage(tr("File saved"), 1000);
 }
@@ -756,7 +983,10 @@ void MainWindow::SaveBuildTab(QTextStream& out)
   out << (ui->IC->isChecked() ? "1" : "0") << " ";
   out << (ui->PS->isChecked() ? "1" : "0") << " ";
   out << (ui->NS->isChecked() ? "1" : "0") << " ";
-  out << (ui->OME->isChecked() ? "1" : "0") << " ";
+  // Backwards compatibility
+  out << "2" << " ";
+  out << (ui->Explosifs->isChecked() ? "1" : "0") << " ";
+  out << (ui->ICPS->isChecked() ? "1" : "0") << " ";
   out << "\n";
 
   // Abilities and Treatment:
@@ -843,7 +1073,13 @@ void MainWindow::LoadBuildTab(QTextStream& in)
   in >> i; ui->IC->setChecked(i);
   in >> i; ui->PS->setChecked(i);
   in >> i; ui->NS->setChecked(i);
-  in >> i; ui->OME->setChecked(i);
+  in >> i;
+  // Backwards compatibility
+  if(i == 2)
+  {
+    in >> i; ui->Explosifs->setChecked(i);
+    in >> i; ui->ICPS->setChecked(i);
+  }
 
   // Abilities and Treatment:
   in >> i; ui->Strength->setValue(i);
@@ -868,6 +1104,21 @@ void MainWindow::SaveResultsTab(QTextStream& out)
   for(int i = 0; i != ui->stepTwo->count(); ++i)
     out << ui->stepTwo->item(i)->text() << "\n";;
 
+}
+
+void MainWindow::SaveResultsTab2(QTextStream& out)
+{
+  out << "\n" << QString::number(ui->avgQLSpinBox_2->value()) << "\n";
+
+  out << "Step One 2:\n";
+  for(int i = 0; i != ui->stepOne_2->count(); ++i)
+    out << ui->stepOne_2->item(i)->text() << "\n";
+  out << "Step Two 2:\n";
+  for(int i = 0; i != ui->stepTwo_2->count(); ++i)
+    out << ui->stepTwo_2->item(i)->text() << "\n";;
+  out << "Step Three 2:\n";
+  for(int i = 0; i != ui->stepThree_2->count(); ++i)
+    out << ui->stepThree_2->item(i)->text() << "\n";;
 }
 
 void MainWindow::LoadResultsTab(QTextStream& in)
@@ -898,6 +1149,48 @@ void MainWindow::LoadResultsTab(QTextStream& in)
   }
 }
 
+void MainWindow::LoadResultsTab2(QTextStream& in)
+{
+    double d;
+    in >> d;
+    ui->avgQLSpinBox_2->setValue(d);
+
+    // Clear current results tab
+    ui->stepOne_2->clear();
+    ui->stepTwo_2->clear();
+    ui->stepThree_2->clear();
+
+    in.readLine(); // Remove trailing newline.
+    QString line = in.readLine(); // Line should now be "Step One:"
+    line = in.readLine();
+    bool on_step_one = true;
+    bool on_step_two = false;
+    bool on_step_three = false;
+    while(line != "Shining 2:"){
+      if(line == "Step Two 2:"){
+        on_step_one = false;
+        on_step_two = true;
+        on_step_three = false;
+        line = in.readLine();
+        continue;
+      }
+      else if(line == "Step Three 2:"){
+        on_step_one = false;
+        on_step_two = false;
+        on_step_three = true;
+        line = in.readLine();
+        continue;
+      }
+      if(on_step_one)
+        ui->stepOne_2->addItem(line);
+      else if(on_step_two)
+        ui->stepTwo_2->addItem(line);
+      else if(on_step_three)
+        ui->stepThree_2->addItem(line);
+      line  = in.readLine();
+    }
+}
+
 void MainWindow::SaveShoppingTab(QTextStream& out)
 {
   out << "Shining:\n";
@@ -910,6 +1203,20 @@ void MainWindow::SaveShoppingTab(QTextStream& out)
   out << "Faded:";
   for(int i = 0; i != ui->Faded->count(); ++i)
     out << "\n" << ui->Faded->item(i)->text();
+}
+
+void MainWindow::SaveShoppingTab2(QTextStream& out)
+{
+  out << "Shining 2:\n";
+  for(int i = 0; i != ui->Shining_2->count(); ++i)
+    out << ui->Shining_2->item(i)->text() << "\n";
+  out << "Bright 2:\n";
+  for(int i = 0; i != ui->Bright_2->count(); ++i)
+    out << ui->Bright_2->item(i)->text() << "\n";;
+  // Avoid trailing newline
+  out << "Faded 2:";
+  for(int i = 0; i != ui->Faded_2->count(); ++i)
+    out << "\n" << ui->Faded_2->item(i)->text();
 }
 
 void MainWindow::LoadShoppingTab(QTextStream& in)
@@ -931,10 +1238,44 @@ void MainWindow::LoadShoppingTab(QTextStream& in)
   }
   while(!in.atEnd()){
     line = in.readLine();
-    if(line == "Auno link:")
+    if(line == "Auno link(s):" || line == "Auno link:")
       break;
     ui->Faded->addItem(line);
   }
+}
+
+void MainWindow::LoadShoppingTab2(QTextStream& in)
+{
+  // Clear current shopping tab
+  ui->Shining_2->clear();
+  ui->Bright_2->clear();
+  ui->Faded_2->clear();
+
+  QString line = in.readLine();
+  while(line != "Bright 2:"){
+    ui->Shining_2->addItem(line);
+    line = in.readLine();
+  }
+  line = in.readLine();
+  while(line != "Faded 2:"){
+    ui->Bright_2->addItem(line);
+    line = in.readLine();
+  }
+  while(!in.atEnd()){
+    line = in.readLine();
+    if(line == "Auno link(s):" || line == "Auno link:")
+      break;
+    ui->Faded_2->addItem(line);
+  }
+}
+
+void MainWindow::SaveAunoLink2(QTextStream& out)
+{
+  if(auno_link_2.isEmpty())
+    return;
+  out << "\n" << "Auno link:";
+  out << "\n" << auno_link_2;
+
 }
 
 void MainWindow::SaveAunoLink(QTextStream& out)
@@ -946,10 +1287,36 @@ void MainWindow::SaveAunoLink(QTextStream& out)
 
 }
 
+void MainWindow::LoadAunoLink2(QTextStream& in)
+{
+  if(!in.atEnd())
+     auno_link_2 = in.readLine();
+}
+
 void MainWindow::LoadAunoLink(QTextStream& in)
 {
   if(!in.atEnd())
      auno_link_ = in.readLine();
+}
+
+void MainWindow::CreateAunoLink2(const vector<Implant>& implants)
+{
+  QString s = "http://auno.org/ao/equip.php?noedit=1";
+  for(unsigned int i = 0; i < implants.size(); ++i){
+    const Implant& implant = implants[i];
+    if(implant.ability_name() != "abi" && implant.ql() > 0 && implant.remove()){
+      s.append("&id3-");
+      QString temp = ConvertSlotToAuno(implant.slot_name_);
+      s.append(temp);
+      s.append("=");
+      s.append(QString::number(implant.aoid_));
+      s.append("&ql3-");
+      s.append(temp);
+      s.append("=");
+      s.append(QString::number(implant.ql_));
+    }
+  }
+  auno_link_2 = s;
 }
 
 void MainWindow::CreateAunoLink()

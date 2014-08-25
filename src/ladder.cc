@@ -10,6 +10,159 @@ using namespace ladder_helper;
 Ladder::Ladder(const ImplantConfiguration& required_config, const CharacterStats& stats)
   : required_config_(required_config), stats_(stats) {}
 
+void Ladder::HeightTwo(const vector<LadderSlot> &ladder_slots)
+{
+  bool config_not_empty = false;
+  Ladder ladder1(this->required_config_, this->stats_);
+  ladder1.HeightOne(ladder_slots);
+  // ladder1 has a process_, process_[0] contains all of the ladder implants.
+  // The ladder implants are marked with a lock_ = true. Must construct a valid
+  // required_config from these laddering implants.
+  ImplantConfiguration configuration1;
+  for(vector<int>::const_iterator it = ladder1.process_[0].order_.begin();
+      it != ladder1.process_[0].order_.end(); ++it){
+    Implant implant = ladder1.process_[0].config_[*it];
+    if(implant.ability_name() != "abi" && implant.lock_){
+      config_not_empty = true;
+      Implant& imp = configuration1.config_[*it];
+      imp = implant;
+      ConvertLadderImplantToFullImplant(imp, true);
+    }
+  }
+  if(config_not_empty){
+    Ladder ladder2(configuration1, this->stats_);
+    ladder2.HeightOne(ladder_slots);
+    this->process_.push_back(ladder2.process_[0]);
+    this->process_.push_back(ladder2.process_[1]);
+    // Scrub the current implants in the process; convert them into full-fledged implants.
+    for(int i = 0; i <= 1; ++i){
+      for(vector<int>::const_iterator it = process_[i].order_.begin();
+          it != process_[i].order_.end(); ++it){
+        Implant& implant = process_[i].config_[*it];
+        if(implant.ability_name() != "abi"){
+          ConvertLadderImplantToFullImplant(implant, false);
+        }
+      }
+    }
+    // Add to our stats all the currently equipped implants; those in the 2nd process,
+    // and those in the 1st process that aren't in slots occupied by the 2nd process.
+    // Also, build up a list of the currently equipped implants.
+    vector<Implant> equipped_implants;
+    for(unsigned int i = 0; i < process_[0].size(); ++i){
+      const Implant& implant1 = process_[0].config_[i];
+      const Implant& implant2 = process_[1].config_[i];
+      if(implant2.ability_name() != "abi"){
+        stats_.UpdateStats(implant2, true, implant2.ql());
+        equipped_implants.push_back(implant2);
+      }
+      else if(implant1.ability_name() != "abi"){
+        stats_.UpdateStats(implant1, true, implant1.ql());
+        equipped_implants.push_back(implant1);
+      }
+    }
+    // Build up the list of required implants, in the order in which they're inserted.
+    // ladder1 contains process[0], process[1].
+
+    vector<Implant> required_implants;
+    for(vector<int>::const_iterator it = ladder1.process_[0].order_.begin();
+      it != ladder1.process_[0].order_.end(); ++it){
+      const Implant& implant = ladder1.process_[0].config_[*it];
+      if(implant.ability_name() != "abi" && !implant.lock_){
+        required_implants.push_back(Implant(implant));
+      }
+    }
+    for(vector<int>::const_iterator it = ladder1.process_[1].order_.begin();
+        it != ladder1.process_[1].order_.end(); ++it){
+      const Implant& implant = ladder1.process_[1].config_[*it];
+      if(implant.ability_name() != "abi" && !implant.lock_){
+        bool taken = false;
+        for(unsigned int i = 0; i < required_implants.size(); ++i){
+          if(required_implants[i].slot_int() == implant.slot_int()){
+            taken = true;
+            break;
+          }
+        }
+        if(!taken){
+          required_implants.push_back(Implant(implant));
+        }
+      }
+    }
+    // Now the implants need to be equipped.
+    for(unsigned int i = 0; i < required_implants.size(); ++i){
+      for(unsigned int j = 0; j < equipped_implants.size(); ++j){
+        if(equipped_implants[j].slot_name() == required_implants[i].slot_name()){
+          stats_.UpdateStats(equipped_implants[j], false);
+          break;
+        }
+      }
+      int ql = stats_.UpdateStats(required_implants[i]);
+      required_implants[i].ql_ = ql;
+    }
+    process_.push_back(ImplantConfiguration());
+    process_[2].config_ = required_implants;
+    //this->process_ = ladder2.process_;
+    //this->required_config_ = ladder2.required_config_;
+    //this->working_config_ = ladder2.working_config_;
+    //this->stats_ = ladder2.stats_;
+    //this->required_ladder_implants_ = ladder2.required_ladder_implants_;
+
+  }
+  return;
+}
+
+void Ladder::ConvertLadderImplantToFullImplant(Implant& imp, bool resetQl)
+{
+  if(resetQl){
+    imp.set_ql(0);
+  }
+  imp.set_lock(false);
+  imp.set_remove(true);
+  std::string query_text = "SELECT shining, bright, faded FROM implants ";
+  query_text += "WHERE slot='" + SlotAbbrToFull(imp.slot_name()) + "' ";
+  query_text += "and req='" + AbilityAndTreatmentAbbrToFull(imp.ability_name()) + "' ";
+  if(imp.shining_abbr() != "shi"){
+    query_text += "and Shining='" + AbilityAndTreatmentAbbrToFull(imp.shining_abbr()) + "' ";
+  }
+  if(imp.bright_abbr() != "bri"){
+    query_text += "and Bright='" + AbilityAndTreatmentAbbrToFull(imp.bright_abbr()) + "' ";
+  }
+  if(imp.faded_abbr() != "fad"){
+    query_text += "and Faded='" + AbilityAndTreatmentAbbrToFull(imp.faded_abbr()) + "' ";
+  }
+  QSqlQuery q;
+  q.exec(QString::fromStdString(query_text));
+  int most_empties = -1;
+  std::string shi, bri, fad;
+  while(q.next()){
+    int emptyCount = 0;
+    string s = q.value(0).toString().toStdString();
+    string b = q.value(1).toString().toStdString();
+    string f = q.value(2).toString().toStdString();
+    if(s == "Empty") ++emptyCount;
+    if(b == "Empty") ++emptyCount;
+    if(f == "Empty") ++emptyCount;
+    if(emptyCount > most_empties || (emptyCount == most_empties && s == "Empty")){
+      most_empties = emptyCount;
+      shi = s;
+      bri = b;
+      fad = f;
+    }
+  }
+  imp.shining_full_ = shi;
+  imp.bright_full_ = bri;
+  imp.faded_full_ = fad;
+  imp.shining_int_ = ClusterToInt(imp.shining_abbr_);
+  imp.bright_int_ = ClusterToInt(imp.bright_abbr_);
+  imp.faded_int_ = ClusterToInt(imp.faded_abbr_);
+
+  std::string query_begin = "SELECT aoid FROM implants WHERE slot='" + SlotAbbrToFull(imp.slot_name()) + "'";
+  string query_text_2 = query_begin + " AND Shining='"+shi+"' AND Bright='"+bri+"' AND Faded='"+fad+"'";
+  QSqlQuery q2;
+  q2.exec(QString::fromStdString(query_text_2));
+  q2.next();
+  imp.aoid_ = q2.value(0).toInt();
+}
+
 void Ladder::HeightOne(const vector<LadderSlot>& ladder_slots)
 {
   double max_avg_ql = 0;
@@ -61,6 +214,44 @@ void Ladder::HeightOne(const vector<LadderSlot>& ladder_slots)
           slot_pos = it;
           subset_pos = i;
           implant_pos = best;
+        }
+        else if(abs(trial_avg_ql - max_avg_ql) < .01)
+        {
+          // They're close; go with the one with the higher treatment cluster, else do nothing.
+          int trial_score = 0;
+          int max_score = 0;
+          if(ladder_implants.back().shining_abbr_ == "tre")
+          {
+            trial_score = 3;
+          }
+          else if(ladder_implants.back().bright_abbr_ == "tre")
+          {
+            trial_score = 2;
+          }
+          else if(ladder_implants.back().faded_abbr_ == "tre")
+          {
+            trial_score = 1;
+          }
+          if((*slot_pos)[subset_pos][implant_pos].shining_abbr_ == "tre")
+          {
+            max_score = 3;
+          }
+          if((*slot_pos)[subset_pos][implant_pos].bright_abbr_ == "tre")
+          {
+            max_score = 2;
+          }
+          if((*slot_pos)[subset_pos][implant_pos].faded_abbr_ == "tre")
+          {
+            max_score = 1;
+          }
+          if(trial_score > max_score)
+          {
+            increasing_avg_ql = true;
+            max_avg_ql = trial_avg_ql;
+            slot_pos = it;
+            subset_pos = i;
+            implant_pos = best;
+          }
         }
       }
     }
