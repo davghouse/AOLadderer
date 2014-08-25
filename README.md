@@ -174,7 +174,6 @@ To-do
 ------------
 * Add more support for swapping weapons, armor, and items
 * ~~Remove unused code~~
- (http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml)
 * ~~Allow exporting configurations to~~ [~~Auno~~] (http://auno.org)
 * ~~Allow saving and loading configurations~~
 * Add support for Jobe clusters
