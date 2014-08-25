@@ -168,7 +168,7 @@ Some ladder implants aren't included -- if their cluster specification is a subs
 
 Ideas for improvement:
 
-As a simple modification of the above algorithm, I've considered looking two (or more) implants ahead rather than one. For example, choose ordered pairs of ladder implants greedily rather than a single ladder implant. This (roughly) multiplies the runtime by the number of ladder implants, which will be annoying.
+As a simple modification of the above algorithm, I've considered looking two (or more) implants ahead rather than one. For example, greedily choose ordered pairs of ladder implants rather than a single ladder implant. This (roughly) multiplies the runtime by the number of ladder implants, which is significant.
 
 To-do
 ------------
