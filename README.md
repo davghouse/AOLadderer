@@ -117,14 +117,14 @@ This tool provides a decent approximation for people wanting to equip a low to m
 
 Tips
 ----
-Swapping items isn't supported by the tool, but it's easy to modify the inputs a bit to partially simulate that. For instance,
+Swapping items isn't supported by the tool [**v. 1.3.0 now 'supports' the basic Explosif's swap**], but it's easy to modify the inputs a bit to partially simulate that. For instance,
 on low level characters I almost always twink with Explosifs. These can be equipped on most characters with zero implant support.
 For this reason, and because implants only require a single ability, it's fine to pretend we have a pair of Explosifs
 that adds +20 to every ability, rather than just Agi/Sen, Str/Sta, or Int/Psy. There is one caveat; the Str/Sta 
 combination doesn't provide any treatment trickle, so either don't add +20 to Str/Sta, or subtract 3 from your treatment. 
 
 This same strategy can be applied to any equipment slots not being used for treatment buffing.
-Just be able to equip the swaps without implant support, and don't overcount treatment trickle. It can also be applied to buffs; you don't have to choose between Prodigious Strength and Iron Circle. One gives +40 Strength, one gives +20 Stamina and Strength. Effectively, they provide +40 Strength and +20 Stamina; cancel one when you need the other. (This should be explicitly supported by the tool, but it's not.) 
+Just be able to equip the swaps without implant support, and don't overcount treatment trickle. It can also be applied to buffs; you don't have to choose between Prodigious Strength and Iron Circle . One gives +40 Strength, one gives +20 Stamina and Strength. Effectively, they provide +40 Strength and +20 Stamina; cancel one when you need the other. [**v. 1.3.0 now supports this**]
 
 Continuing the above example of the 48 Nano-Technician:
 
@@ -136,12 +136,15 @@ That's a big difference. The average QL is greater than the natural twink's, tho
 For a swap as simple as Explosifs, it's worth it. Equipping the implants isn't quite as easy, 
 but it will be obvious when changing the type of the Explosifs is necessary.
 
-**You'll have to tell the tool about your ability to swap Explosifs, or other similar items, by increasing your starting abilities. Don't think of these as your actual abilities, think of them as your effective abilities for the purposes of equipping implants.**
+**You'll have to tell the tool about your ability to swap items, by manually increasing your starting abilities. Don't think of these as your actual abilities, think of them as your effective abilities for the purposes of equipping implants.**
+
+Another tip; if L/R wrists and left-hand are important for your setup, consider using the tool on those three alone, and then doing the rest of your implants. This is OK because those aren't ladder slots, so the tool will never use them when laddering up the rest.
 
 Algorithm
 ---------
 
-Intuitively, it's a greedy algorithm that proceeds recursively as follows: Equip the ladder implant that, if we were to equip all of our required implants in all the currently unoccupied slots, and then equip any more required implants in slots currently occupied by ladder implants by removing those ladder implants in the reverse order of their addition, would yield the highest average QL for the final set of required implants. Stop equipping ladder implants when we run out of slots for them, or when the addition of the next one no longer increases the average QL of the final set of required implants.
+Intuitively, the 'Basic' solver uses a greedy algorithm that proceeds recursively as follows: Equip the ladder implant that, if we were to equip all of our required implants in all the currently unoccupied slots, and then equip any more required implants by removing ladder implants in the reverse order of their addition, would yield the highest average QL for the final implant set. Stop equipping ladder implants when we run out of slots for them, or when the addition of the next one no longer increases the average QL. The 'Advanced' solver adds another layer of recursion on top: it gets the set of ladder implants found by the basic solver, and then ladders those implants via the basic solver (and then uses those laddered ladder implants to equip the required implants). It short-circuits after one layer, because going further doesn't seem to be worth it. 
+
 
 More details:
 
@@ -161,11 +164,15 @@ doesn't increase.
 
 Fortunately, there aren't many ladder implants. There are 33 subsets, with implants equal (from a laddering perspective)
 up to their required ability. There are 63 total ladder implants considered by the algorithm. 
-Some ladder implants aren't included -- if their cluster specification is a subset of another's and they require the same ability.  
+Some ladder implants aren't included -- if their cluster specification is a subset of another's and they require the same ability.
+
+Ideas for improvement:
+
+As a simple modification of the above algorithm, I've considered looking two (or more) implants ahead rather than one. For example, choose ordered pairs of ladder implants greedily rather than a single ladder implant. This (roughly) multiplies the runtime by the number of ladder implants, which will be annoying.
 
 To-do
 ------------
-* Add some kind of support for swapping weapons, armor, and items
+* Add more support for swapping weapons, armor, and items
 * ~~Remove unused code~~
  (http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml)
 * ~~Allow exporting configurations to~~ [~~Auno~~] (http://auno.org)
