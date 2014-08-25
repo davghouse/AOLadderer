@@ -215,6 +215,44 @@ void Ladder::HeightOne(const vector<LadderSlot>& ladder_slots)
           subset_pos = i;
           implant_pos = best;
         }
+        else if(abs(trial_avg_ql - max_avg_ql) < .01)
+        {
+          // They're close; go with the one with the higher treatment cluster, else do nothing.
+          int trial_score = 0;
+          int max_score = 0;
+          if(ladder_implants.back().shining_abbr_ == "tre")
+          {
+            trial_score = 3;
+          }
+          else if(ladder_implants.back().bright_abbr_ == "tre")
+          {
+            trial_score = 2;
+          }
+          else if(ladder_implants.back().faded_abbr_ == "tre")
+          {
+            trial_score = 1;
+          }
+          if((*slot_pos)[subset_pos][implant_pos].shining_abbr_ == "tre")
+          {
+            max_score = 3;
+          }
+          if((*slot_pos)[subset_pos][implant_pos].bright_abbr_ == "tre")
+          {
+            max_score = 2;
+          }
+          if((*slot_pos)[subset_pos][implant_pos].faded_abbr_ == "tre")
+          {
+            max_score = 1;
+          }
+          if(trial_score > max_score)
+          {
+            increasing_avg_ql = true;
+            max_avg_ql = trial_avg_ql;
+            slot_pos = it;
+            subset_pos = i;
+            implant_pos = best;
+          }
+        }
       }
     }
     ladder_implants.back() = (*slot_pos)[subset_pos][implant_pos];

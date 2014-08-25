@@ -12,6 +12,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Ladderer
 TEMPLATE = app
+RC_FILE = ladder.rc
 
 
 SOURCES +=\

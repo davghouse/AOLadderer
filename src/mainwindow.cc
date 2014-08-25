@@ -55,12 +55,13 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->ICRT, SIGNAL(clicked(bool)), this, SLOT(ToggleImprovedCutRedTape(bool)));
   connect(ui->G, SIGNAL(clicked(bool)), this, SLOT(ToggleGauntlet(bool)));
   connect(ui->EB, SIGNAL(clicked(bool)), this, SLOT(ToggleExtruderBar(bool)));
+  connect(ui->Explosifs, SIGNAL(clicked(bool)), this, SLOT(ToggleExplosifs(bool)));
 
   connect(ui->IC, SIGNAL(clicked(bool)), this, SLOT(ToggleIronCircle(bool)));
   connect(ui->PS, SIGNAL(clicked(bool)), this, SLOT(ToggleProdigiousStrength(bool)));
+  connect(ui->ICPS, SIGNAL(clicked(bool)), this, SLOT(ToggleICPS(bool)));
 
   connect(ui->NS, SIGNAL(clicked(bool)), this, SLOT(ToggleNeuronalStimulator(bool)));
-  connect(ui->OME, SIGNAL(clicked(bool)), this, SLOT(ToggleOdinsMissingEye(bool)));
 
   // Build:
   connect(ui->Build, SIGNAL(clicked()), SLOT(RunHeightOne()));
@@ -687,6 +688,19 @@ void MainWindow::ToggleExtruderBar(bool add)
   ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
+void MainWindow::ToggleExplosifs(bool add)
+{
+  int val = add ? 20 : -20;
+  double trickle = (.3*val + .5*val + .2*val)/4;
+  ui->Agility->setValue(ui->Agility->value() + val);
+  ui->Intelligence->setValue(ui->Intelligence->value() + val);
+  ui->Psychic->setValue(ui->Psychic->value() + val);
+  ui->Sense->setValue(ui->Sense->value() + val);
+  ui->Stamina->setValue(ui->Stamina->value() + val);
+  ui->Strength->setValue(ui->Strength->value() + val);
+  ui->Treatment->setValue(ui->Treatment->value() + trickle);
+}
+
 void MainWindow::ToggleIronCircle(bool add)
 {
   int val = add ? 20 : -20;
@@ -695,6 +709,11 @@ void MainWindow::ToggleIronCircle(bool add)
   if(add && ui->PS->isChecked()){
     ui->PS->setChecked(false);
     ToggleProdigiousStrength(false);
+  }
+  if(add && ui->ICPS->isChecked())
+  {
+    ui->ICPS->setChecked(false);
+    ToggleICPS(false);
   }
 }
 
@@ -706,6 +725,26 @@ void MainWindow::ToggleProdigiousStrength(bool add)
     ui->IC->setChecked(false);
     ToggleIronCircle(false);
   }
+  if(add && ui->ICPS->isChecked()){
+    ui->ICPS->setChecked(false);
+    ToggleICPS(false);
+  }
+}
+
+void MainWindow::ToggleICPS(bool add)
+{
+  int val_str = add ? 40 : -40;
+  int val_sta = add ? 20 : -20;
+  ui->Strength->setValue(ui->Strength->value() + val_str);
+  ui->Stamina->setValue(ui->Stamina->value() + val_sta);
+  if(add && ui->IC->isChecked()){
+    ui->IC->setChecked(false);
+    ToggleIronCircle(false);
+  }
+  if(add && ui->PS->isChecked()){
+    ui->PS->setChecked(false);
+    ToggleProdigiousStrength(false);
+  }
 }
 
 void MainWindow::ToggleNeuronalStimulator(bool add)
@@ -714,23 +753,6 @@ void MainWindow::ToggleNeuronalStimulator(bool add)
   double trickle = (.5*val)/4;
   ui->Intelligence->setValue(ui->Intelligence->value() + val);
   ui->Psychic->setValue(ui->Psychic->value() + val);
-  if(add && ui->OME->isChecked()){
-    ui->OME->setChecked(false);
-    ToggleOdinsMissingEye(false);
-  }
-  ui->Treatment->setValue(ui->Treatment->value() + trickle);
-}
-
-void MainWindow::ToggleOdinsMissingEye(bool add)
-{
-  int val = add ? 40 : -40;
-  double trickle = (.5*val)/4;
-  ui->Intelligence->setValue(ui->Intelligence->value() + val);
-  ui->Psychic->setValue(ui->Psychic->value() + val);
-  if(add && ui->NS->isChecked()){
-    ui->NS->setChecked(false);
-    ToggleNeuronalStimulator(false);
-  }
   ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
@@ -961,7 +983,10 @@ void MainWindow::SaveBuildTab(QTextStream& out)
   out << (ui->IC->isChecked() ? "1" : "0") << " ";
   out << (ui->PS->isChecked() ? "1" : "0") << " ";
   out << (ui->NS->isChecked() ? "1" : "0") << " ";
-  out << (ui->OME->isChecked() ? "1" : "0") << " ";
+  // Backwards compatibility
+  out << "2" << " ";
+  out << (ui->Explosifs->isChecked() ? "1" : "0") << " ";
+  out << (ui->ICPS->isChecked() ? "1" : "0") << " ";
   out << "\n";
 
   // Abilities and Treatment:
@@ -1048,7 +1073,13 @@ void MainWindow::LoadBuildTab(QTextStream& in)
   in >> i; ui->IC->setChecked(i);
   in >> i; ui->PS->setChecked(i);
   in >> i; ui->NS->setChecked(i);
-  in >> i; ui->OME->setChecked(i);
+  in >> i;
+  // Backwards compatibility
+  if(i == 2)
+  {
+    in >> i; ui->Explosifs->setChecked(i);
+    in >> i; ui->ICPS->setChecked(i);
+  }
 
   // Abilities and Treatment:
   in >> i; ui->Strength->setValue(i);

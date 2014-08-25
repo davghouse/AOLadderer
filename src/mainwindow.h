@@ -30,12 +30,13 @@ private slots:
   void ToggleImprovedCutRedTape(bool);
   void ToggleGauntlet(bool);
   void ToggleExtruderBar(bool);
+  void ToggleExplosifs(bool);
 
   void ToggleIronCircle(bool);
   void ToggleProdigiousStrength(bool);
+  void ToggleICPS(bool);
 
   void ToggleNeuronalStimulator(bool);
-  void ToggleOdinsMissingEye(bool);
 
   // Build:
   void RunHeightOne();

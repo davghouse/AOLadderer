@@ -65,8 +65,8 @@
        <rect>
         <x>420</x>
         <y>10</y>
-        <width>171</width>
-        <height>481</height>
+        <width>175</width>
+        <height>489</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -181,6 +181,13 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QCheckBox" name="Explosifs">
+              <property name="text">
+               <string>Explosif's (+20 to all)</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -201,6 +208,13 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QCheckBox" name="ICPS">
+              <property name="text">
+               <string>IC || PS (+20 sta, +40 str)</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -214,33 +228,10 @@
               </property>
              </widget>
             </item>
-            <item>
-             <widget class="QCheckBox" name="OME">
-              <property name="text">
-               <string notr="true">Odin's Missing Eye</string>
-              </property>
-             </widget>
-            </item>
            </layout>
           </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Ignored</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
@@ -3675,7 +3666,7 @@
            <item>
             <widget class="QLabel" name="label_31">
              <property name="text">
-              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step one:&lt;/span&gt; Insert implants in order.                           &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step one:&lt;/span&gt; Insert ladder implants in order. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
@@ -4138,7 +4129,6 @@
   <tabstop>IC</tabstop>
   <tabstop>PS</tabstop>
   <tabstop>NS</tabstop>
-  <tabstop>OME</tabstop>
   <tabstop>tabWidget</tabstop>
   <tabstop>stepOne</tabstop>
   <tabstop>stepTwo</tabstop>
