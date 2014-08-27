@@ -103,7 +103,7 @@ For more information on the last strategy, see the Tips section below.
    
 This tool provides a decent approximation for people wanting to equip a low to mid-level character.
 
-**Good things:**  
+**Good things (for the basic solver):**  
 * Just one of each type of ladder implant can be used
 * As a result, no more than 10 ladder implants will be used
 * No more than 23 implant insertions
