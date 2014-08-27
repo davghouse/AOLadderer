@@ -67,7 +67,7 @@ The following ladder implants might be useful in a laddering process:
 | Head  | ?   | Intelligence | Treatment | Nano Pool | Sense    |
 
 Perhaps the Head implant would be equipped to allow a character with surplus Psychic (meaning there exists an implant for which they have enough Psychic but not enough Treatment) to equip a higher QL of the Chest.
-Both together might allow for equipping a higher QL of some Sense-requiring.  
+Both together might allow for equipping a higher QL of some Sense-requiring (and of course, Treatment-requiring) implant.  
 
   
 **Twinking** is the process of equipping a character with hard-to-equip and/or hard-to-get items.  
@@ -76,7 +76,7 @@ For many characters, laddering implants is a part of this process.
 Usage
 -----
 
-For Windows 7 or 8 users, download the latest release, unzip, and double-click on Ladderer.exe. It looks good in Windows Classic theme and bad elsewhere.
+For Windows 7 or 8 users, download the latest release, unzip, and double-click on ao-ladderer.exe. It looks good in Windows Classic theme and bad elsewhere. The download is pretty large because I didn't want to mess around with static linking in Qt, for both practical and legal reasons. So all the needed Qt .dlls are included in their entirety. 
 
 Choose your implant configuration and input the abilities and Treatment you'll have at the time of equipping. 
 I do this by having an actual character and equipping it with gear I think will be good for implant laddering.
@@ -103,7 +103,7 @@ For more information on the last strategy, see the Tips section below.
    
 This tool provides a decent approximation for people wanting to equip a low to mid-level character.
 
-**Good things:**  
+**Good things (for the basic solver):**  
 * Just one of each type of ladder implant can be used
 * As a result, no more than 10 ladder implants will be used
 * No more than 23 implant insertions
@@ -183,3 +183,4 @@ To-do
 * Build on Linux
 * Explore better algorithms
 * Incorporate into a general twinker for Anarchy Online
+* Rewrite in .NET (WPF)
