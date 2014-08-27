@@ -691,14 +691,14 @@ void MainWindow::ToggleExtruderBar(bool add)
 void MainWindow::ToggleExplosifs(bool add)
 {
   int val = add ? 20 : -20;
-  double trickle = (.3*val + .5*val + .2*val)/4;
+  //double trickle = (.3*val + .5*val + .2*val)/4;
   ui->Agility->setValue(ui->Agility->value() + val);
   ui->Intelligence->setValue(ui->Intelligence->value() + val);
   ui->Psychic->setValue(ui->Psychic->value() + val);
   ui->Sense->setValue(ui->Sense->value() + val);
   ui->Stamina->setValue(ui->Stamina->value() + val);
   ui->Strength->setValue(ui->Strength->value() + val);
-  ui->Treatment->setValue(ui->Treatment->value() + trickle);
+  //ui->Treatment->setValue(ui->Treatment->value() + trickle);
 }
 
 void MainWindow::ToggleIronCircle(bool add)

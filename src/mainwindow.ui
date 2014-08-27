@@ -184,7 +184,7 @@
             <item>
              <widget class="QCheckBox" name="Explosifs">
               <property name="text">
-               <string>Explosif's (+20 to all)</string>
+               <string>Explosif's (+20 abis, 0 tre)</string>
               </property>
              </widget>
             </item>
