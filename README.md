@@ -183,3 +183,4 @@ To-do
 * Build on Linux
 * Explore better algorithms
 * Incorporate into a general twinker for Anarchy Online
+* Rewrite in .NET (WPF)
