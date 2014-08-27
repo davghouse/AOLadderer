@@ -76,7 +76,7 @@ For many characters, laddering implants is a part of this process.
 Usage
 -----
 
-For Windows 7 or 8 users, download the latest release, unzip, and double-click on Ladderer.exe. It looks good in Windows Classic theme and bad elsewhere.
+For Windows 7 or 8 users, download the latest release, unzip, and double-click on ao-ladderer.exe. It looks good in Windows Classic theme and bad elsewhere. The download is pretty large because I didn't want to mess around with static-linking in Qt, for both practical and legal reasons. So all the needed Qt .dlls are included in their entirety. 
 
 Choose your implant configuration and input the abilities and Treatment you'll have at the time of equipping. 
 I do this by having an actual character and equipping it with gear I think will be good for implant laddering.
