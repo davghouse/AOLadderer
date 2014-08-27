@@ -67,7 +67,7 @@ The following ladder implants might be useful in a laddering process:
 | Head  | ?   | Intelligence | Treatment | Nano Pool | Sense    |
 
 Perhaps the Head implant would be equipped to allow a character with surplus Psychic (meaning there exists an implant for which they have enough Psychic but not enough Treatment) to equip a higher QL of the Chest.
-Both together might allow for equipping a higher QL of some Sense-requiring.  
+Both together might allow for equipping a higher QL of some Sense-requiring (and of course, Treatment-requiring) implant.  
 
   
 **Twinking** is the process of equipping a character with hard-to-equip and/or hard-to-get items.  
