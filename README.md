@@ -5,10 +5,10 @@ Implant laddering tool for the sci-fi MMORPG Anarchy Online.
 
 Latest release [here](https://github.com/davghouse/ao-ladderer/releases/tag/v1.3.1).
 
-![tab 1](/Screenshots/5.png)
-![tab 2](/Screenshots/6.png)
-![tab 3](/Screenshots/7.png)
-![tab 4](/Screenshots/8.png)
+![tab 1](/Screenshots/9.png)
+![tab 2](/Screenshots/10.png)
+![tab 3](/Screenshots/11.png)
+![tab 4](/Screenshots/12.png)
 
 Background
 ----------
