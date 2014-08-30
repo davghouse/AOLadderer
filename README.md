@@ -157,7 +157,7 @@ As a simple modification of the above algorithm, I've considered looking two (or
 
 To-do
 ------------
-* **Rewrite in .NET (WPF), because this Qt code is a huge mess**
+* **Rewrite in .NET (WPF), because this Qt code became a huge mess**
 * Add more support for swapping weapons, armor, and items
 * ~~Remove unused code~~
 * ~~Allow exporting configurations to~~ [~~Auno~~] (http://auno.org)
