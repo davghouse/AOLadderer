@@ -54,7 +54,7 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="buildTab">
      <attribute name="title">
@@ -3324,6 +3324,18 @@
            </item>
            <item>
             <widget class="QListWidget" name="stepOne">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>587</width>
+               <height>204</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
@@ -3351,12 +3363,24 @@
               </sizepolicy>
              </property>
              <property name="text">
-              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step two: &lt;/span&gt;Insert remaining final implants (above the dashed line) in order, removing ladder implants when necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step two: &lt;/span&gt;Insert remaining final implants in order, removing ladder implants when/if necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QListWidget" name="stepTwo">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>587</width>
+               <height>203</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
@@ -3681,6 +3705,18 @@
              <property name="enabled">
               <bool>true</bool>
              </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>587</width>
+               <height>126</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
@@ -3702,12 +3738,24 @@
            <item>
             <widget class="QLabel" name="label_32">
              <property name="text">
-              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step two: &lt;/span&gt;Insert remaining ladder implants in order, removing prior ladder implants when necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step two: &lt;/span&gt;Insert remaining ladder implants in order, removing prior ladder implants when/if necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QListWidget" name="stepTwo_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>587</width>
+               <height>127</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
@@ -3720,12 +3768,24 @@
            <item>
             <widget class="QLabel" name="label_34">
              <property name="text">
-              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step three: &lt;/span&gt;Insert final implants in order, removing ladder implants when necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step three: &lt;/span&gt;Insert final implants in order, removing ladder implants when/if necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QListWidget" name="stepThree_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>587</width>
+               <height>126</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
