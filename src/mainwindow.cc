@@ -484,24 +484,24 @@ void MainWindow::ShowHeightOne(const Ladder & ladder)
       if(!stop_adding){
         ShowImplant(implant, shi, bri, fad, 2);
       }
-      if(shi != "-----"){
+      if(shi != "-----" && shi != "Empty"){
         ShoppingItem t;
         t.cluster_ = shi; t.ql_ = implant.ql();
         shining_shopping.push_back(t);
       }
-      if(bri != "-----"){
+      if(bri != "-----" && bri != "Empty"){
         ShoppingItem t;
         t.cluster_ = bri; t.ql_ = implant.ql();
         bright_shopping.push_back(t);
       }
-      if(fad != "-----"){
+      if(fad != "-----" && fad != "Empty"){
         ShoppingItem t;
         t.cluster_ = fad; t.ql_ = implant.ql();
         faded_shopping.push_back(t);
       }
     }
   }
-  if(!equipped_required_implant_in_step_one)
+  if(!equipped_required_implant_in_step_one && stop_adding)
     ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
   // Shopping tab:
   std::sort(shining_shopping.begin(), shining_shopping.end());
