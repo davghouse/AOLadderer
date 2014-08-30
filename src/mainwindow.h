@@ -57,6 +57,20 @@ private slots:
   void ExportToAuno();
   void ExportToAuno2();
 
+  void HeadClusterChanged(int);
+  void EyeClusterChanged(int);
+  void EarClusterChanged(int);
+  void ChestClusterChanged(int);
+  void RarmClusterChanged(int);
+  void LarmClusterChanged(int);
+  void WaistClusterChanged(int);
+  void RwristClusterChanged(int);
+  void LwristClusterChanged(int);
+  void LegClusterChanged(int);
+  void RhandClusterChanged(int);
+  void LhandClusterChanged(int);
+  void FeetClusterChanged(int);
+
 private:
   // File menu helper functions:
   void SaveFile(QString&);
@@ -107,6 +121,10 @@ private:
   void ShowImplant(const Implant& implant, std::string& shi,
                    std::string& bri, std::string& fad, int step);
   void ShowImplant2(const Implant& implant, int step);
+
+  // Helper for displaying implants' required abilities as their clusters are being chosen
+  void SetRequiredAbility(const std::string& slot, const std::string& shi, const std::string& bri,
+                          const std::string& fad);
 
 private:
   Ui::MainWindow *ui;
