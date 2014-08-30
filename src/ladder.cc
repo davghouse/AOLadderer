@@ -215,7 +215,8 @@ void Ladder::HeightOne(const vector<LadderSlot>& ladder_slots)
           subset_pos = i;
           implant_pos = best;
         }
-        else if(abs(trial_avg_ql - max_avg_ql) < .01)
+        else if(abs(trial_avg_ql - max_avg_ql) < .01 && (max_avg_ql < 200) &&
+                laddered_stats.get_treatment() < 951)
         {
           // They're close; go with the one with the higher treatment cluster, else do nothing.
           int trial_score = 0;

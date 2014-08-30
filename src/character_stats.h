@@ -21,6 +21,7 @@ public:
 
   // Gets value of ability from name of ability.
   int ability_from_name(const std::string& ability_name) const;
+  int get_treatment() const;
 
   // Replaces current stats with given stats.
   void UpdateStats(const std::vector<int>& abilities, double treatment);
@@ -40,6 +41,11 @@ private:
 inline int CharacterStats::ability_from_name(const std::string& ability_name) const
 {
   return abilities_[ladder_helper::AbilityToInt(ability_name)];
+}
+
+inline int CharacterStats::get_treatment() const
+{
+ return treatment_;
 }
 
 #endif // CHARACTER_STATS_H_

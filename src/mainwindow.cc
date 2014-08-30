@@ -82,6 +82,59 @@ MainWindow::MainWindow(QWidget *parent) :
   connect(ui->actionSave_as, SIGNAL(triggered()), SLOT(SaveAs()));
   connect(ui->actionExport_to_Auno, SIGNAL(triggered()), SLOT(ExportToAuno()));
   connect(ui->actionExport_to_Auno_2, SIGNAL(triggered()), SLOT(ExportToAuno2()));
+
+  // Implant ability requirement display
+  connect(ui->headShi, SIGNAL(currentIndexChanged(int)), SLOT(HeadClusterChanged(int)));
+  connect(ui->headBri, SIGNAL(currentIndexChanged(int)), SLOT(HeadClusterChanged(int)));
+  connect(ui->headFad, SIGNAL(currentIndexChanged(int)), SLOT(HeadClusterChanged(int)));
+
+  connect(ui->eyeShi, SIGNAL(currentIndexChanged(int)), SLOT(EyeClusterChanged(int)));
+  connect(ui->eyeBri, SIGNAL(currentIndexChanged(int)), SLOT(EyeClusterChanged(int)));
+  connect(ui->eyeFad, SIGNAL(currentIndexChanged(int)), SLOT(EyeClusterChanged(int)));
+
+  connect(ui->earShi, SIGNAL(currentIndexChanged(int)), SLOT(EarClusterChanged(int)));
+  connect(ui->earBri, SIGNAL(currentIndexChanged(int)), SLOT(EarClusterChanged(int)));
+  connect(ui->earFad, SIGNAL(currentIndexChanged(int)), SLOT(EarClusterChanged(int)));
+
+  connect(ui->chestShi, SIGNAL(currentIndexChanged(int)), SLOT(ChestClusterChanged(int)));
+  connect(ui->chestBri, SIGNAL(currentIndexChanged(int)), SLOT(ChestClusterChanged(int)));
+  connect(ui->chestFad, SIGNAL(currentIndexChanged(int)), SLOT(ChestClusterChanged(int)));
+
+  connect(ui->rarmShi, SIGNAL(currentIndexChanged(int)), SLOT(RarmClusterChanged(int)));
+  connect(ui->rarmBri, SIGNAL(currentIndexChanged(int)), SLOT(RarmClusterChanged(int)));
+  connect(ui->rarmFad, SIGNAL(currentIndexChanged(int)), SLOT(RarmClusterChanged(int)));
+
+  connect(ui->larmShi, SIGNAL(currentIndexChanged(int)), SLOT(LarmClusterChanged(int)));
+  connect(ui->larmBri, SIGNAL(currentIndexChanged(int)), SLOT(LarmClusterChanged(int)));
+  connect(ui->larmFad, SIGNAL(currentIndexChanged(int)), SLOT(LarmClusterChanged(int)));
+
+  connect(ui->waistShi, SIGNAL(currentIndexChanged(int)), SLOT(WaistClusterChanged(int)));
+  connect(ui->waistBri, SIGNAL(currentIndexChanged(int)), SLOT(WaistClusterChanged(int)));
+  connect(ui->waistFad, SIGNAL(currentIndexChanged(int)), SLOT(WaistClusterChanged(int)));
+
+  connect(ui->rwristShi, SIGNAL(currentIndexChanged(int)), SLOT(RwristClusterChanged(int)));
+  connect(ui->rwristBri, SIGNAL(currentIndexChanged(int)), SLOT(RwristClusterChanged(int)));
+  connect(ui->rwristFad, SIGNAL(currentIndexChanged(int)), SLOT(RwristClusterChanged(int)));
+
+  connect(ui->lwristShi, SIGNAL(currentIndexChanged(int)), SLOT(LwristClusterChanged(int)));
+  connect(ui->lwristBri, SIGNAL(currentIndexChanged(int)), SLOT(LwristClusterChanged(int)));
+  connect(ui->lwristFad, SIGNAL(currentIndexChanged(int)), SLOT(LwristClusterChanged(int)));
+
+  connect(ui->legShi, SIGNAL(currentIndexChanged(int)), SLOT(LegClusterChanged(int)));
+  connect(ui->legBri, SIGNAL(currentIndexChanged(int)), SLOT(LegClusterChanged(int)));
+  connect(ui->legFad, SIGNAL(currentIndexChanged(int)), SLOT(LegClusterChanged(int)));
+
+  connect(ui->rhandShi, SIGNAL(currentIndexChanged(int)), SLOT(RhandClusterChanged(int)));
+  connect(ui->rhandBri, SIGNAL(currentIndexChanged(int)), SLOT(RhandClusterChanged(int)));
+  connect(ui->rhandFad, SIGNAL(currentIndexChanged(int)), SLOT(RhandClusterChanged(int)));
+
+  connect(ui->lhandShi, SIGNAL(currentIndexChanged(int)), SLOT(LhandClusterChanged(int)));
+  connect(ui->lhandBri, SIGNAL(currentIndexChanged(int)), SLOT(LhandClusterChanged(int)));
+  connect(ui->lhandFad, SIGNAL(currentIndexChanged(int)), SLOT(LhandClusterChanged(int)));
+
+  connect(ui->feetShi, SIGNAL(currentIndexChanged(int)), SLOT(FeetClusterChanged(int)));
+  connect(ui->feetBri, SIGNAL(currentIndexChanged(int)), SLOT(FeetClusterChanged(int)));
+  connect(ui->feetFad, SIGNAL(currentIndexChanged(int)), SLOT(FeetClusterChanged(int)));
 }
 
 MainWindow::~MainWindow()
@@ -413,38 +466,42 @@ void MainWindow::ShowHeightOne(const Ladder & ladder)
     ui->stepOne->addItem(QString::fromStdString(std::string(77, '-')));
   }
   // Step Two:
+  bool stop_adding = false;
   for(vector<int>::const_iterator it = ladder.process_[1].order_.begin();
       it != ladder.process_[1].order_.end(); ++it){
     Implant implant = ladder.process_[1].config_[*it];
     if(implant.ability_name() != "abi" && implant.ql() > 0 && implant.remove()){
       if(equipped_required_implant_in_step_one){
         if(*it == first_after_dash){
-          ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
+          stop_adding = true;
+          //ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
         }
       }
       std::string shi, bri, fad;
       shi = ladder.required_config_[*it].shining_full_;
       bri = ladder.required_config_[*it].bright_full_;
       fad = ladder.required_config_[*it].faded_full_;
-      ShowImplant(implant, shi, bri, fad, 2);
-      if(shi != "-----"){
+      if(!stop_adding){
+        ShowImplant(implant, shi, bri, fad, 2);
+      }
+      if(shi != "-----" && shi != "Empty"){
         ShoppingItem t;
         t.cluster_ = shi; t.ql_ = implant.ql();
         shining_shopping.push_back(t);
       }
-      if(bri != "-----"){
+      if(bri != "-----" && bri != "Empty"){
         ShoppingItem t;
         t.cluster_ = bri; t.ql_ = implant.ql();
         bright_shopping.push_back(t);
       }
-      if(fad != "-----"){
+      if(fad != "-----" && fad != "Empty"){
         ShoppingItem t;
         t.cluster_ = fad; t.ql_ = implant.ql();
         faded_shopping.push_back(t);
       }
     }
   }
-  if(!equipped_required_implant_in_step_one)
+  if(!equipped_required_implant_in_step_one && stop_adding)
     ui->stepTwo->addItem(QString::fromStdString(std::string(77, '-')));
   // Shopping tab:
   std::sort(shining_shopping.begin(), shining_shopping.end());
@@ -545,7 +602,7 @@ void MainWindow::RunHeightTwo()
     QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
     ladder.HeightTwo(ladder_slots_);
-    if(ladder.process_.size() == 3){
+    if(ladder.process_.size() == 3 && ladder.AverageQL() > 0){
       ShowHeightTwo(ladder);
     }
 #ifndef QT_NO_CURSOR
@@ -579,7 +636,9 @@ void MainWindow::RunHeightOne()
     QApplication::setOverrideCursor(Qt::WaitCursor);
 #endif
     ladder.HeightOne(ladder_slots_);
-    ShowHeightOne(ladder);
+    if(ladder.AverageQL() > 0){
+      ShowHeightOne(ladder);
+    }
 #ifndef QT_NO_CURSOR
     QApplication::restoreOverrideCursor();
 #endif
@@ -864,6 +923,7 @@ void MainWindow::ExportToAuno2()
   if(!auno_link_2.isEmpty())
     QDesktopServices::openUrl(QUrl(auno_link_2));
 }
+
 void MainWindow::ExportToAuno()
 {
   if(!auno_link_.isEmpty())
@@ -1377,4 +1437,231 @@ QString MainWindow::ConvertSlotToAuno(const std::string& slot_name)
   if(slot_name_full == "Feet")
      return "8192";
   return "0";
+}
+
+// Implant required ability display
+
+void MainWindow::HeadClusterChanged(int row)
+{
+  std::string shi, bri, fad;
+  // head 0 Head
+  shi = ui->headShi->currentText().toStdString();
+  bri = ui->headBri->currentText().toStdString();
+  fad = ui->headFad->currentText().toStdString();
+  if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
+  SetRequiredAbility("Head", shi, bri, fad);
+}
+
+void MainWindow::EyeClusterChanged(int row)
+{
+  std::string shi, bri, fad;
+  // head 0 Head
+  shi = ui->eyeShi->currentText().toStdString();
+  bri = ui->eyeBri->currentText().toStdString();
+  fad = ui->eyeFad->currentText().toStdString();
+  if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
+  SetRequiredAbility("Eye", shi, bri, fad);
+}
+
+void MainWindow::EarClusterChanged(int row)
+{
+  std::string shi, bri, fad;
+  // head 0 Head
+  shi = ui->earShi->currentText().toStdString();
+  bri = ui->earBri->currentText().toStdString();
+  fad = ui->earFad->currentText().toStdString();
+  if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
+  SetRequiredAbility("Ear", shi, bri, fad);
+}
+
+void MainWindow::ChestClusterChanged(int row)
+{
+  std::string shi, bri, fad;
+  // head 0 Head
+  shi = ui->chestShi->currentText().toStdString();
+  bri = ui->chestBri->currentText().toStdString();
+  fad = ui->chestFad->currentText().toStdString();
+  if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
+  SetRequiredAbility("Chest", shi, bri, fad);
+}
+
+void MainWindow::RarmClusterChanged(int row)
+{
+  std::string shi, bri, fad;
+  // head 0 Head
+  shi = ui->rarmShi->currentText().toStdString();
+  bri = ui->rarmBri->currentText().toStdString();
+  fad = ui->rarmFad->currentText().toStdString();
+  if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
+  SetRequiredAbility("Right-Arm", shi, bri, fad);
+}
+
+void MainWindow::LarmClusterChanged(int row)
+{
+  std::string shi, bri, fad;
+  // head 0 Head
+  shi = ui->larmShi->currentText().toStdString();
+  bri = ui->larmBri->currentText().toStdString();
+  fad = ui->larmFad->currentText().toStdString();
+  if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
+  SetRequiredAbility("Left-Arm", shi, bri, fad);
+}
+
+void MainWindow::WaistClusterChanged(int row)
+{
+  std::string shi, bri, fad;
+  // head 0 Head
+  shi = ui->waistShi->currentText().toStdString();
+  bri = ui->waistBri->currentText().toStdString();
+  fad = ui->waistFad->currentText().toStdString();
+  if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
+  SetRequiredAbility("Waist", shi, bri, fad);
+}
+
+void MainWindow::RwristClusterChanged(int row)
+{
+  std::string shi, bri, fad;
+  // head 0 Head
+  shi = ui->rwristShi->currentText().toStdString();
+  bri = ui->rwristBri->currentText().toStdString();
+  fad = ui->rwristFad->currentText().toStdString();
+  if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
+  SetRequiredAbility("Right-Wrist", shi, bri, fad);
+}
+
+void MainWindow::LwristClusterChanged(int row)
+{
+  std::string shi, bri, fad;
+  // head 0 Head
+  shi = ui->lwristShi->currentText().toStdString();
+  bri = ui->lwristBri->currentText().toStdString();
+  fad = ui->lwristFad->currentText().toStdString();
+  if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
+  SetRequiredAbility("Left-Wrist", shi, bri, fad);
+}
+
+void MainWindow::LegClusterChanged(int row)
+{
+  std::string shi, bri, fad;
+  // head 0 Head
+  shi = ui->legShi->currentText().toStdString();
+  bri = ui->legBri->currentText().toStdString();
+  fad = ui->legFad->currentText().toStdString();
+  if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
+  SetRequiredAbility("Leg", shi, bri, fad);
+}
+
+void MainWindow::RhandClusterChanged(int row)
+{
+  std::string shi, bri, fad;
+  // head 0 Head
+  shi = ui->rhandShi->currentText().toStdString();
+  bri = ui->rhandBri->currentText().toStdString();
+  fad = ui->rhandFad->currentText().toStdString();
+  if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
+  SetRequiredAbility("Right-Hand", shi, bri, fad);
+}
+
+void MainWindow::LhandClusterChanged(int row)
+{
+  std::string shi, bri, fad;
+  // head 0 Head
+  shi = ui->lhandShi->currentText().toStdString();
+  bri = ui->lhandBri->currentText().toStdString();
+  fad = ui->lhandFad->currentText().toStdString();
+  if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
+  SetRequiredAbility("Left-Hand", shi, bri, fad);
+}
+
+void MainWindow::FeetClusterChanged(int row)
+{
+  std::string shi, bri, fad;
+  // head 0 Head
+  shi = ui->feetShi->currentText().toStdString();
+  bri = ui->feetBri->currentText().toStdString();
+  fad = ui->feetFad->currentText().toStdString();
+  if(shi == "") shi = "Empty"; if(bri == "") bri = "Empty"; if(fad == "") fad = "Empty";
+  SetRequiredAbility("Feet", shi, bri, fad);
+}
+
+void MainWindow::SetRequiredAbility(const std::string &slot, const std::string &shi,
+                                    const std::string &bri, const std::string &fad)
+{
+  string ability_name;
+  if(shi != "Empty" || bri != "Empty" || fad != "Empty"){
+    std::string query_begin = "SELECT req, aoid FROM implants WHERE slot='" + slot + "'";
+    string query_text = query_begin + " AND Shining='"+shi+"' AND Bright='"+bri+"' AND Faded='"+fad+"'";
+    QSqlQuery query;
+    query.exec(QString::fromStdString(query_text));
+    query.next();
+    ability_name = AbilityFullToAbbr(query.value(0).toString().toStdString());
+  }
+  else{
+    ability_name = "---";
+  }
+  if(slot == "Head")
+  {
+    ui->headLbl->setText(QString::fromStdString(ability_name +
+                                                ui->headLbl->text().toStdString().substr(3)));
+  }
+  else if(slot == "Eye")
+  {
+    ui->eyeLbl->setText(QString::fromStdString(ability_name +
+                                                ui->eyeLbl->text().toStdString().substr(3)));
+  }
+  else if(slot == "Ear")
+  {
+    ui->earLbl->setText(QString::fromStdString(ability_name +
+                                                ui->earLbl->text().toStdString().substr(3)));
+  }
+  else if(slot == "Chest")
+  {
+    ui->chestLbl->setText(QString::fromStdString(ability_name +
+                                                ui->chestLbl->text().toStdString().substr(3)));
+  }
+  else if(slot == "Right-Arm")
+  {
+    ui->rarmLbl->setText(QString::fromStdString(ability_name +
+                                                ui->rarmLbl->text().toStdString().substr(3)));
+  }
+  else if(slot == "Left-Arm")
+  {
+    ui->larmLbl->setText(QString::fromStdString(ability_name +
+                                                ui->larmLbl->text().toStdString().substr(3)));
+  }
+  else if(slot == "Waist")
+  {
+    ui->waistLbl->setText(QString::fromStdString(ability_name +
+                                                ui->waistLbl->text().toStdString().substr(3)));
+  }
+  else if(slot == "Right-Wrist")
+  {
+    ui->rwristLbl->setText(QString::fromStdString(ability_name +
+                                                ui->rwristLbl->text().toStdString().substr(3)));
+  }
+  else if(slot == "Left-Wrist")
+  {
+    ui->lwristLbl->setText(QString::fromStdString(ability_name +
+                                                ui->lwristLbl->text().toStdString().substr(3)));
+  }
+  else if(slot == "Leg")
+  {
+    ui->legLbl->setText(QString::fromStdString(ability_name +
+                                                ui->legLbl->text().toStdString().substr(3)));
+  }
+  else if(slot == "Right-Hand")
+  {
+    ui->rhandLbl->setText(QString::fromStdString(ability_name +
+                                                ui->rhandLbl->text().toStdString().substr(3)));
+  }
+  else if(slot == "Left-Hand")
+  {
+    ui->lhandLbl->setText(QString::fromStdString(ability_name +
+                                                ui->lhandLbl->text().toStdString().substr(3)));
+  }
+  else if(slot == "Feet")
+  {
+    ui->feetLbl->setText(QString::fromStdString(ability_name +
+                                                ui->feetLbl->text().toStdString().substr(3)));
+  }
 }

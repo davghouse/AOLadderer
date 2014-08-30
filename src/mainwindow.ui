@@ -300,7 +300,7 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>409</width>
+        <width>410</width>
         <height>484</height>
        </rect>
       </property>
@@ -344,7 +344,7 @@
        <item row="1" column="0">
         <layout class="QHBoxLayout" name="head">
          <item>
-          <widget class="QLabel" name="label">
+          <widget class="QLabel" name="headLbl">
            <property name="font">
             <font>
              <weight>50</weight>
@@ -352,7 +352,7 @@
             </font>
            </property>
            <property name="text">
-            <string notr="true">Head</string>
+            <string notr="true">--- Head</string>
            </property>
           </widget>
          </item>
@@ -691,7 +691,7 @@
        <item row="2" column="0">
         <layout class="QHBoxLayout" name="eye">
          <item>
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="eyeLbl">
            <property name="font">
             <font>
              <weight>50</weight>
@@ -699,7 +699,7 @@
             </font>
            </property>
            <property name="text">
-            <string notr="true">Eye</string>
+            <string notr="true">--- Eye</string>
            </property>
           </widget>
          </item>
@@ -985,9 +985,9 @@
        <item row="3" column="0">
         <layout class="QHBoxLayout" name="ear">
          <item>
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="earLbl">
            <property name="text">
-            <string notr="true">Ear</string>
+            <string notr="true">--- Ear</string>
            </property>
           </widget>
          </item>
@@ -1150,9 +1150,9 @@
        <item row="4" column="0">
         <layout class="QHBoxLayout" name="chest">
          <item>
-          <widget class="QLabel" name="label_4">
+          <widget class="QLabel" name="chestLbl">
            <property name="text">
-            <string notr="true">Chest</string>
+            <string notr="true">--- Chest</string>
            </property>
           </widget>
          </item>
@@ -1365,9 +1365,9 @@
        <item row="5" column="0">
         <layout class="QHBoxLayout" name="rarm">
          <item>
-          <widget class="QLabel" name="label_5">
+          <widget class="QLabel" name="rarmLbl">
            <property name="text">
-            <string notr="true">Right-Arm</string>
+            <string notr="true">--- R-Arm</string>
            </property>
           </widget>
          </item>
@@ -1600,9 +1600,9 @@
        <item row="6" column="0">
         <layout class="QHBoxLayout" name="larm">
          <item>
-          <widget class="QLabel" name="label_6">
+          <widget class="QLabel" name="larmLbl">
            <property name="text">
-            <string notr="true">Left-Arm</string>
+            <string notr="true">--- L-Arm</string>
            </property>
           </widget>
          </item>
@@ -1770,9 +1770,9 @@
        <item row="7" column="0">
         <layout class="QHBoxLayout" name="waist">
          <item>
-          <widget class="QLabel" name="label_7">
+          <widget class="QLabel" name="waistLbl">
            <property name="text">
-            <string notr="true">Waist</string>
+            <string notr="true">--- Waist</string>
            </property>
           </widget>
          </item>
@@ -2010,9 +2010,9 @@
        <item row="8" column="0">
         <layout class="QHBoxLayout" name="rwrist">
          <item>
-          <widget class="QLabel" name="label_8">
+          <widget class="QLabel" name="rwristLbl">
            <property name="text">
-            <string notr="true">Right-Wrist</string>
+            <string notr="true">--- R-Wrist</string>
            </property>
           </widget>
          </item>
@@ -2215,9 +2215,9 @@
        <item row="9" column="0">
         <layout class="QHBoxLayout" name="lwrist">
          <item>
-          <widget class="QLabel" name="label_9">
+          <widget class="QLabel" name="lwristLbl">
            <property name="text">
-            <string notr="true">Left-Wrist</string>
+            <string notr="true">--- L-Wrist</string>
            </property>
           </widget>
          </item>
@@ -2365,9 +2365,9 @@
        <item row="10" column="0">
         <layout class="QHBoxLayout" name="leg">
          <item>
-          <widget class="QLabel" name="label_10">
+          <widget class="QLabel" name="legLbl">
            <property name="text">
-            <string notr="true">Leg</string>
+            <string notr="true">--- Leg</string>
            </property>
           </widget>
          </item>
@@ -2550,9 +2550,9 @@
        <item row="11" column="0">
         <layout class="QHBoxLayout" name="rhand">
          <item>
-          <widget class="QLabel" name="label_11">
+          <widget class="QLabel" name="rhandLbl">
            <property name="text">
-            <string notr="true">Right-Hand</string>
+            <string notr="true">--- R-Hand</string>
            </property>
           </widget>
          </item>
@@ -2810,9 +2810,9 @@
        <item row="12" column="0">
         <layout class="QHBoxLayout" name="lhand">
          <item>
-          <widget class="QLabel" name="label_12">
+          <widget class="QLabel" name="lhandLbl">
            <property name="text">
-            <string notr="true">Left-Hand</string>
+            <string notr="true">--- L-Hand</string>
            </property>
           </widget>
          </item>
@@ -2955,9 +2955,9 @@
        <item row="13" column="0">
         <layout class="QHBoxLayout" name="feet">
          <item>
-          <widget class="QLabel" name="label_13">
+          <widget class="QLabel" name="feetLbl">
            <property name="text">
-            <string notr="true">Feet</string>
+            <string notr="true">--- Feet</string>
            </property>
           </widget>
          </item>
@@ -3324,6 +3324,18 @@
            </item>
            <item>
             <widget class="QListWidget" name="stepOne">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>587</width>
+               <height>204</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
@@ -3344,13 +3356,31 @@
            </item>
            <item>
             <widget class="QLabel" name="label_16">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
-              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step two: &lt;/span&gt;Insert remaining final implants (above the dashed line) in order, removing ladder implants when necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step two: &lt;/span&gt;Insert remaining final implants in order, removing ladder implants when/if necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QListWidget" name="stepTwo">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>587</width>
+               <height>203</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
@@ -3675,6 +3705,18 @@
              <property name="enabled">
               <bool>true</bool>
              </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>587</width>
+               <height>126</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
@@ -3696,12 +3738,24 @@
            <item>
             <widget class="QLabel" name="label_32">
              <property name="text">
-              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step two: &lt;/span&gt;Insert remaining ladder implants in order, removing prior ladder implants when necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step two: &lt;/span&gt;Insert remaining ladder implants in order, removing prior ladder implants when/if necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QListWidget" name="stepTwo_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>587</width>
+               <height>127</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
@@ -3714,12 +3768,24 @@
            <item>
             <widget class="QLabel" name="label_34">
              <property name="text">
-              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step three: &lt;/span&gt;Insert final implants in order, removing ladder implants when necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;Step three: &lt;/span&gt;Insert final implants in order, removing ladder implants when/if necessary.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QListWidget" name="stepThree_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>587</width>
+               <height>126</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Courier New</family>
@@ -4013,7 +4079,7 @@
      <x>0</x>
      <y>0</y>
      <width>627</width>
-     <height>18</height>
+     <height>19</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_File">
