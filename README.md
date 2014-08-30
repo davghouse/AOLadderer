@@ -76,7 +76,7 @@ For many characters, laddering implants is a part of this process.
 Usage
 -----
 
-For Windows 7 or 8 users, download the latest release, unzip, and double-click on ao-ladderer.exe. It looks good in Windows Classic theme and bad elsewhere. The download is pretty large because I didn't want to mess around with static linking in Qt, for both practical and legal reasons. So all the needed Qt .dlls are included in their entirety. 
+For Windows 7 or 8 users, download the latest release, unzip, and double-click on ao-ladderer.exe. The download is pretty large because I didn't want to mess around with static linking in Qt, for both practical and legal reasons. So all the needed Qt .dlls have to be included in their entirety. 
 
 Choose your implant configuration and input the abilities and Treatment you'll have at the time of equipping. 
 I do this by having an actual character and equipping it with gear I think will be good for implant laddering.
@@ -92,14 +92,13 @@ Comparing implant configurations for a level 48 froob Nano-Technician:
 
 | Strategy     | Average QL | Link                                       | Matter Crea |
 | ------------ | ---------- | ------------------------------------------ | ----------- |
-| Twink        | 140.46     | http://auno.org/ao/equip.php?saveid=192647 | 147         |
-| ao-ladderer  | 134.54     | http://auno.org/ao/equip.php?saveid=192648 | 145         |
 | Direct       | 125.00     | http://auno.org/ao/equip.php?saveid=192649 | 138         |
-| ao-ladderer + swap | 140.62 | http://auno.org/ao/equip.php?saveid=193165 | 145 | 
+| Twink        | 140.46     | http://auno.org/ao/equip.php?saveid=192647 | 147         |
+| ao-ladderer  | 140.62     | http://auno.org/ao/equip.php?saveid=193165 | 145         | 
 
-The first strategy was done by hand, twinking naturally. The second uses the tool.
-The third uses no ladder implants, just equipping required implants in the order which maximizes the average QL.
-For more information on the last strategy, see the Tips section below. 
+The first strategy uses no ladder implants, just equipping required implants in the order which maximizes their average QL.
+The second strategy was done by hand, twinking naturally. The third uses ao-ladderer's basic solution.
+Matter Crea is listed because it's the most important stat for that specific character. The average QL from the tool is slightly higher, but the Matter Crea is 2 points less, which could be a big deal.
    
 This tool provides a decent approximation for people wanting to equip a low to mid-level character.
 
@@ -118,26 +117,11 @@ This tool provides a decent approximation for people wanting to equip a low to m
 
 Tips
 ----
-Swapping items isn't supported by the tool, but it's easy to modify the inputs a bit to partially simulate that. For instance,
-on low level characters I almost always twink with Explosifs. These can be equipped on most characters with zero implant support.
-For this reason, and because implants only require a single ability, it's fine to pretend we have a pair of Explosifs
-that adds +20 to every ability, rather than just Agi/Sen, Str/Sta, or Int/Psy. There is one caveat; the Str/Sta 
-combination doesn't provide any treatment trickle, so either don't add +20 to Str/Sta, or subtract 3 from your treatment. [**The basic Explosif's swap is supported as of 1.3.0**]
+It's easy to modify the inputs a bit to simulate swapping items. For instance, on low level characters I almost always twink with Explosifs. These can be equipped on most characters with zero implant support. For this reason, and because implants only require a single ability, it's fine to pretend we have a pair of Explosifs that adds +20 to every ability, rather than just Agi/Sen, Str/Sta, or Int/Psy. There is one caveat; the Str/Sta combination doesn't provide any treatment trickle, so either don't add +20 to Str/Sta, or subtract 3 from your treatment. This swap is so common the tool supports it directly. Just remember, if you use this swap you can't use treatment buffing weapons like the Quartz rifle. There's no way to tell the tool (yet) that sometimes you have +10 treatment and +8 sta, and other times you have +20 str/sta/agi/sen/int/psy. You could tell it about a +25 Tsakachumi and Explosifs though; +25 agi, +20/str/sta/sen/int/psy, as long as you can get the Tsak on without implants.
 
-This same strategy can be applied to any equipment slots not being used for treatment buffing.
-Just be able to equip the swaps without implant support, and don't overcount treatment trickle. It can also be applied to buffs; you don't have to choose between Prodigious Strength and Iron Circle . One gives +40 Strength, one gives +20 Stamina and Strength. Effectively, they provide +40 Strength and +20 Stamina; cancel one when you need the other. [**Combined IC/PS buff is supported as of 1.3.0**]
+This same strategy can be applied to any equipment slots not being used for treatment buffing. Just be able to equip the swaps without implant support, and don't overcount treatment trickle. It can also be applied to buffs; you don't have to choose between Prodigious Strength and Iron Circle. One gives +40 Strength, one gives +20 Stamina and Strength. Effectively, they provide +40 Strength and +20 Stamina; cancel one when you need the other. This combined buff is supported by the tool.
 
-Continuing the above example of the 48 Nano-Technician:
-
-| Strategy     | Average QL | Link                                       | Matter Crea |
-| ------------ | ---------- | ------------------------------------------ | ----------- |
-| ao-ladderer + swap | 140.62 | http://auno.org/ao/equip.php?saveid=193165 | 145 |
-
-That's a big difference. The average QL is greater than the natural twink's, though the Matter Crea is still lower.
-For a swap as simple as Explosifs, it's worth it. Equipping the implants isn't quite as easy, 
-but it will be obvious when changing the type of the Explosifs is necessary.
-
-**You'll have to tell the tool about your ability to swap items, by manually increasing your starting abilities. Don't think of these as your actual abilities, think of them as your effective abilities for the purposes of equipping implants.**
+**You'll have to tell the tool about your ability to swap items (other than Explosifs), by manually increasing your starting abilities. Don't think of these as your actual abilities, think of them as your effective abilities for the purposes of equipping implants. They are your abilities that can be gotten simultaneously not with the other listed abilities, but with the listed treatment.**
 
 Another tip; if L/R wrists and left-hand are important for your setup, consider using the tool on those three alone, and then doing the rest of your implants. This is OK because those aren't ladder slots, so the tool will never use them when laddering up the rest.
 
