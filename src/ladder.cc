@@ -215,38 +215,40 @@ void Ladder::HeightOne(const vector<LadderSlot>& ladder_slots)
           subset_pos = i;
           implant_pos = best;
         }
-        else if(abs(trial_avg_ql - max_avg_ql) < .01 && (max_avg_ql < 200) &&
-                laddered_stats.get_treatment() < 951)
-        {
-          // They're close; go with the one with the higher treatment cluster, else do nothing.
+        // The effect of the below 'else if' is twofold;
+        // If a ladder implant has been found up to the point, then it might be replaced by a ladder implant
+        // that affects the average QL to the same extent, but gives more treatment. This is a reasonable heuristic.
+        // But if a ladder implant hasn't been found up to this point, then that means the implant we're currently
+        // looking at doesn't increase the average QL. But if it adds treatment it can still get included, temporarily at
+        // least, in the final set of ladder implants. This is a useful heuristic that helps avoid problems encoutered
+        // from only being able to look one implant deep. For example, if we're at the exact requirements for an implant,
+        // then adding neither treatment nor the corresponding ability alone will raise the implant's QL. But if we temporarily
+        // raise treatment, then the next phase of the ladder will perhaps be able to increase the corresponding ability.
+        // If it doesn't pan out that way, that is, if the final implant in our laddering process can be removed without
+        // any ill-effects, then it will be removed outside of the containing while loop.
+        else if((abs(trial_avg_ql - max_avg_ql) < .01) && (max_avg_ql < 200) &&
+                laddered_stats.get_treatment() < 951){
           int trial_score = 0;
           int max_score = 0;
-          if(ladder_implants.back().shining_abbr_ == "tre")
-          {
+          if(ladder_implants.back().shining_abbr_ == "tre"){
             trial_score = 3;
           }
-          else if(ladder_implants.back().bright_abbr_ == "tre")
-          {
+          else if(ladder_implants.back().bright_abbr_ == "tre"){
             trial_score = 2;
           }
-          else if(ladder_implants.back().faded_abbr_ == "tre")
-          {
+          else if(ladder_implants.back().faded_abbr_ == "tre"){
             trial_score = 1;
           }
-          if((*slot_pos)[subset_pos][implant_pos].shining_abbr_ == "tre")
-          {
+          if((*slot_pos)[subset_pos][implant_pos].shining_abbr_ == "tre"){
             max_score = 3;
           }
-          if((*slot_pos)[subset_pos][implant_pos].bright_abbr_ == "tre")
-          {
+          else if((*slot_pos)[subset_pos][implant_pos].bright_abbr_ == "tre"){
             max_score = 2;
           }
-          if((*slot_pos)[subset_pos][implant_pos].faded_abbr_ == "tre")
-          {
+          else if((*slot_pos)[subset_pos][implant_pos].faded_abbr_ == "tre"){
             max_score = 1;
           }
-          if(trial_score > max_score)
-          {
+          if(trial_score > max_score){
             increasing_avg_ql = true;
             max_avg_ql = trial_avg_ql;
             slot_pos = it;
@@ -264,6 +266,19 @@ void Ladder::HeightOne(const vector<LadderSlot>& ladder_slots)
   if(!increasing_avg_ql){
     // Didn't find a useful ladder implant last time, so remove last added.
     ladder_implants.pop_back();
+  }
+
+  // Verify that the final ladder implant was actually needed,
+  // and wasn't added in unnecessarily as result of a heuristic.
+  Implant finalImplant = ladder_implants.back();
+  ladder_implants.pop_back();
+  Ladder trial_ladder(required_config_, stats_);
+  trial_ladder.EquipLadderImplants(ladder_implants);
+  trial_ladder.HeightZero();
+  double trial_avg_ql = trial_ladder.AverageQL();
+  if(max_avg_ql > trial_avg_ql + .01)
+  {
+    ladder_implants.push_back(finalImplant);
   }
 
   Ladder final_ladder(required_config_,stats_);
