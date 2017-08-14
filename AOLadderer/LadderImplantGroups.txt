@@ -1,0 +1,138 @@
+These are all the ladder implants we need to consider, organized by slot, and then by ladder clusters.
+The implants in each group go in the same slot, and have the same ladder clusters, but require different
+abilities. For example, there are many Eye implants that add to Intelligence. They can be made to
+require Agility, Intelligence, Psychic, or Sense, by choosing certain non-ladder clusters. There are many
+different ways to combine non-ladder clusters with the Eye's bright Intelligence cluster to yield one
+of those ability requirements. Out of all those ways, I chose a single one for each ability requirement,
+so whenever we need a ladder implant like Eye, adding to Intelligence, requiring Sense, we always build
+it from the same clusters. Could end up saving some work if we see we already have an implant like
+that built. The one I chose has a Pistol faded cluser, which could come in handy for other twinking goals.
+Now, if there was a ladder implant that added to Intelligence and Psychic, and required Sense, there would
+be no reason to build the one that only adds to Intelligence. The main work in creating this file was
+removing those redundant ladder implants, with the same slot and ability requirement as another ladder
+implant, but only a subset of the ladder clusters. The secondary work was choosing which ladder implant
+from each {slot+ladder clusters+ability requirement} group to choose as the standard. Doesn't matter
+as far as the ladderer is concerned, but I preferred maximizing empties, then choosing something useful
+for weapon swaps, then choosing something in alphabetical order. When the ladderer runs, it considers
+{slot+ladder clusters} groups. When doing that, it always chooses the implant with the ability requirement
+the user has the most in. The ability requirement is the only way the implants differ (as far as the
+ladderer is concerned), so choosing the one with the ability requirement the user has the most in is obvious.
+There are scenarios where one group makes another group irrelevant. For example, if the user has equal or more
+Agility than Psychic, the Psychic and Sense adding head, requiring Agility, would be better than the Psychic
+adding head, requiring Psychic. If the user has more Psychic than Agility, the head requiring Psychic and
+adding only to Psychic may be better than the head requiring Agility and adding to both Psychic and Sense.
+
+Implant template index | AOID | Required ability | Shiny | Bright | Faded
+
+Head
+  +Intelligence
+    263,105291,Intelligence,Intelligence,Elec. Engi,EMPTY
+  +Intelligence +Sense
+    253,106946,Agility,Intelligence,EMPTY,Sense
+    259,107187,Psychic,Intelligence,Dimach,Sense
+  +Psychic
+    617,105619,Psychic,Psychic,Dimach,EMPTY
+  +Psychic +Sense
+    613,106969,Agility,Psychic,EMPTY,Sense
+    619,107189,Intelligence,Psychic,Dimach,Sense
+  +Sense
+    223,107169,Sense,First Aid,Dimach,Sense
+    187,173105,Stamina,Disease AC,Dimach,Sense
+  +Treatment
+    869,105547,Psychic,Treatment,Dimach,EMPTY
+  +Treatment +Sense
+    865,106954,Agility,Treatment,EMPTY,Sense
+    871,107171,Intelligence,Treatment,Dimach,Sense
+
+Eye
+  +Intelligence
+    1030,102307,Agility,EMPTY,Intelligence,EMPTY
+    1948,102806,Intelligence,Tutoring,Intelligence,Pistol
+    1036,102796,Psychic,EMPTY,Intelligence,Pistol
+    2176,102802,Sense,Vehicle Air,Intelligence,Pistol
+  +Treatment
+    1162,101971,Agility,EMPTY,Treatment,EMPTY
+    1168,102685,Intelligence,EMPTY,Treatment,Pistol
+    2308,102691,Sense,Vehicle Air,Treatment,Pistol
+
+Ear
+  +Intelligence
+    2344,107347,Agility,EMPTY,Concealment,Intelligence
+    2356,107339,Intelligence,EMPTY,Tutoring,Intelligence
+    2338,107331,Psychic,EMPTY,EMPTY,Intelligence
+    2362,107333,Sense,EMPTY,Vehicle Air,Intelligence
+  +Psychic
+    2345,107367,Agility,EMPTY,Concealment,Psychic
+    2339,107351,Intelligence,EMPTY,EMPTY,Psychic
+    2363,107353,Sense,EMPTY,Vehicle Air,Psychic
+
+Chest
+  +Psychic
+    2436,108510,Strength,EMPTY,Psychic,EMPTY
+  +Psychic +Strength
+    2445,109140,Intelligence,EMPTY,Psychic,Strength
+  +Sense
+    2746,108422,Strength,Sense,EMPTY,EMPTY
+  +Sense +Psychic
+    2786,108538,Intelligence,Sense,Psychic,EMPTY
+  +Sense +Psychic +Strength
+    2795,109154,Psychic,Sense,Psychic,Strength
+  +Sense +Strength
+    2755,109204,Agility,Sense,EMPTY,Strength
+  +Stamina
+    2796,108414,Strength,Stamina,EMPTY,EMPTY
+  +Stamina +Psychic
+    2836,108534,Intelligence,Stamina,Psychic,EMPTY
+  +Stamina +Psychic +Strength
+    2845,109152,Stamina,Stamina,Psychic,Strength
+  +Stamina +Strength
+    2805,109200,Agility,Stamina,EMPTY,Strength
+
+Right-Arm
+  +Strength
+    3247,107538,Agility,Strength,Physic. Init,EMPTY
+    3229,107483,Sense,Strength,EMPTY,EMPTY
+    3236,108363,Stamina,Strength,Brawling,Fast Attack
+    3235,107691,Strength,Strength,Brawling,EMPTY
+
+Left-Arm
+  +Strength
+    3280,109267,Sense,EMPTY,Strength,EMPTY
+    3281,109269,Stamina,EMPTY,Strength,Chemical AC
+    3313,109273,Strength,Brawling,Strength,Chemical AC
+
+Waist
+  +Agility
+    3365,111267,Agility,EMPTY,Duck-Exp,Agility
+  +Sense
+    3427,110226,Agility,EMPTY,Sense,EMPTY
+  +Sense +Agility
+    3429,111277,Psychic,EMPTY,Sense,Agility
+    3557,111279,Sense,Chemical AC,Sense,Agility
+    3685,111283,Stamina,Cold AC,Sense,Agility
+  +Sense +Stamina
+    3442,111357,Psychic,EMPTY,Sense,Stamina
+    3570,111359,Sense,Chemical AC,Sense,Stamina
+    3698,111363,Stamina,Cold AC,Sense,Stamina
+  +Stamina
+    3378,111347,Agility,EMPTY,Duck-Exp,Stamina
+
+Leg
+  +Agility
+    4422,113225,Agility,Agility,Evade-ClsC,EMPTY
+  +Agility +Stamina
+    4432,113186,Stamina,Agility,Stamina,EMPTY
+  +Stamina
+    4496,130447,Agility,Duck-Exp,Stamina,Run Speed
+
+Right-Hand
+  +Treatment
+    4685,112182,Agility,EMPTY,Pistol,Treatment
+    4541,112158,Intelligence,EMPTY,EMPTY,Treatment
+    4621,112205,Sense,EMPTY,First Aid,Treatment
+    4589,112160,Stamina,EMPTY,Cold AC,Treatment
+
+Feet
+  +Agility
+    5388,113599,Agility,EMPTY,Agility,EMPTY
+    5389,113601,Stamina,EMPTY,Agility,Duck-Exp

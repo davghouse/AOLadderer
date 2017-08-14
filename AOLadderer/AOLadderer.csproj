@@ -2,4 +2,7 @@
   <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
 </Project>
