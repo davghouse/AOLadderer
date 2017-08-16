@@ -8,8 +8,11 @@ namespace AOLadderer
 {
     public class ImplantTemplate
     {
-        private ImplantTemplate(int aoid, ImplantSlot implantSlot, Ability requiredAbility,
-            ShinyClusterTemplate shinyClusterTemplate, BrightClusterTemplate brightClusterTemplate, FadedClusterTemplate fadedClusterTemplate)
+        private ImplantTemplate(
+            int aoid, ImplantSlot implantSlot, Ability requiredAbility,
+            ShinyClusterTemplate shinyClusterTemplate,
+            BrightClusterTemplate brightClusterTemplate,
+            FadedClusterTemplate fadedClusterTemplate)
         {
             AOID = aoid;
             ImplantSlot = implantSlot;
@@ -17,8 +20,6 @@ namespace AOLadderer
             ShinyClusterTemplate = shinyClusterTemplate;
             BrightClusterTemplate = brightClusterTemplate;
             FadedClusterTemplate = fadedClusterTemplate;
-
-            // Performance optimizations: store some commonly needed data.
             RaisedLadderStats = new ClusterTemplate[] { ShinyClusterTemplate, BrightClusterTemplate, FadedClusterTemplate }
                 .Where(t => t?.RaisesLadderStat ?? false)
                 .Select(t => t.Stat)
@@ -52,7 +53,7 @@ namespace AOLadderer
                 && t.FadedStat == fadedStat);
 
         public override string ToString()
-            => $"{ImplantSlot.Name} Implant: {ShinyClusterTemplate?.Stat.Name ?? "Empty"}, {BrightClusterTemplate?.Stat.Name ?? "Empty"}, {FadedClusterTemplate?.Stat.Name ?? "Empty"}";
+            => $"{ImplantSlot.Name} Implant ({RequiredAbility}): {ShinyClusterTemplate?.Stat.Name ?? "Empty"}, {BrightClusterTemplate?.Stat.Name ?? "Empty"}, {FadedClusterTemplate?.Stat.Name ?? "Empty"}";
 
         // We've hard-coded the stats, implant slots, and cluster templates, but there are too many implant templates
         // to hard code them w/o causing problems in VS and blowing up the assembly size. We can compute all the possible

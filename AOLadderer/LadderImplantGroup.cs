@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using AOLadderer.Helpers;
+using AOLadderer.Stats;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AOLadderer
@@ -11,13 +13,47 @@ namespace AOLadderer
             LadderImplantTemplates = implantTemplateIndexes
                 .Select(i => ImplantTemplate.ImplantTemplates[i])
                 .ToArray();
-            ImplantSlot = LadderImplantTemplates.First().ImplantSlot;
-            RaisedLadderStats = LadderImplantTemplates.First().RaisedLadderStats;
+            ImplantSlot = LadderImplantTemplates[0].ImplantSlot;
+            RaisedLadderStats = LadderImplantTemplates[0].RaisedLadderStats;
+            RequiredAbilityOptions = LadderImplantTemplates
+                .Select(t => t.RequiredAbility)
+                .ToArray();
         }
 
         public IReadOnlyList<ImplantTemplate> LadderImplantTemplates { get; }
         public ImplantSlot ImplantSlot { get; }
         public IReadOnlyList<Stat> RaisedLadderStats { get; }
+        public IReadOnlyList<Ability> RequiredAbilityOptions { get; }
+
+        public IReadOnlyList<LadderImplantGroup> _ladderImplantGroupsWithSupersedingLadderStats;
+        public IReadOnlyList<LadderImplantGroup> LadderImplantGroupsWithSupersedingLadderStats => _ladderImplantGroupsWithSupersedingLadderStats
+            ?? (_ladderImplantGroupsWithSupersedingLadderStats = ImplantSlot.LadderImplantGroups
+                .Where(g => g.RaisedLadderStats.IsSupersetOf(RaisedLadderStats))
+                .ToArray());
+
+        public bool IsSupersededByOtherLadderImplantGroups(Character character)
+            => LadderImplantGroupsWithSupersedingLadderStats
+            .Any(g => g.RequiredAbilityOptions.Max(character.GetAbilityValue) >= RequiredAbilityOptions.Max(character.GetAbilityValue));
+
+        public ImplantTemplate GetBestImplantTemplate(Character character)
+        {
+            if (LadderImplantTemplates.Count == 1)
+                return LadderImplantTemplates[0];
+
+            var bestImplantTemplate = LadderImplantTemplates[0];
+            int abilityValueForBestImplantTemplate = character.GetAbilityValue(bestImplantTemplate.RequiredAbility);
+            foreach (var implantTemplate in LadderImplantTemplates.Skip(1))
+            {
+                int abilityValueForImplantTemplate = character.GetAbilityValue(implantTemplate.RequiredAbility);
+                if (abilityValueForImplantTemplate > abilityValueForBestImplantTemplate)
+                {
+                    bestImplantTemplate = implantTemplate;
+                    abilityValueForBestImplantTemplate = abilityValueForImplantTemplate;
+                }
+            }
+
+            return bestImplantTemplate;
+        }
 
         public static readonly IReadOnlyList<LadderImplantGroup> LadderImplantGroups = new[]
         {

@@ -25,5 +25,15 @@ namespace AOLadderer
 
         public bool IsImplantSlotEmpty(ImplantSlot implantSlot)
             => _implantSlotImplants[implantSlot] == null;
+
+        public int GetTotalImplantQL()
+            => _implantSlotImplants.Values.Sum(i => i?.QL ?? 0);
+
+        public double GetAverageImplantQL()
+        {
+            int fullImplantSlotCount = _implantSlotImplants.Values.Count(i => i != null);
+
+            return fullImplantSlotCount == 0 ? 0 : GetTotalImplantQL() / (double)fullImplantSlotCount;
+        }
     }
 }

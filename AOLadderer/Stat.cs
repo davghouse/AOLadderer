@@ -25,8 +25,8 @@ namespace AOLadderer
 
         /* Can't use fields here, otherwise if derived classes are initialized first then initializing these fields
            would cycle back to the derived classes which would return null for their specific stat collections.
-           See details here: (https://codeblog.jonskeet.uk/2012/04/07/type-initializer-circular-dependencies/).
-           Other static fields are fine, Stat and ImplantSlot are self-contained, then ClusterTemplates depend on those,
+           See details here: (https://codeblog.jonskeet.uk/2012/04/07/type-initializer-circular-dependencies/). Most
+           other static fields are fine, Stat and ImplantSlot are self-contained, then ClusterTemplates depend on those,
            then ImplantTemplates depends on all of them, so it's a DAG. But seems bad... Just use properties everywhere? */
 
         private static IReadOnlyList<Stat> _stats;

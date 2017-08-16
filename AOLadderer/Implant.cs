@@ -5,21 +5,21 @@ using System.Collections.Generic;
 
 namespace AOLadderer
 {
-    public class Implant
+    public class Implant : IEquatable<Implant>
     {
         public Implant(ImplantTemplate implantTemplate, int implantQL)
         {
             ImplantTemplate = implantTemplate;
-            ImplantQL = implantQL;
+            QL = implantQL;
         }
 
         public ImplantTemplate ImplantTemplate { get; }
-        public int ImplantQL { get; }
+        public int QL { get; }
         public int AOID => ImplantTemplate.AOID;
         public ImplantSlot ImplantSlot => ImplantTemplate.ImplantSlot;
         public Ability RequiredAbility => ImplantTemplate.RequiredAbility;
-        public int RequiredAbilityValue => GetRequiredAbilityValue(ImplantQL);
-        public int RequiredTreatmentValue => GetRequiredTreatmentValue(ImplantQL);
+        public int RequiredAbilityValue => GetRequiredAbilityValue(QL);
+        public int RequiredTreatmentValue => GetRequiredTreatmentValue(QL);
         public ShinyClusterTemplate ShinyClusterTemplate => ImplantTemplate.ShinyClusterTemplate;
         public BrightClusterTemplate BrightClusterTemplate => ImplantTemplate.BrightClusterTemplate;
         public FadedClusterTemplate FadedClusterTemplate => ImplantTemplate.FadedClusterTemplate;
@@ -28,16 +28,16 @@ namespace AOLadderer
         public IReadOnlyList<ClusterTemplate> AbilityClusterTemplates => ImplantTemplate.AbilityClusterTemplates;
         public ClusterTemplate TreatmentClusterTemplate => ImplantTemplate.TreatmentClusterTemplate;
         public Stat ShinyStat => ImplantTemplate.ShinyStat;
-        public Stat BrightStat =>ImplantTemplate.BrightStat;
+        public Stat BrightStat => ImplantTemplate.BrightStat;
         public Stat FadedStat => ImplantTemplate.FadedStat;
-        public int? ShinyStatIncrease => ShinyClusterTemplate?.GetStatIncrease(ImplantQL);
-        public int? BrightStatIncrease => BrightClusterTemplate?.GetStatIncrease(ImplantQL);
-        public int? FadedStatIncrease => FadedClusterTemplate?.GetStatIncrease(ImplantQL);
+        public int? ShinyStatIncrease => ShinyClusterTemplate?.GetStatIncrease(QL);
+        public int? BrightStatIncrease => BrightClusterTemplate?.GetStatIncrease(QL);
+        public int? FadedStatIncrease => FadedClusterTemplate?.GetStatIncrease(QL);
 
         public override string ToString()
-            => $"{ImplantTemplate}, QL {ImplantQL}";
+            => $"{ImplantTemplate}, QL {QL}";
 
-        public static Implant BuildImplant(ImplantSlot implantSlot, Stat shinyStat, Stat brightStat, Stat fadedStat, int implantQL)
+        public static Implant GetImplant(ImplantSlot implantSlot, Stat shinyStat, Stat brightStat, Stat fadedStat, int implantQL)
             => new Implant(ImplantTemplate.GetImplantTemplate(implantSlot, shinyStat, brightStat, fadedStat), implantQL);
 
         public static int GetRequiredAbilityValue(int implantQL)
@@ -63,5 +63,14 @@ namespace AOLadderer
 
         public static int GetMaxImplantQL(int abilityValue, double treatmentValue)
             => Math.Min(GetMaxImplantQLForAbilityValue(abilityValue), GetMaxImplantQLForTreatmentValue(treatmentValue));
+
+        public override bool Equals(object other)
+            => Equals(other as Implant);
+
+        public bool Equals(Implant other)
+            => ImplantTemplate == other.ImplantTemplate && QL == other.QL;
+
+        public override int GetHashCode()
+            => ImplantTemplate.GetHashCode();
     }
 }

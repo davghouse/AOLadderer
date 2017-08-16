@@ -9,15 +9,10 @@ namespace AOLadderer
             Stat = stat;
             ClusterGrade = clusterGrade;
             ImplantSlot = implantSlot;
-
-            // Performance optimizations: store some commonly needed data.
             RaisesAbility = Stat is Ability;
             RaisesTreatment = Stat == Skill.Treatment;
             RaisesLadderStat = Stat.IsLadderStat;
             Ability = stat as Ability;
-            ArmorClass = stat as ArmorClass;
-            MaxHealthOrNano = stat as MaxHealthOrNano;
-            Skill = stat as Skill;
         }
 
         public Stat Stat { get; }
@@ -27,9 +22,6 @@ namespace AOLadderer
         public bool RaisesTreatment { get; }
         public bool RaisesLadderStat { get; }
         public Ability Ability { get; }
-        public ArmorClass ArmorClass { get; }
-        public MaxHealthOrNano MaxHealthOrNano { get; }
-        public Skill Skill { get; }
 
         public abstract int GetStatIncrease(int implantQL);
 

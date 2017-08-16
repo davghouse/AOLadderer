@@ -91,17 +91,17 @@ namespace AOLadderer.UnitTests
         [TestMethod]
         public void VerifiesAbilityAndTreatmentRequirements()
         {
-            var leftHand = Implant.BuildImplant(ImplantSlot.LeftHand, Skill.FastAttack, ArmorClass.FireAC, Skill.MartialArts, 155);
+            var leftHand = Implant.GetImplant(ImplantSlot.LeftHand, Skill.FastAttack, ArmorClass.FireAC, Skill.MartialArts, 155);
             Assert.AreEqual(Ability.Agility, leftHand.RequiredAbility);
             Assert.AreEqual(314, leftHand.RequiredAbilityValue);
             Assert.AreEqual(738, leftHand.RequiredTreatmentValue);
 
-            var feet = Implant.BuildImplant(ImplantSlot.Feet, Skill.EvadeClsC, Skill.MartialArts, Skill.DuckExp, 144);
+            var feet = Implant.GetImplant(ImplantSlot.Feet, Skill.EvadeClsC, Skill.MartialArts, Skill.DuckExp, 144);
             Assert.AreEqual(Ability.Agility, feet.RequiredAbility);
             Assert.AreEqual(292, feet.RequiredAbilityValue);
             Assert.AreEqual(686, feet.RequiredTreatmentValue);
 
-            var eye = Implant.BuildImplant(ImplantSlot.Eye, Skill.AimedShot, Skill.SensoryImpr, Skill.SharpObj, 132);
+            var eye = Implant.GetImplant(ImplantSlot.Eye, Skill.AimedShot, Skill.SensoryImpr, Skill.SharpObj, 132);
             Assert.AreEqual(Ability.Agility, eye.RequiredAbility);
             Assert.AreEqual(268, eye.RequiredAbilityValue);
             Assert.AreEqual(630, eye.RequiredTreatmentValue);

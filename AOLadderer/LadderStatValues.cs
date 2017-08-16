@@ -8,8 +8,9 @@ namespace AOLadderer
     {
         private Dictionary<Ability, int> _abilityValues;
 
-        public LadderStatValues(int agilityValue, int intelligenceValue, int psychicValue,
-            int senseValue, int staminaValue, int strengthValue, double treatmentValue)
+        public LadderStatValues(
+            int agilityValue, int intelligenceValue, int psychicValue, int senseValue,
+            int staminaValue, int strengthValue, double treatmentValue)
         {
             _abilityValues = Ability.Abilities.ToDictionary(a => a, a => 0);
             _abilityValues[Ability.Agility] = agilityValue;
@@ -21,7 +22,8 @@ namespace AOLadderer
             TreatmentValue = treatmentValue;
         }
 
-        public LadderStatValues(IReadOnlyDictionary<Ability, int> abilityValues = null, double treatmentValue = 0)
+        public LadderStatValues(
+            IReadOnlyDictionary<Ability, int> abilityValues = null, double treatmentValue = 0)
         {
             _abilityValues = Ability.Abilities
                 .ToDictionary(a => a, a => (abilityValues?.ContainsKey(a) ?? false) ? abilityValues[a] : 0);
@@ -54,10 +56,10 @@ namespace AOLadderer
             {
                 IncreaseAbilityValue(
                     abilityClusterTemplate.Ability,
-                    abilityClusterTemplate.GetStatIncrease(implant.ImplantQL));
+                    abilityClusterTemplate.GetStatIncrease(implant.QL));
             }
 
-            TreatmentValue += implant.TreatmentClusterTemplate?.GetStatIncrease(implant.ImplantQL) ?? 0;
+            TreatmentValue += implant.TreatmentClusterTemplate?.GetStatIncrease(implant.QL) ?? 0;
         }
 
         public void SubtractImplantValues(Implant implant)
@@ -66,10 +68,10 @@ namespace AOLadderer
             {
                 DecreaseAbilityValue(
                     abilityClusterTemplate.Ability,
-                    abilityClusterTemplate.GetStatIncrease(implant.ImplantQL));
+                    abilityClusterTemplate.GetStatIncrease(implant.QL));
             }
 
-            TreatmentValue -= implant.TreatmentClusterTemplate?.GetStatIncrease(implant.ImplantQL) ?? 0;
+            TreatmentValue -= implant.TreatmentClusterTemplate?.GetStatIncrease(implant.QL) ?? 0;
         }
     }
 }

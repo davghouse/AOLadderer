@@ -50,5 +50,6 @@ namespace AOLadderer
             Feet = new ImplantSlot("Feet");
 
         public static readonly IReadOnlyList<ImplantSlot> ImplantSlots = new[] { Head, Eye, Ear, Chest, RightArm, LeftArm, Waist, RightWrist, LeftWrist, Leg, RightHand, LeftHand, Feet };
+        public static readonly IReadOnlyList<ImplantSlot> LadderImplantSlots = new[] { Head, Eye, Ear, Chest, RightArm, LeftArm, Waist, Leg, RightHand, Feet };
     }
 }
