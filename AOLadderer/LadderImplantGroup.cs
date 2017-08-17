@@ -44,11 +44,11 @@ namespace AOLadderer
             int abilityValueForBestImplantTemplate = character.GetAbilityValue(bestImplantTemplate.RequiredAbility);
             foreach (var implantTemplate in LadderImplantTemplates.Skip(1))
             {
-                int abilityValueForImplantTemplate = character.GetAbilityValue(implantTemplate.RequiredAbility);
-                if (abilityValueForImplantTemplate > abilityValueForBestImplantTemplate)
+                int abilityValueForThisImplantTemplate = character.GetAbilityValue(implantTemplate.RequiredAbility);
+                if (abilityValueForThisImplantTemplate > abilityValueForBestImplantTemplate)
                 {
                     bestImplantTemplate = implantTemplate;
-                    abilityValueForBestImplantTemplate = abilityValueForImplantTemplate;
+                    abilityValueForBestImplantTemplate = abilityValueForThisImplantTemplate;
                 }
             }
 

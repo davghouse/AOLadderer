@@ -11,7 +11,7 @@ namespace AOLadderer.UnitTests
         public void CountsAllPossibleEquipOrdersForZeroImplantTemplates()
         {
             var implantTemplates = new ImplantTemplate[0];
-            Assert.AreEqual(0, LadderProcess.GetAllPossibleEquipOrders(implantTemplates).ToArray().Length);
+            Assert.AreEqual(1, LadderProcess.GetAllPossibleEquipOrders(implantTemplates).ToArray().Length);
         }
 
         [TestMethod]

@@ -1,71 +1,77 @@
-﻿using AOLadderer.Stats;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace AOLadderer.LadderProcesses
 {
     public sealed class DegenerateLadderProcess : LadderProcess
     {
-        public DegenerateLadderProcess(
-            int agilityValue, int intelligenceValue, int psychicValue, int senseValue,
-            int staminaValue, int strengthValue, double treatmentValue,
-            IEnumerable<ImplantTemplate> implantTemplates)
-            : base(agilityValue, intelligenceValue, psychicValue, senseValue,
-                  staminaValue, strengthValue, treatmentValue, implantTemplates)
-        { }
+        private readonly IReadOnlyList<Implant> _initiallyEquippedImplants;
+        private readonly ImplantTemplate[] _finalLadderImplantTemplatesInInitiallyEmptyImplantSlots;
+        private readonly IReadOnlyList<ImplantTemplate> _finalNonLadderImplantTemplatesInInitiallyEmptyImplantSlots;
+        private readonly ImplantTemplate[] _finalImplantTemplatesInInitiallyFullImplantSlots;
 
-        public DegenerateLadderProcess(
-            IReadOnlyDictionary<Ability, int> abilityValues, double treatmentValue,
-            IEnumerable<ImplantTemplate> implantTemplates)
-            : base(abilityValues, treatmentValue, implantTemplates)
-        { }
-
-        public DegenerateLadderProcess(Character character, IEnumerable<ImplantTemplate> implantTemplates)
-            : base(character, implantTemplates)
-        { }
+        public DegenerateLadderProcess(Character character, IEnumerable<ImplantTemplate> finalImplantTemplates)
+            : base(character, finalImplantTemplates)
+        {
+            _initiallyEquippedImplants = _character.GetEquippedImplants().ToArray();
+            _finalLadderImplantTemplatesInInitiallyEmptyImplantSlots = _finalImplantTemplates
+                .Where(t => t.RaisesLadderStats && _character.IsImplantSlotEmpty(t.ImplantSlot))
+                .ToArray();
+            _finalNonLadderImplantTemplatesInInitiallyEmptyImplantSlots = _finalImplantTemplates
+                .Where(t => !t.RaisesLadderStats && _character.IsImplantSlotEmpty(t.ImplantSlot))
+                .ToArray();
+            _finalImplantTemplatesInInitiallyFullImplantSlots = _finalImplantTemplates
+                .Where(t => _character.IsImplantSlotFull(t.ImplantSlot))
+                .ToArray();
+            Run();
+        }
 
         protected override void Run()
         {
-            if (_finalLadderImplantTemplates.Length == 0)
+            foreach (var initiallyEmptyEquipOrder in GetAllPossibleEquipOrders(_finalLadderImplantTemplatesInInitiallyEmptyImplantSlots))
             {
-                foreach (var finalImplantTemplate in _finalImplantTemplates)
+                foreach (var finalLadderImplantTemplate in initiallyEmptyEquipOrder)
                 {
-                    _character.EquipMaxImplant(finalImplantTemplate, isSlotKnownToBeEmpty: true);
+                    _character.EquipMaxImplant(finalLadderImplantTemplate, isSlotKnownToBeEmpty: true);
                 }
 
-                TotalImplantQL = _character.GetTotalImplantQL();
-                _orderedFinalImplants = _finalImplantTemplates
-                    .Select(t => _character.GetImplant(t.ImplantSlot))
-                    .ToList();
-                _character.UnequipImplants();
-            }
-            else
-            {
-                foreach (var equipOrder in GetAllPossibleEquipOrders(_finalLadderImplantTemplates))
+                foreach (var finalNonLadderImplantTemplate in _finalNonLadderImplantTemplatesInInitiallyEmptyImplantSlots)
                 {
-                    foreach (var finalLadderImplantTemplate in equipOrder)
+                    _character.EquipMaxImplant(finalNonLadderImplantTemplate, isSlotKnownToBeEmpty: true);
+                }
+
+                // We are assuming initially full slots are ladder implants which someone (the basic ladder process) is trying
+                // out to see how much they improve the result of the degenerate ladder process. That's why we don't even consider
+                // unequipping them until now. And given that they're ladder implants, we try all possible (un)equip orders.
+                foreach (var initiallyFullEquipOrder in GetAllPossibleEquipOrders(_finalImplantTemplatesInInitiallyFullImplantSlots))
+                {
+                    foreach (var finalImplantTemplate in initiallyFullEquipOrder)
                     {
-                        _character.EquipMaxImplant(finalLadderImplantTemplate, isSlotKnownToBeEmpty: true);
+                        _character.EquipMaxImplant(finalImplantTemplate, isSlotKnownToBeEmpty: false);
                     }
 
-                    foreach (var finalNonLadderImplantTemplate in _finalNonLadderImplantTemplates)
+                    int trialTotalFinalImplantQL = _character.GetTotalImplantQL(_finalImplantSlots);
+                    if (trialTotalFinalImplantQL > TotalFinalImplantQL)
                     {
-                        _character.EquipMaxImplant(finalNonLadderImplantTemplate, isSlotKnownToBeEmpty: true);
-                    }
-
-                    int equipOrderTotalImplantQL = _character.GetTotalImplantQL();
-                    if (equipOrderTotalImplantQL > TotalImplantQL)
-                    {
-                        TotalImplantQL = equipOrderTotalImplantQL;
-                        _orderedFinalImplants = equipOrder
-                            .Concat(_finalNonLadderImplantTemplates)
+                        TotalFinalImplantQL = trialTotalFinalImplantQL;
+                        _orderedFinalImplants = initiallyEmptyEquipOrder
+                            .Concat(_finalNonLadderImplantTemplatesInInitiallyEmptyImplantSlots)
+                            .Concat(initiallyFullEquipOrder)
                             .Select(t => _character.GetImplant(t.ImplantSlot))
-                            .ToList();
+                            .ToArray();
                     }
 
-                    _character.UnequipImplants();
+                    _character.SetImplants(_initiallyEquippedImplants, areSlotsKnownToBeEmpty: false);
                 }
+
+                _character.UnequipImplants();
+                _character.SetImplants(_initiallyEquippedImplants, areSlotsKnownToBeEmpty: true);
             }
         }
+
+        public override IReadOnlyList<Implant> OrderedLadderImplants => new Implant[0];
+
+        private IReadOnlyList<Implant> _orderedFinalImplants = new Implant[0];
+        public override IReadOnlyList<Implant> OrderedFinalImplants => _orderedFinalImplants;
     }
 }

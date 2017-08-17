@@ -48,6 +48,9 @@ namespace AOLadderer
         public Implant GetImplant(ImplantSlot implantSlot)
             => _implantConfiguration.GetImplant(implantSlot);
 
+        public IEnumerable<Implant> GetEquippedImplants()
+            => _implantConfiguration.GetEquippedImplants();
+
         public Implant UnequipImplant(ImplantSlot implantSlot)
         {
             var implant = GetImplant(implantSlot);
@@ -157,10 +160,10 @@ namespace AOLadderer
         public bool IsImplantSlotEmpty(ImplantSlot implantSlot)
             => _implantConfiguration.IsImplantSlotEmpty(implantSlot);
 
-        public int GetTotalImplantQL()
-            => _implantConfiguration.GetTotalImplantQL();
+        public int GetTotalImplantQL(IEnumerable<ImplantSlot> implantSlots = null)
+            => _implantConfiguration.GetTotalImplantQL(implantSlots);
 
-        public double GetAverageImplantQL()
-            => _implantConfiguration.GetAverageImplantQL();
+        public double GetAverageImplantQL(IEnumerable<ImplantSlot> implantSlots = null)
+            => _implantConfiguration.GetAverageImplantQL(implantSlots);
     }
 }
