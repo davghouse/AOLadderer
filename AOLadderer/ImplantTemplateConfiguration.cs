@@ -11,6 +11,10 @@ namespace AOLadderer
             => _implantSlotImplantTemplates = ImplantSlot.ImplantSlots
             .ToDictionary(s => s, s => implantTemplates?.SingleOrDefault(t => t.ImplantSlot == s));
 
+        public ImplantTemplateConfiguration(ImplantTemplateConfiguration implantTemplateConfiguration)
+            => _implantSlotImplantTemplates = new Dictionary<ImplantSlot, ImplantTemplate>(
+                implantTemplateConfiguration._implantSlotImplantTemplates);
+
         public ImplantTemplate GetImplantTemplate(ImplantSlot implantSlot)
             => _implantSlotImplantTemplates[implantSlot];
 

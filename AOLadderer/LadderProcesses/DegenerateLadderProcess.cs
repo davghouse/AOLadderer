@@ -30,14 +30,18 @@ namespace AOLadderer.LadderProcesses
         {
             foreach (var initiallyEmptyEquipOrder in GetAllPossibleEquipOrders(_finalLadderImplantTemplatesInInitiallyEmptyImplantSlots))
             {
+                // Before, we were unequipping all implants and re-equipping the initial ones at the end of this loop body.
+                // Turns out just creating a new character based on the original character is better for performance.
+                var workingCharacter = new Character(_character);
+
                 foreach (var finalLadderImplantTemplate in initiallyEmptyEquipOrder)
                 {
-                    _character.EquipMaxImplant(finalLadderImplantTemplate, isSlotKnownToBeEmpty: true);
+                    workingCharacter.EquipMaxImplant(finalLadderImplantTemplate, isSlotKnownToBeEmpty: true);
                 }
 
                 foreach (var finalNonLadderImplantTemplate in _finalNonLadderImplantTemplatesInInitiallyEmptyImplantSlots)
                 {
-                    _character.EquipMaxImplant(finalNonLadderImplantTemplate, isSlotKnownToBeEmpty: true);
+                    workingCharacter.EquipMaxImplant(finalNonLadderImplantTemplate, isSlotKnownToBeEmpty: true);
                 }
 
                 // We are assuming initially full slots are ladder implants which someone (the basic ladder process) is trying
@@ -47,25 +51,22 @@ namespace AOLadderer.LadderProcesses
                 {
                     foreach (var finalImplantTemplate in initiallyFullEquipOrder)
                     {
-                        _character.EquipMaxImplant(finalImplantTemplate, isSlotKnownToBeEmpty: false);
+                        workingCharacter.EquipMaxImplant(finalImplantTemplate, isSlotKnownToBeEmpty: false);
                     }
 
-                    int trialTotalFinalImplantQL = _character.GetTotalImplantQL(_finalImplantSlots);
+                    int trialTotalFinalImplantQL = workingCharacter.GetTotalImplantQL(_finalImplantSlots);
                     if (trialTotalFinalImplantQL > TotalFinalImplantQL)
                     {
                         TotalFinalImplantQL = trialTotalFinalImplantQL;
                         _orderedFinalImplants = initiallyEmptyEquipOrder
                             .Concat(_finalNonLadderImplantTemplatesInInitiallyEmptyImplantSlots)
                             .Concat(initiallyFullEquipOrder)
-                            .Select(t => _character.GetImplant(t.ImplantSlot))
+                            .Select(t => workingCharacter.GetImplant(t.ImplantSlot))
                             .ToArray();
                     }
 
-                    _character.SetImplants(_initiallyEquippedImplants, areSlotsKnownToBeEmpty: false);
+                    workingCharacter.SetImplants(_initiallyEquippedImplants, areSlotsKnownToBeEmpty: false);
                 }
-
-                _character.UnequipImplants();
-                _character.SetImplants(_initiallyEquippedImplants, areSlotsKnownToBeEmpty: true);
             }
         }
 

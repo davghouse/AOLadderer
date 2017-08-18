@@ -27,6 +27,12 @@ namespace AOLadderer
             _implantConfiguration = new ImplantConfiguration(implants);
         }
 
+        public Character(Character character)
+        {
+            _ladderStatValues = new LadderStatValues(character._ladderStatValues);
+            _implantConfiguration = new ImplantConfiguration(character._implantConfiguration);
+        }
+
         public int GetAbilityValue(Ability ability)
             => _ladderStatValues.GetAbilityValue(ability);
 

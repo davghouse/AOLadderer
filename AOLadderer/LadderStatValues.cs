@@ -30,6 +30,12 @@ namespace AOLadderer
             TreatmentValue = treatmentValue;
         }
 
+        public LadderStatValues(LadderStatValues ladderStatValues)
+        {
+            _abilityValues = new Dictionary<Ability, int>(ladderStatValues._abilityValues);
+            TreatmentValue = ladderStatValues.TreatmentValue;
+        }
+
         public int GetAbilityValue(Ability ability)
             => _abilityValues[ability];
 
