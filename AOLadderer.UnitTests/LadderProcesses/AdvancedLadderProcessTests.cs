@@ -2,13 +2,12 @@
 using AOLadderer.Stats;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace AOLadderer.UnitTests.LadderProcesses
 {
     [TestClass]
-    public class BasicLadderProcessTests
+    public class AdvancedLadderProcessTests
     {
         private Character _character;
         private IReadOnlyList<ImplantTemplate> _finalImplantTemplates;
@@ -40,9 +39,9 @@ namespace AOLadderer.UnitTests.LadderProcesses
         }
 
         [TestMethod]
-        public void BasicLadderProcessIsPossible()
+        public void AdvancedLadderProcessIsPossible()
         {
-            var ladderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
+            var ladderProcess = new AdvancedLadderProcess(_character, _finalImplantTemplates);
 
             foreach (var ladderImplant in ladderProcess.OrderedLadderImplants)
             {
@@ -59,24 +58,24 @@ namespace AOLadderer.UnitTests.LadderProcesses
         }
 
         [TestMethod]
-        public void BasicLadderProcessLeavesCharacterInOriginalState()
+        public void AdvancedLadderProcessLeavesCharacterInOriginalState()
         {
-            var ladderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
+            var ladderProcess = new AdvancedLadderProcess(_character, _finalImplantTemplates);
             Assert.AreEqual(0, _character.GetTotalImplantQL());
             Assert.AreEqual(662.6250, _character.TreatmentValue);
             Assert.AreEqual(281, _character.GetAbilityValue(Ability.Agility));
         }
 
         [TestMethod]
-        public void BasicLadderProcessIsDeterministicWhenOldApplicationIsnt()
+        public void AdvancedLadderProcessIsDeterministicWhenOldApplicationIsnt()
         {
             var ladderProcesses = new[]
             {
-                new BasicLadderProcess(_character, _finalImplantTemplates),
-                new BasicLadderProcess(_character, _finalImplantTemplates),
-                new BasicLadderProcess(_character, _finalImplantTemplates),
-                new BasicLadderProcess(_character, _finalImplantTemplates),
-                new BasicLadderProcess(_character, _finalImplantTemplates)
+                new AdvancedLadderProcess(_character, _finalImplantTemplates),
+                new AdvancedLadderProcess(_character, _finalImplantTemplates),
+                new AdvancedLadderProcess(_character, _finalImplantTemplates),
+                new AdvancedLadderProcess(_character, _finalImplantTemplates),
+                new AdvancedLadderProcess(_character, _finalImplantTemplates)
             };
 
             Assert.IsTrue(ladderProcesses.All(p => p.TotalFinalImplantQL == ladderProcesses[0].TotalFinalImplantQL));
@@ -85,81 +84,68 @@ namespace AOLadderer.UnitTests.LadderProcesses
         }
 
         [TestMethod]
-        public void BasicLadderProcessIsAtLeastAsGoodAsOldApplications()
+        public void AdvancedLadderProcessIsBetterThanBasic()
         {
-            // For 282 the old one seems deterministic, unlike for 281.
-            _character.IncreaseAbilityValue(Ability.Agility, 1);
-            Assert.AreEqual(282, _character.GetAbilityValue(Ability.Agility));
-
-            var ladderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
-
-            Assert.IsTrue(164.55 <= ladderProcess.AverageFinalImplantQL);
-            // Throw in a regression test, hopefully won't ever drop below this.
-            Assert.AreEqual(166.72727272727272, ladderProcess.AverageFinalImplantQL);
+            var basicLadderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
+            var advancedLadderProcess = new AdvancedLadderProcess(_character, _finalImplantTemplates);
+            Assert.IsTrue(basicLadderProcess.AverageFinalImplantQL < advancedLadderProcess.AverageFinalImplantQL);
         }
 
         [TestMethod]
-        public void BasicLadderProcessBehaviorWhenHugeCharacterStats()
+        public void AdvancedLadderProcessIsAtLeastAsGoodAsOldApplications()
+        {
+            // To be consistent w/ other test for basic ladder process.
+            _character.IncreaseAbilityValue(Ability.Agility, 1);
+            Assert.AreEqual(282, _character.GetAbilityValue(Ability.Agility));
+
+            var ladderProcess = new AdvancedLadderProcess(_character, _finalImplantTemplates);
+
+            Assert.IsTrue(167 <= ladderProcess.AverageFinalImplantQL);
+            // Throw in a regression test, hopefully won't ever drop below this.
+            Assert.AreEqual(168.54545454545453, ladderProcess.AverageFinalImplantQL);
+        }
+
+        [TestMethod]
+        public void AdvancedLadderProcessBehaviorWhenHugeCharacterStats()
         {
             _character = new Character(
                 agilityValue: 981, intelligenceValue: 915, psychicValue: 905,
                 senseValue: 913, staminaValue: 901, strengthValue: 916, treatmentValue: 962.6250);
 
-            var ladderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
+            var ladderProcess = new AdvancedLadderProcess(_character, _finalImplantTemplates);
 
             // First group supersedes second in this case, so it should be chosen. We're not worrying
             // about detecting when no ladder implants will help, so at least once always gets chosen.
-            Assert.AreEqual(
-                LadderImplantGroup.LadderImplantGroups[1].LadderImplantTemplates[0],
-                ladderProcess.OrderedLadderImplants[0].ImplantTemplate);
-            Assert.AreEqual(1, ladderProcess.OrderedLadderImplants.Count);
+            CollectionAssert.AreEquivalent(
+                new[]
+                {
+                    LadderImplantGroup.LadderImplantGroups[1].LadderImplantTemplates[0],
+                    LadderImplantGroup.LadderImplantGroups[1].LadderImplantTemplates[0]
+                },
+                ladderProcess.OrderedLadderImplants.Select(i => i.ImplantTemplate).ToArray());
+            Assert.AreEqual(2, ladderProcess.OrderedLadderImplants.Count);
             Assert.AreEqual(200, ladderProcess.AverageFinalImplantQL);
             Assert.AreEqual(200 * 11, ladderProcess.TotalFinalImplantQL);
         }
 
         [TestMethod]
-        public void BasicLadderProcessBehaviorWhenTinyCharacterStats()
+        public void AdvancedLadderProcessBehaviorWhenTinyCharacterStats()
         {
             _character = new Character(
                 agilityValue: 1, intelligenceValue: 1, psychicValue: 1,
                 senseValue: 1, staminaValue: 1, strengthValue: 1, treatmentValue: 1);
 
-            var ladderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
+            var ladderProcess = new AdvancedLadderProcess(_character, _finalImplantTemplates);
 
             Assert.AreEqual(0, ladderProcess.TotalFinalImplantQL);
             Assert.AreEqual(0, ladderProcess.OrderedLadderImplants.Count);
             Assert.AreEqual(0, ladderProcess.OrderedFinalImplants.Count);
         }
 
-        [TestMethod, Timeout(60000)]
-        public void BasicLadderDoesntTakeForeverEvenWhenHighNumberOfFinalImplantsAsLadderImplants()
-        {
-            // If we try 9 or 10 ladder implants it's going take around a minute.
-            _finalImplantTemplates = new[]
-            {
-                ImplantTemplate.GetImplantTemplate(ImplantSlot.Head, Skill.TimeAndSpace, Skill.NanoPool, Ability.Sense),
-                ImplantTemplate.GetImplantTemplate(ImplantSlot.Eye, Skill.AimedShot, Skill.SensoryImpr, Skill.TimeAndSpace),
-                ImplantTemplate.GetImplantTemplate(ImplantSlot.Ear, null, Skill.Concealment, Ability.Intelligence),
-                ImplantTemplate.GetImplantTemplate(ImplantSlot.Chest, Ability.Stamina, Skill.BioMetamor, Skill.SensoryImpr),
-                ImplantTemplate.GetImplantTemplate(ImplantSlot.RightArm, Ability.Strength, null, null),
-                ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftArm, null, Ability.Strength, null),
-                ImplantTemplate.GetImplantTemplate(ImplantSlot.Waist, ArmorClass.FireAC, MaxHealthOrNano.MaxHealth, Skill.EvadeClsC),
-                ImplantTemplate.GetImplantTemplate(ImplantSlot.RightWrist, Skill.RunSpeed, Skill.NanoResist, Skill.MultMelee),
-                ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftWrist, Skill.MultMelee, Skill.RunSpeed, Skill.NanoResist),
-                ImplantTemplate.GetImplantTemplate(ImplantSlot.Leg, Ability.Agility, Skill.EvadeClsC, ArmorClass.MeleeMaAC),
-                ImplantTemplate.GetImplantTemplate(ImplantSlot.RightHand, Skill.MartialArts, Skill.TimeAndSpace, Skill.Treatment),
-                ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftHand, null, ArmorClass.FireAC, Skill.MartialArts),
-                ImplantTemplate.GetImplantTemplate(ImplantSlot.Feet, Skill.EvadeClsC, Ability.Agility, Skill.DuckExp),
-            };
-            Assert.AreEqual(8, _finalImplantTemplates.Count(t => t.RaisesLadderStats));
-
-            var ladderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
-        }
-
         [TestMethod]
-        public void BasicLadderProcessHandlesEmptyFinalImplantTemplates()
+        public void AdvancedLadderProcessHandlesEmptyFinalImplantTemplates()
         {
-            var ladderProcess = new BasicLadderProcess(_character, new ImplantTemplate[0]);
+            var ladderProcess = new AdvancedLadderProcess(_character, new ImplantTemplate[0]);
             Assert.AreEqual(0, ladderProcess.TotalFinalImplantQL);
             Assert.AreEqual(0, ladderProcess.AverageFinalImplantQL);
             Assert.AreEqual(0, ladderProcess.OrderedLadderImplants.Count);

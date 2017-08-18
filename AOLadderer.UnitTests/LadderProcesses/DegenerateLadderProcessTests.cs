@@ -290,5 +290,15 @@ namespace AOLadderer.UnitTests.LadderProcesses
             Assert.IsTrue(Array.IndexOf(orderedFinalImplantSlots, ImplantSlot.Ear) > Array.IndexOf(orderedFinalImplantSlots, ImplantSlot.Eye));
             Assert.IsTrue(Array.IndexOf(orderedFinalImplantSlots, ImplantSlot.Ear) > Array.IndexOf(orderedFinalImplantSlots, ImplantSlot.Feet));
         }
+
+        [TestMethod]
+        public void DegenerateLadderProcessHandlesEmptyFinalImplantTemplates()
+        {
+            var ladderProcess = new DegenerateLadderProcess(_character, new ImplantTemplate[0]);
+            Assert.AreEqual(0, ladderProcess.TotalFinalImplantQL);
+            Assert.AreEqual(0, ladderProcess.AverageFinalImplantQL);
+            Assert.AreEqual(0, ladderProcess.OrderedLadderImplants.Count);
+            Assert.AreEqual(0, ladderProcess.OrderedFinalImplants.Count);
+        }
     }
 }

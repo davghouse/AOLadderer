@@ -19,7 +19,8 @@ namespace AOLadderer
 
         protected abstract void Run();
         public int TotalFinalImplantQL { get; protected set; }
-        public double AverageFinalImplantQL => TotalFinalImplantQL / (double)_finalImplantTemplates.Count;
+        public double AverageFinalImplantQL
+            => _finalImplantTemplates.Count == 0 ? 0 : TotalFinalImplantQL / (double)_finalImplantTemplates.Count;
         public abstract IReadOnlyList<Implant> OrderedLadderImplants { get; }
         public abstract IReadOnlyList<Implant> OrderedFinalImplants { get; }
 

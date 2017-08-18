@@ -4,6 +4,11 @@ using System.Linq;
 
 namespace AOLadderer.LadderProcesses
 {
+    // Given a character with no initially equipped implants and their final implant templates, greedily
+    // select ladder implants that produce the biggest increase to the total final implant QL, if all
+    // final implants were to be equipped (in the optimal order) after the ladder implant. This is done
+    // by carefully considering only the ladder implants which might actually help, and then using the
+    // degenerate ladder process to assess how effective they are.
     public sealed class BasicLadderProcess : LadderProcess
     {
         public BasicLadderProcess(Character character, IEnumerable<ImplantTemplate> finalImplantTemplates)

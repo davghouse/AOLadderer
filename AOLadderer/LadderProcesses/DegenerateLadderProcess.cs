@@ -3,6 +3,9 @@ using System.Linq;
 
 namespace AOLadderer.LadderProcesses
 {
+    // Given a character with some (or none) initially equipped *ladder* implants and their final implant templates,
+    // find the optimal order of final implants, where a requirement is filling in initially empty slots first.
+    // This is done by considering every permutation of two different groups of ladder implants (in empty/full slots).
     public sealed class DegenerateLadderProcess : LadderProcess
     {
         private readonly IReadOnlyList<Implant> _initiallyEquippedImplants;
@@ -44,9 +47,6 @@ namespace AOLadderer.LadderProcesses
                     workingCharacter.EquipMaxImplant(finalNonLadderImplantTemplate, isSlotKnownToBeEmpty: true);
                 }
 
-                // We are assuming initially full slots are ladder implants which someone (the basic ladder process) is trying
-                // out to see how much they improve the result of the degenerate ladder process. That's why we don't even consider
-                // unequipping them until now. And given that they're ladder implants, we try all possible (un)equip orders.
                 foreach (var initiallyFullEquipOrder in GetAllPossibleEquipOrders(_finalImplantTemplatesInInitiallyFullImplantSlots))
                 {
                     foreach (var finalImplantTemplate in initiallyFullEquipOrder)

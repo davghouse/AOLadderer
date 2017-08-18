@@ -68,7 +68,7 @@ namespace AOLadderer
             => Equals(other as Implant);
 
         public bool Equals(Implant other)
-            => ImplantTemplate == other.ImplantTemplate && QL == other.QL;
+            => ImplantTemplate == other?.ImplantTemplate && QL == other?.QL;
 
         public override int GetHashCode()
             => ImplantTemplate.GetHashCode();
