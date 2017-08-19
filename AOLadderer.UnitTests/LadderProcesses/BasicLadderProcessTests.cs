@@ -12,7 +12,6 @@ namespace AOLadderer.UnitTests.LadderProcesses
     {
         private Character _character;
         private IReadOnlyList<ImplantTemplate> _finalImplantTemplates;
-        private IReadOnlyList<ImplantSlot> _finalImplantSlots;
 
         [TestInitialize]
         public void Initialize()
@@ -34,9 +33,6 @@ namespace AOLadderer.UnitTests.LadderProcesses
                 ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftHand, null, ArmorClass.FireAC, Skill.MartialArts),
                 ImplantTemplate.GetImplantTemplate(ImplantSlot.Feet, Skill.EvadeClsC, Skill.MartialArts, Skill.DuckExp),
             };
-            _finalImplantSlots = _finalImplantTemplates
-                .Select(t => t.ImplantSlot)
-                .ToArray();
         }
 
         [TestMethod]
@@ -54,8 +50,12 @@ namespace AOLadderer.UnitTests.LadderProcesses
                 Assert.IsTrue(_character.TryEquipImplant(finalImplant));
             }
 
-            Assert.AreEqual(_character.GetTotalImplantQL(_finalImplantSlots), ladderProcess.TotalFinalImplantQL);
-            Assert.AreEqual(_character.GetAverageImplantQL(_finalImplantSlots), ladderProcess.AverageFinalImplantQL);
+            var finalImplantSlots = _finalImplantTemplates
+                .Select(t => t.ImplantSlot)
+                .ToArray();
+
+            Assert.AreEqual(_character.GetTotalImplantQL(finalImplantSlots), ladderProcess.TotalFinalImplantQL);
+            Assert.AreEqual(_character.GetAverageImplantQL(finalImplantSlots), ladderProcess.AverageFinalImplantQL);
         }
 
         [TestMethod]
@@ -164,6 +164,28 @@ namespace AOLadderer.UnitTests.LadderProcesses
             Assert.AreEqual(0, ladderProcess.AverageFinalImplantQL);
             Assert.AreEqual(0, ladderProcess.OrderedLadderImplants.Count);
             Assert.AreEqual(0, ladderProcess.OrderedFinalImplants.Count);
+        }
+
+        [TestMethod]
+        public void BasicLadderProcessIsAtLeastAsGoodAsOldApplicationWhenNoInitialLimitingFactor()
+        {
+            // There's no limiting factor here, they have the exact stats required to equip a QL 100 left-arm.
+            _character = new Character(
+                agilityValue: 204, intelligenceValue: 204, psychicValue: 204,
+                senseValue: 204, staminaValue: 204, strengthValue: 204, treatmentValue: 479);
+            _finalImplantTemplates = new[]
+            {
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftArm, Skill.Brawling, Skill.TwoHandBlunt, ArmorClass.ChemicalAC)
+            };
+
+            var ladderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
+
+            // Make sure it's at least as good as the old ladderer. I wanted to document this behavior because it depends
+            // upon something non-obvious, the order we've defined the ladder implant groups. If there's no limiting factor
+            // the first non-superseded group is used to find the first ladder implant. So it's important that that implant
+            // is a good one. The most obvious choice is a shiny treatment implant since treatment benefits every implant.
+            // And so we've defined the ladder implants groups such that head groups adding to treatment come first.
+            Assert.IsTrue(121 <= ladderProcess.AverageFinalImplantQL);
         }
     }
 }

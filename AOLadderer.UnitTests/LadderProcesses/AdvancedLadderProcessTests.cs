@@ -11,7 +11,6 @@ namespace AOLadderer.UnitTests.LadderProcesses
     {
         private Character _character;
         private IReadOnlyList<ImplantTemplate> _finalImplantTemplates;
-        private IReadOnlyList<ImplantSlot> _finalImplantSlots;
 
         [TestInitialize]
         public void Initialize()
@@ -33,9 +32,6 @@ namespace AOLadderer.UnitTests.LadderProcesses
                 ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftHand, null, ArmorClass.FireAC, Skill.MartialArts),
                 ImplantTemplate.GetImplantTemplate(ImplantSlot.Feet, Skill.EvadeClsC, Skill.MartialArts, Skill.DuckExp),
             };
-            _finalImplantSlots = _finalImplantTemplates
-                .Select(t => t.ImplantSlot)
-                .ToArray();
         }
 
         [TestMethod]
@@ -53,8 +49,12 @@ namespace AOLadderer.UnitTests.LadderProcesses
                 Assert.IsTrue(_character.TryEquipImplant(finalImplant));
             }
 
-            Assert.AreEqual(_character.GetTotalImplantQL(_finalImplantSlots), ladderProcess.TotalFinalImplantQL);
-            Assert.AreEqual(_character.GetAverageImplantQL(_finalImplantSlots), ladderProcess.AverageFinalImplantQL);
+            var finalImplantSlots = _finalImplantTemplates
+                .Select(t => t.ImplantSlot)
+                .ToArray();
+
+            Assert.AreEqual(_character.GetTotalImplantQL(finalImplantSlots), ladderProcess.TotalFinalImplantQL);
+            Assert.AreEqual(_character.GetAverageImplantQL(finalImplantSlots), ladderProcess.AverageFinalImplantQL);
         }
 
         [TestMethod]

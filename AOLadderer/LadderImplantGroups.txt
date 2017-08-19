@@ -25,6 +25,11 @@ adding only to Psychic may be better than the head requiring Agility and adding 
 Implant template index | AOID | Required ability | Shiny | Bright | Faded
 
 Head
+  +Treatment
+    869,105547,Psychic,Treatment,Dimach,EMPTY
+  +Treatment +Sense
+    865,106954,Agility,Treatment,EMPTY,Sense
+    871,107171,Intelligence,Treatment,Dimach,Sense
   +Intelligence
     263,105291,Intelligence,Intelligence,Elec. Engi,EMPTY
   +Intelligence +Sense
@@ -38,22 +43,17 @@ Head
   +Sense
     223,107169,Sense,First Aid,Dimach,Sense
     187,173105,Stamina,Disease AC,Dimach,Sense
-  +Treatment
-    869,105547,Psychic,Treatment,Dimach,EMPTY
-  +Treatment +Sense
-    865,106954,Agility,Treatment,EMPTY,Sense
-    871,107171,Intelligence,Treatment,Dimach,Sense
 
 Eye
+  +Treatment
+    1162,101971,Agility,EMPTY,Treatment,EMPTY
+    1168,102685,Intelligence,EMPTY,Treatment,Pistol
+    2308,102691,Sense,Vehicle Air,Treatment,Pistol
   +Intelligence
     1030,102307,Agility,EMPTY,Intelligence,EMPTY
     1948,102806,Intelligence,Tutoring,Intelligence,Pistol
     1036,102796,Psychic,EMPTY,Intelligence,Pistol
     2176,102802,Sense,Vehicle Air,Intelligence,Pistol
-  +Treatment
-    1162,101971,Agility,EMPTY,Treatment,EMPTY
-    1168,102685,Intelligence,EMPTY,Treatment,Pistol
-    2308,102691,Sense,Vehicle Air,Treatment,Pistol
 
 Ear
   +Intelligence

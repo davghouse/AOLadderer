@@ -28,18 +28,18 @@ namespace AOLadderer.UnitTests
         [TestMethod]
         public void VerifiesSomeLadderImplantGroupsWithSupersedingLadderStats()
         {
-            // Head group adding to Psychic has its ladder stats superseded by group adding to Psychic and Sense.
-            Assert.AreEqual(
-                LadderImplantGroup.LadderImplantGroups[2].LadderImplantGroupsWithSupersedingLadderStats.Single(),
-                LadderImplantGroup.LadderImplantGroups[3]);
-
             // Head group adding to Treatment has its ladder stats superseded by group adding to Treatment and Sense.
             Assert.AreEqual(
-                LadderImplantGroup.LadderImplantGroups[5].LadderImplantGroupsWithSupersedingLadderStats.Single(),
-                LadderImplantGroup.LadderImplantGroups[6]);
+                LadderImplantGroup.LadderImplantGroups[0].LadderImplantGroupsWithSupersedingLadderStats.Single(),
+                LadderImplantGroup.LadderImplantGroups[1]);
+
+            // Head group adding to Psychic has its ladder stats superseded by group adding to Psychic and Sense.
+            Assert.AreEqual(
+                LadderImplantGroup.LadderImplantGroups[4].LadderImplantGroupsWithSupersedingLadderStats.Single(),
+                LadderImplantGroup.LadderImplantGroups[5]);
 
             // Eye group adding to Intelligence has its ladder stats superseded by no other groups.
-            Assert.IsFalse(LadderImplantGroup.LadderImplantGroups[7].LadderImplantGroupsWithSupersedingLadderStats.Any());
+            Assert.IsFalse(LadderImplantGroup.LadderImplantGroups[8].LadderImplantGroupsWithSupersedingLadderStats.Any());
 
             // Leg group adding to Stamina has its ladder stats superseded by group adding to Agility and Stamina.
             Assert.AreEqual(
