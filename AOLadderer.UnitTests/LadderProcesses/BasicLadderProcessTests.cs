@@ -107,10 +107,11 @@ namespace AOLadderer.UnitTests.LadderProcesses
 
             var ladderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
 
-            // First group supersedes second in this case, so it should be chosen. We're not worrying
-            // about detecting when no ladder implants will help, so at least once always gets chosen.
+            // Heuristic chooses the ladder implant adding the most treatment when there are ties.
+            // We're not worrying about detecting when no ladder implants will help, so at least
+            // one always gets chosen.
             Assert.AreEqual(
-                LadderImplantGroup.LadderImplantGroups[1].LadderImplantTemplates[0],
+                LadderImplantGroup.LadderImplantGroups[6].LadderImplantTemplates[0],
                 ladderProcess.OrderedLadderImplants[0].ImplantTemplate);
             Assert.AreEqual(1, ladderProcess.OrderedLadderImplants.Count);
             Assert.AreEqual(200, ladderProcess.AverageFinalImplantQL);
@@ -180,11 +181,6 @@ namespace AOLadderer.UnitTests.LadderProcesses
 
             var ladderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
 
-            // Make sure it's at least as good as the old ladderer. I wanted to document this behavior because it depends
-            // upon something non-obvious, the order we've defined the ladder implant groups. If there's no limiting factor
-            // the first non-superseded group is used to find the first ladder implant. So it's important that that implant
-            // is a good one. The most obvious choice is a shiny treatment implant since treatment benefits every implant.
-            // And so we've defined the ladder implants groups such that head groups adding to treatment come first.
             Assert.IsTrue(121 <= ladderProcess.AverageFinalImplantQL);
         }
     }

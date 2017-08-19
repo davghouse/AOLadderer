@@ -57,15 +57,15 @@ namespace AOLadderer
 
         public static readonly IReadOnlyList<LadderImplantGroup> LadderImplantGroups = new[]
         {
-            new LadderImplantGroup(869),
-            new LadderImplantGroup(865, 871),
             new LadderImplantGroup(263),
             new LadderImplantGroup(253, 259),
             new LadderImplantGroup(617),
             new LadderImplantGroup(613, 619),
             new LadderImplantGroup(223, 187),
-            new LadderImplantGroup(1162, 1168, 2308),
+            new LadderImplantGroup(869),
+            new LadderImplantGroup(865, 871),
             new LadderImplantGroup(1030, 1948, 1036, 2176),
+            new LadderImplantGroup(1162, 1168, 2308),
             new LadderImplantGroup(2344, 2356, 2338, 2362),
             new LadderImplantGroup(2345, 2339, 2363),
             new LadderImplantGroup(2436),

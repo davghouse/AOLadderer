@@ -39,7 +39,12 @@ namespace AOLadderer.LadderProcesses
                         int trialTotalFinalImplantQL = trialDegenerateLadderProcess.TotalFinalImplantQL;
                         var trialOrderedFinalImplants = trialDegenerateLadderProcess.OrderedFinalImplants;
 
-                        if (trialTotalFinalImplantQL > TotalFinalImplantQL)
+                        if (trialTotalFinalImplantQL > TotalFinalImplantQL
+                            // The old application used this heuristic: if we've found an implant useful for laddering, and
+                            // we've found another 'just as good' that adds more treatment, prefer the one adding more treatment.
+                            || (nextLadderImplant != null
+                                && trialTotalFinalImplantQL == TotalFinalImplantQL
+                                && trialLadderImplant.TotalTreatmentIncrease > nextLadderImplant.TotalTreatmentIncrease))
                         {
                             TotalFinalImplantQL = trialTotalFinalImplantQL;
                             _orderedFinalImplants = trialOrderedFinalImplants;

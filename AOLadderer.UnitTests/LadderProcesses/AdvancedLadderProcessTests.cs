@@ -114,13 +114,14 @@ namespace AOLadderer.UnitTests.LadderProcesses
 
             var ladderProcess = new AdvancedLadderProcess(_character, _finalImplantTemplates);
 
-            // First group supersedes second in this case, so it should be chosen. We're not worrying
-            // about detecting when no ladder implants will help, so at least once always gets chosen.
+            // Heuristic chooses the ladder implant adding the most treatment when there are ties.
+            // We're not worrying about detecting when no ladder implants will help, so at least
+            // one always gets chosen (for each basic ladder process inside the advanced ladder process).
             CollectionAssert.AreEquivalent(
                 new[]
                 {
-                    LadderImplantGroup.LadderImplantGroups[1].LadderImplantTemplates[0],
-                    LadderImplantGroup.LadderImplantGroups[1].LadderImplantTemplates[0]
+                    LadderImplantGroup.LadderImplantGroups[6].LadderImplantTemplates[0],
+                    LadderImplantGroup.LadderImplantGroups[6].LadderImplantTemplates[0]
                 },
                 ladderProcess.OrderedLadderImplants.Select(i => i.ImplantTemplate).ToArray());
             Assert.AreEqual(2, ladderProcess.OrderedLadderImplants.Count);

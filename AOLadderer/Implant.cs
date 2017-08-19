@@ -2,6 +2,7 @@
 using AOLadderer.Stats;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AOLadderer
 {
@@ -33,6 +34,10 @@ namespace AOLadderer
         public int? ShinyStatIncrease => ShinyClusterTemplate?.GetStatIncrease(QL);
         public int? BrightStatIncrease => BrightClusterTemplate?.GetStatIncrease(QL);
         public int? FadedStatIncrease => FadedClusterTemplate?.GetStatIncrease(QL);
+
+        public double TotalTreatmentIncrease =>
+            AbilityClusterTemplates.Sum(t => t.Ability.GetTreatmentTrickle(t.GetStatIncrease(QL)))
+            + (TreatmentClusterTemplate?.GetStatIncrease(QL) ?? 0);
 
         public override string ToString()
             => $"{ImplantTemplate}, QL {QL}";

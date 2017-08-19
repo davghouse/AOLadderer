@@ -106,5 +106,18 @@ namespace AOLadderer.UnitTests
             Assert.AreEqual(268, eye.RequiredAbilityValue);
             Assert.AreEqual(630, eye.RequiredTreatmentValue);
         }
+
+        [TestMethod]
+        public void GetsTotalTreatmentIncrease()
+        {
+            var leftHand = Implant.GetImplant(ImplantSlot.LeftHand, Skill.FastAttack, ArmorClass.FireAC, Skill.MartialArts, 155);
+            Assert.AreEqual(0, leftHand.TotalTreatmentIncrease);
+
+            var head1 = Implant.GetImplant(ImplantSlot.Head, Skill.Treatment, null, Ability.Sense, 200);
+            Assert.AreEqual(106.1, head1.TotalTreatmentIncrease);
+
+            var head2 = Implant.GetImplant(ImplantSlot.Head, Ability.Intelligence, null, Ability.Sense, 200);
+            Assert.AreEqual(7.975, head2.TotalTreatmentIncrease);
+        }
     }
 }
