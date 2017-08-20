@@ -1,0 +1,99 @@
+﻿<Window x:Class="AOLadderer.UI.Views.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:AOLadderer.UI.ViewModels"
+        xmlns:views="clr-namespace:AOLadderer.UI.Views"
+        mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
+        Style="{StaticResource WindowStyle}" Background="Transparent"
+        BorderBrush="{StaticResource LightBlueBrush50}" BorderThickness="1"
+        Title="AO Ladderer" Height="350" Width="525">
+  <Window.Resources>
+    <Style TargetType="TextBlock">
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="Effect">
+        <Setter.Value>
+          <DropShadowEffect BlurRadius="1" ShadowDepth="1"/>
+        </Setter.Value>
+      </Setter>
+      <Style.Triggers>
+        <Trigger Property="IsEnabled" Value="False">
+          <Setter Property="Foreground" Value="Gray"/>
+          <Setter Property="Effect" Value="{x:Null}"/>
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+  </Window.Resources>
+
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="24"/>
+      <RowDefinition Height="24"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <Grid Grid.Row="0"
+          Background="{StaticResource Black60}"
+          MouseDown="HeaderRow_MouseDown_Drag">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="24"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="24"/>
+      </Grid.ColumnDefinitions>
+
+      <Image Grid.Column="0"
+             Source="/Icons/Ladder.ico" Margin="1"/>
+      <TextBlock Grid.Column="1" Margin="5 0 0 0" VerticalAlignment="Center"
+                 Style="{StaticResource WhiteTextBlockStyle}"
+                 Text="AO Ladderer"/>
+      <Button Grid.Column="2"
+              Click="CloseButton_Click_CloseApplication"
+              ToolTip="Close">
+        <fa:ImageAwesome Icon="Close"/>
+      </Button>
+    </Grid>
+
+    <Menu Grid.Row="1" Padding="0 6 0 0"
+          Foreground="White" FontFamily="Verdana" FontSize="12"
+          Background="{StaticResource Black60}" >
+      <!-- I would like to style these menu items but can't find the template, see: https://stackoverflow.com/q/32082576. -->
+      <MenuItem Header="_File">
+        <MenuItem Header="Open..." Foreground="Black" FontFamily="Verdana" FontSize="12"/>
+        <Separator/>
+        <MenuItem Header="Save" Foreground="Black"/>
+        <MenuItem Header="Save As..." Foreground="Black"/>
+      </MenuItem>
+
+      <MenuItem Padding="10 0 10 0" Header="_Export">
+        <MenuItem Header="Basic to Auno" Foreground="Black"/>
+        <MenuItem Header="Advanced to Auno" Foreground="Black"/>
+      </MenuItem>
+    </Menu>
+
+    <Grid Grid.Row="2" Background="{StaticResource DarkBlueBrush85}">
+      <TabControl Margin="10" Background="{StaticResource DarkBlueBrush}" BorderBrush="{StaticResource LightBlueBrush}" >
+        <TabItem Header="Build" DataContext="{Binding BuildViewModel}">
+          <views:BuildView/>
+        </TabItem>
+        <TabItem Header="Basic Ladder" DataContext="{Binding BasicLadderViewModel}">
+          <views:LadderView/>
+        </TabItem>
+        <TabItem Header="Basic Shopping" DataContext="{Binding BasicShoppingViewModel}">
+          <views:ShoppingView/>
+        </TabItem>
+        <TabItem Header="Advanced Ladder" DataContext="{Binding AdvancedLadderViewModel}">
+          <views:LadderView/>
+        </TabItem>
+        <TabItem Header="Advanced Shopping" DataContext="{Binding AdvancedShoppingViewModel}">
+          <views:ShoppingView/>
+        </TabItem>
+      </TabControl>
+
+      <Border Margin="1 0 1 1"
+            BorderBrush="{StaticResource LightBlueBrush}" BorderThickness="1"/>
+    </Grid>
+
+  </Grid>
+</Window>
