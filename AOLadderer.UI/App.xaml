@@ -122,12 +122,6 @@
           <DropShadowEffect BlurRadius="1" ShadowDepth="1"/>
         </Setter.Value>
       </Setter>
-      <Style.Triggers>
-        <Trigger Property="IsEnabled" Value="False">
-          <Setter Property="Foreground" Value="Gray"/>
-          <Setter Property="Effect" Value="{x:Null}"/>
-        </Trigger>
-      </Style.Triggers>
     </Style>
 
     <ControlTemplate x:Key="TextBoxControlTemplate" TargetType="{x:Type TextBox}">

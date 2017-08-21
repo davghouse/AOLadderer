@@ -18,12 +18,6 @@
           <DropShadowEffect BlurRadius="1" ShadowDepth="1"/>
         </Setter.Value>
       </Setter>
-      <Style.Triggers>
-        <Trigger Property="IsEnabled" Value="False">
-          <Setter Property="Foreground" Value="Gray"/>
-          <Setter Property="Effect" Value="{x:Null}"/>
-        </Trigger>
-      </Style.Triggers>
     </Style>
   </Window.Resources>
 
@@ -41,6 +35,7 @@
         <ColumnDefinition Width="24"/>
         <ColumnDefinition Width="*"/>
         <ColumnDefinition Width="24"/>
+        <ColumnDefinition Width="24"/>
       </Grid.ColumnDefinitions>
 
       <Image Grid.Column="0"
@@ -49,6 +44,11 @@
                  Style="{StaticResource WhiteTextBlockStyle}"
                  Text="AO Ladderer"/>
       <Button Grid.Column="2"
+              Click="MinimizeButton_Click_MinimizeApplication"
+              ToolTip="Minimize">
+        <fa:ImageAwesome Icon="WindowMinimize"/>
+      </Button>
+      <Button Grid.Column="3"
               Click="CloseButton_Click_CloseApplication"
               ToolTip="Close">
         <fa:ImageAwesome Icon="Close"/>
@@ -77,22 +77,26 @@
         <TabItem Header="Build" DataContext="{Binding BuildViewModel}">
           <views:BuildView/>
         </TabItem>
+
         <TabItem Header="Basic Ladder" DataContext="{Binding BasicLadderViewModel}">
           <views:LadderView/>
         </TabItem>
+
         <TabItem Header="Basic Shopping" DataContext="{Binding BasicShoppingViewModel}">
           <views:ShoppingView/>
         </TabItem>
+
         <TabItem Header="Advanced Ladder" DataContext="{Binding AdvancedLadderViewModel}">
           <views:LadderView/>
         </TabItem>
+
         <TabItem Header="Advanced Shopping" DataContext="{Binding AdvancedShoppingViewModel}">
           <views:ShoppingView/>
         </TabItem>
       </TabControl>
 
       <Border Margin="1 0 1 1"
-            BorderBrush="{StaticResource LightBlueBrush}" BorderThickness="1"/>
+              BorderBrush="{StaticResource LightBlueBrush}" BorderThickness="1"/>
     </Grid>
   </Grid>
 </Window>

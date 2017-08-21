@@ -22,6 +22,9 @@ namespace AOLadderer.UI.Views
             }
         }
 
+        private void MinimizeButton_Click_MinimizeApplication(object sender, RoutedEventArgs e)
+            => WindowState = WindowState.Minimized;
+
         private void CloseButton_Click_CloseApplication(object sender, RoutedEventArgs e)
             => Close();
 
