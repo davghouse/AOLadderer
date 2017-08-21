@@ -64,6 +64,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="RelayCommand.cs" />
+    <Compile Include="RelayCommandParameterized.cs" />
+    <Compile Include="ViewModels\ImplantViewModel.cs" />
     <Compile Include="ViewModels\LadderViewModel.cs" />
     <Compile Include="ViewModels\ShoppingViewModel.cs" />
     <Compile Include="ViewModels\BuildViewModel.cs" />

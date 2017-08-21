@@ -7,9 +7,13 @@ namespace AOLadderer
     public class ImplantSlot
     {
         private ImplantSlot(string name)
-            => Name = name;
+        {
+            Name = name;
+            ShortName = name.Replace("Right", "R").Replace("Left", "L");
+        }
 
         public string Name { get; }
+        public string ShortName { get; }
 
         private IReadOnlyList<ShinyClusterTemplate> _shinyClusterTemplates;
         public IReadOnlyList<ShinyClusterTemplate> ShinyClusterTemplates => _shinyClusterTemplates

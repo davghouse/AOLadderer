@@ -8,7 +8,12 @@ namespace AOLadderer.Stats
 
         private Ability(string name, double treatmentTrickleMultiplier = 0)
             : base(name)
-            => _treatmentTrickleMultiplier = treatmentTrickleMultiplier;
+        {
+            _treatmentTrickleMultiplier = treatmentTrickleMultiplier;
+            ShortName = name.Substring(0, 3);
+        }
+
+        public string ShortName { get; }
 
         public override int GetShinyStatIncrease(int implantQL)
             => (int)(4.7487437 + 0.2512563 * implantQL + 0.5);

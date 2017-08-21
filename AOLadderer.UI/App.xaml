@@ -27,6 +27,9 @@
     <SolidColorBrush x:Key="DarkBlueBrush20" Color="{StaticResource DarkBlueColor}" Opacity=".20" po:Freeze="True"/>
     <SolidColorBrush x:Key="DarkBlueBrush15" Color="{StaticResource DarkBlueColor}" Opacity=".15" po:Freeze="True"/>
 
+    <Color x:Key="BorderGrayColor">#9C9C9C</Color>
+    <SolidColorBrush x:Key="BorderGrayBrush" Color="{StaticResource BorderGrayColor}" po:Freeze="True"/>
+
     <SolidColorBrush x:Key="Black40" Color="Black" Opacity=".40" po:Freeze="True"/>
     <SolidColorBrush x:Key="Black60" Color="Black" Opacity=".60" po:Freeze="True"/>
 
@@ -58,6 +61,55 @@
       <Setter Property="BorderBrush" Value="Transparent"/>
     </Style>
 
+    <ControlTemplate x:Key="TextButtonControlTemplate" TargetType="{x:Type Button}">
+      <Border x:Name="border" SnapsToDevicePixels="True"
+              CornerRadius="10" Background="{StaticResource EnabledButtonBrush}"
+              BorderBrush="{StaticResource MiddleBlueBrush}" BorderThickness="1">
+        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+      </Border>
+      <ControlTemplate.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Background" TargetName="border">
+            <Setter.Value>
+              <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="{StaticResource LightBlueColor}" Offset="0"/>
+                <GradientStop Color="{StaticResource MiddleBlueColor}" Offset=".2"/>
+                <GradientStop Color="Black" Offset=".55"/>
+                <GradientStop Color="{StaticResource LightMiddleBlueColor}" Offset="2"/>
+              </LinearGradientBrush>
+            </Setter.Value>
+          </Setter>
+          <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource LightBlueBrush}"/>
+        </Trigger>
+        <Trigger Property="IsPressed" Value="True">
+          <Setter Property="Background" TargetName="border">
+            <Setter.Value>
+              <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Color="{StaticResource LightBlueColor}" Offset="0"/>
+                <GradientStop Color="{StaticResource MiddleBlueColor}" Offset=".3"/>
+                <GradientStop Color="Black" Offset=".6"/>
+                <GradientStop Color="{StaticResource LightMiddleBlueColor}" Offset="1.2"/>
+              </LinearGradientBrush>
+            </Setter.Value>
+          </Setter>
+          <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource LightMiddleBlueBrush}"/>
+        </Trigger>
+        <Trigger Property="IsEnabled" Value="False">
+          <Setter Property="Background" TargetName="border" Value="{StaticResource DisabledButtonBrush}"/>
+          <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource MiddleDarkBlueBrush}"/>
+        </Trigger>
+      </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="Button" x:Key="TextButtonStyle">
+      <Setter Property="Template" Value="{StaticResource TextButtonControlTemplate}"/>
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="MinWidth" Value="100"/>
+      <Setter Property="MinHeight" Value="20"/>
+      <Setter Property="Width" Value="Auto"/>
+      <Setter Property="Height" Value="Auto"/>
+    </Style>
+
     <Style TargetType="fa:ImageAwesome">
       <Setter Property="Foreground" Value="{StaticResource LightBlueBrush}"/>
       <Setter Property="Margin" Value="1"/>
@@ -76,6 +128,32 @@
           <Setter Property="Effect" Value="{x:Null}"/>
         </Trigger>
       </Style.Triggers>
+    </Style>
+
+    <ControlTemplate x:Key="TextBoxControlTemplate" TargetType="{x:Type TextBox}">
+      <Border x:Name="border" BorderThickness="1" SnapsToDevicePixels="True"
+              BorderBrush="{StaticResource MiddleBlueBrush}" CornerRadius="6"
+              Background="{StaticResource DarkBlueBrush}"
+              Padding="1 0 1 0">
+        <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+      </Border>
+      <!-- AO doesn't have IsMouseOver and IsKeyboardFocused border highlights, so I'm leaving them out. -->
+      <ControlTemplate.Triggers>
+        <Trigger Property="IsEnabled" Value="False">
+          <Setter Property="Background" TargetName="border">
+            <Setter.Value>
+              <SolidColorBrush Color="Gray" Opacity=".4"/>
+            </Setter.Value>
+          </Setter>
+        </Trigger>
+      </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="TextBox">
+      <Setter Property="Template" Value="{StaticResource TextBoxControlTemplate}"/>
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="VerticalContentAlignment" Value="Center"/>
+      <Setter Property="CaretBrush" Value="White"/>
     </Style>
 
     <Style TargetType="ToolTip">
