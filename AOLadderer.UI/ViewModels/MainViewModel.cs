@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AOLadderer.ClusterTemplates;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -12,11 +13,80 @@ namespace AOLadderer.UI.ViewModels
 
         public BuildViewModel BuildViewModel { get; } = new BuildViewModel();
         public LadderViewModel BasicLadderViewModel { get; } = new LadderViewModel();
-        public ShoppingViewModel BasicShoppingViewModel = new ShoppingViewModel();
+        public ShoppingViewModel BasicShoppingViewModel { get; } = new ShoppingViewModel();
         public LadderViewModel AdvancedLadderViewModel { get; } = new LadderViewModel();
-        public ShoppingViewModel AdvancedShoppingViewModel = new ShoppingViewModel();
+        public ShoppingViewModel AdvancedShoppingViewModel { get; } = new ShoppingViewModel();
 
-        /* Erm, maybe we should just use [Serializable]? */
+        // Well, this is kind of disgusting. I'll need to look into serialization options to replace this
+        // manual effort. But I don't want our serialization to affect the AOLadderer project.
+        public void SaveToFile(string filePath)
+        {
+            using (var file = new StreamWriter(filePath))
+            {
+                foreach (var implantConfigurationViewModel in BuildViewModel.ImplantConfigurationViewModels)
+                {
+                    file.WriteLine(implantConfigurationViewModel.GetImplantTemplate()?.AOID);
+                }
+
+                file.WriteLine(BuildViewModel.UseComposites);
+                file.WriteLine(BuildViewModel.UseCompositesPay2Win);
+                file.WriteLine(BuildViewModel.UseSurgeryClinicEffect);
+                file.WriteLine(BuildViewModel.UseSuperiorFirstAid);
+                file.WriteLine(BuildViewModel.UseEnhancedSenses);
+                file.WriteLine(BuildViewModel.UseFelineGrace);
+                file.WriteLine(BuildViewModel.UseEssenceOfBehemoth);
+                file.WriteLine(BuildViewModel.UseGauntlet);
+                file.WriteLine(BuildViewModel.UseExtruderBar);
+                file.WriteLine(BuildViewModel.UseExplosifs);
+                file.WriteLine(BuildViewModel.UseIronCircle);
+                file.WriteLine(BuildViewModel.UseProdigiousStrength);
+                file.WriteLine(BuildViewModel.UseIronCircleOrProdigiousStrength);
+                file.WriteLine(BuildViewModel.UseNeuronalStimulator);
+
+                file.WriteLine(BuildViewModel.Strength);
+                file.WriteLine(BuildViewModel.Stamina);
+                file.WriteLine(BuildViewModel.Sense);
+                file.WriteLine(BuildViewModel.Agility);
+                file.WriteLine(BuildViewModel.Intelligence);
+                file.WriteLine(BuildViewModel.Psychic);
+                file.WriteLine(BuildViewModel.Treatment);
+
+                void SaveLadderViewModelToFile(LadderViewModel ladderViewModel)
+                {
+                    file.WriteLine(ladderViewModel.LadderStepViewModels.Count);
+                    foreach (var ladderStepViewModel in ladderViewModel.LadderStepViewModels)
+                    {
+                        file.WriteLine(ladderStepViewModel.Implant.AOID);
+                        file.WriteLine(ladderStepViewModel.Implant.QL);
+                        file.WriteLine(ladderStepViewModel.IsChecked);
+                    }
+                    file.WriteLine(ladderViewModel.AverageFinalImplantQL);
+                }
+
+                void SaveClusterPurchasesToFile(IReadOnlyList<ClusterPurchaseViewModel> clusterPurchases)
+                {
+                    file.WriteLine(clusterPurchases.Count);
+                    foreach (var clusterPurchase in clusterPurchases)
+                    {
+                        file.WriteLine(clusterPurchase.Stat.Name);
+                        file.WriteLine(clusterPurchase.MinimumClusterQL);
+                        file.WriteLine(clusterPurchase.IsChecked);
+                    }
+                }
+
+                void SaveShoppingViewModelToFile(ShoppingViewModel shoppingViewModel)
+                {
+                    SaveClusterPurchasesToFile(shoppingViewModel.ShinyClusterPurchases);
+                    SaveClusterPurchasesToFile(shoppingViewModel.BrightClusterPurchases);
+                    SaveClusterPurchasesToFile(shoppingViewModel.FadedClusterPurchases);
+                }
+
+                SaveLadderViewModelToFile(BasicLadderViewModel);
+                SaveShoppingViewModelToFile(BasicShoppingViewModel);
+                SaveLadderViewModelToFile(AdvancedLadderViewModel);
+                SaveShoppingViewModelToFile(AdvancedShoppingViewModel);
+            }
+        }
 
         public void LoadFromFile(string filePath)
         {
@@ -57,103 +127,63 @@ namespace AOLadderer.UI.ViewModels
                 BuildViewModel.Psychic = int.Parse(file.ReadLine());
                 BuildViewModel.Treatment = double.Parse(file.ReadLine());
 
-                int basicLadderStepCount = int.Parse(file.ReadLine());
-                var basicLadderStepViewModels = new List<LadderStepViewModel>();
-                for (int i = 1; i <= basicLadderStepCount; ++i)
+                void LoadLadderViewModelFromFile(LadderViewModel ladderViewModel)
                 {
-                    int aoid = int.Parse(file.ReadLine());
-                    int implantQL = int.Parse(file.ReadLine());
-                    bool isChecked = bool.Parse(file.ReadLine());
-                    var implant = new Implant(ImplantTemplate.ImplantTemplates.Single(t => t.AOID == aoid), implantQL);
-                    basicLadderStepViewModels.Add(new LadderStepViewModel(implant)
+                    int ladderStepCount = int.Parse(file.ReadLine());
+                    var ladderStepViewModels = new List<LadderStepViewModel>();
+                    for (int i = 1; i <= ladderStepCount; ++i)
                     {
-                        IsChecked = isChecked
-                    });
-                }
-                BasicLadderViewModel.LadderStepViewModels = basicLadderStepViewModels;
-                if (double.TryParse(file.ReadLine(), out double basicAverageFinalImplantQL))
-                {
-                    BasicLadderViewModel.AverageFinalImplantQL = basicAverageFinalImplantQL;
-                }
-                else
-                {
-                    BasicLadderViewModel.AverageFinalImplantQL = null;
-                }
+                        int aoid = int.Parse(file.ReadLine());
+                        int implantQL = int.Parse(file.ReadLine());
+                        bool isChecked = bool.Parse(file.ReadLine());
+                        var implant = new Implant(ImplantTemplate.ImplantTemplates.Single(t => t.AOID == aoid), implantQL);
+                        ladderStepViewModels.Add(new LadderStepViewModel(implant)
+                            {
+                                IsChecked = isChecked
+                            });
+                    }
+                    ladderViewModel.LadderStepViewModels = ladderStepViewModels;
 
-                int advancedLadderStepCount = int.Parse(file.ReadLine());
-                var advancedLadderStepViewModels = new List<LadderStepViewModel>();
-                for (int i = 1; i <= advancedLadderStepCount; ++i)
-                {
-                    int aoid = int.Parse(file.ReadLine());
-                    int implantQL = int.Parse(file.ReadLine());
-                    bool isChecked = bool.Parse(file.ReadLine());
-                    var implant = new Implant(ImplantTemplate.ImplantTemplates.Single(t => t.AOID == aoid), implantQL);
-                    advancedLadderStepViewModels.Add(new LadderStepViewModel(implant)
+                    if (double.TryParse(file.ReadLine(), out double averageFinalImplantQL))
                     {
-                        IsChecked = isChecked
-                    });
-                }
-                AdvancedLadderViewModel.LadderStepViewModels = advancedLadderStepViewModels;
-                if (double.TryParse(file.ReadLine(), out double advancedAverageFinalImplantQL))
-                {
-                    AdvancedLadderViewModel.AverageFinalImplantQL = advancedAverageFinalImplantQL;
-                }
-                else
-                {
-                    AdvancedLadderViewModel.AverageFinalImplantQL = null;
-                }
-            }
-        }
-
-        public void SaveToFile(string filePath)
-        {
-            using (var file = new StreamWriter(filePath))
-            {
-                foreach (var implantConfigurationViewModel in BuildViewModel.ImplantConfigurationViewModels)
-                {
-                    file.WriteLine(implantConfigurationViewModel.GetImplantTemplate()?.AOID);
+                        ladderViewModel.AverageFinalImplantQL = averageFinalImplantQL;
+                    }
+                    else
+                    {
+                        ladderViewModel.AverageFinalImplantQL = null;
+                    }
                 }
 
-                file.WriteLine(BuildViewModel.UseComposites);
-                file.WriteLine(BuildViewModel.UseCompositesPay2Win);
-                file.WriteLine(BuildViewModel.UseSurgeryClinicEffect);
-                file.WriteLine(BuildViewModel.UseSuperiorFirstAid);
-                file.WriteLine(BuildViewModel.UseEnhancedSenses);
-                file.WriteLine(BuildViewModel.UseFelineGrace);
-                file.WriteLine(BuildViewModel.UseEssenceOfBehemoth);
-                file.WriteLine(BuildViewModel.UseGauntlet);
-                file.WriteLine(BuildViewModel.UseExtruderBar);
-                file.WriteLine(BuildViewModel.UseExplosifs);
-                file.WriteLine(BuildViewModel.UseIronCircle);
-                file.WriteLine(BuildViewModel.UseProdigiousStrength);
-                file.WriteLine(BuildViewModel.UseIronCircleOrProdigiousStrength);
-                file.WriteLine(BuildViewModel.UseNeuronalStimulator);
-
-                file.WriteLine(BuildViewModel.Strength);
-                file.WriteLine(BuildViewModel.Stamina);
-                file.WriteLine(BuildViewModel.Sense);
-                file.WriteLine(BuildViewModel.Agility);
-                file.WriteLine(BuildViewModel.Intelligence);
-                file.WriteLine(BuildViewModel.Psychic);
-                file.WriteLine(BuildViewModel.Treatment);
-
-                file.WriteLine(BasicLadderViewModel.LadderStepViewModels.Count);
-                foreach (var ladderStepViewModel in BasicLadderViewModel.LadderStepViewModels)
+                IReadOnlyList<ClusterPurchaseViewModel> LoadClusterPurchasesFromFile(IEnumerable<ClusterTemplate> clusterTemplates)
                 {
-                    file.WriteLine(ladderStepViewModel.Implant.AOID);
-                    file.WriteLine(ladderStepViewModel.Implant.QL);
-                    file.WriteLine(ladderStepViewModel.IsChecked);
-                }
-                file.WriteLine(BasicLadderViewModel.AverageFinalImplantQL);
+                    int clusterPurchasesCount = int.Parse(file.ReadLine());
+                    var clusterPurchaseViewModels = new List<ClusterPurchaseViewModel>();
+                    for (int i = 1; i <= clusterPurchasesCount; ++i)
+                    {
+                        string statName = file.ReadLine();
+                        int minimumClusterQL = int.Parse(file.ReadLine());
+                        bool isChecked = bool.Parse(file.ReadLine());
+                        var clusterTemplate = clusterTemplates.Single(t => t.Stat.Name == statName);
+                        clusterPurchaseViewModels.Add(new ClusterPurchaseViewModel(clusterTemplate, minimumClusterQL)
+                            {
+                                IsChecked = isChecked
+                            });
+                    }
 
-                file.WriteLine(AdvancedLadderViewModel.LadderStepViewModels.Count);
-                foreach (var ladderStepViewModel in AdvancedLadderViewModel.LadderStepViewModels)
-                {
-                    file.WriteLine(ladderStepViewModel.Implant.AOID);
-                    file.WriteLine(ladderStepViewModel.Implant.QL);
-                    file.WriteLine(ladderStepViewModel.IsChecked);
+                    return clusterPurchaseViewModels;
                 }
-                file.WriteLine(AdvancedLadderViewModel.AverageFinalImplantQL);
+
+                void LoadShoppingViewModelFromFile(ShoppingViewModel shoppingViewModel)
+                {
+                    shoppingViewModel.ShinyClusterPurchases = LoadClusterPurchasesFromFile(ShinyClusterTemplate.ShinyClusterTemplates);
+                    shoppingViewModel.BrightClusterPurchases = LoadClusterPurchasesFromFile(BrightClusterTemplate.BrightClusterTemplates);
+                    shoppingViewModel.FadedClusterPurchases = LoadClusterPurchasesFromFile(FadedClusterTemplate.FadedClusterTemplates);
+                }
+
+                LoadLadderViewModelFromFile(BasicLadderViewModel);
+                LoadShoppingViewModelFromFile(BasicShoppingViewModel);
+                LoadLadderViewModelFromFile(AdvancedLadderViewModel);
+                LoadShoppingViewModelFromFile(AdvancedShoppingViewModel);
             }
         }
 
@@ -162,10 +192,12 @@ namespace AOLadderer.UI.ViewModels
             if (e.PropertyName == nameof(BuildViewModel.BasicLadderProcess))
             {
                 BasicLadderViewModel.LadderProcess = BuildViewModel.BasicLadderProcess;
+                BasicShoppingViewModel.LadderProcess = BuildViewModel.BasicLadderProcess;
             }
             else if (e.PropertyName == nameof(BuildViewModel.AdvancedLadderProcess))
             {
                 AdvancedLadderViewModel.LadderProcess = BuildViewModel.AdvancedLadderProcess;
+                AdvancedShoppingViewModel.LadderProcess = BuildViewModel.AdvancedLadderProcess;
             }
         }
     }

@@ -24,6 +24,7 @@ namespace AOLadderer
         public Ability Ability { get; }
 
         public abstract int GetStatIncrease(int implantQL);
+        public abstract int GetMinimumClusterQL(int implantQL);
 
         public override string ToString()
             => $"{Stat.Name} Cluster - {ClusterGrade} ({ImplantSlot.Name})";

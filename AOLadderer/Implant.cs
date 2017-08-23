@@ -34,6 +34,9 @@ namespace AOLadderer
         public int? ShinyStatIncrease => ShinyClusterTemplate?.GetStatIncrease(QL);
         public int? BrightStatIncrease => BrightClusterTemplate?.GetStatIncrease(QL);
         public int? FadedStatIncrease => FadedClusterTemplate?.GetStatIncrease(QL);
+        public int? MinimumShinyClusterQL => ShinyClusterTemplate?.GetMinimumClusterQL(QL);
+        public int? MinimumBrightClusterQL => BrightClusterTemplate?.GetMinimumClusterQL(QL);
+        public int? MinimumFadedClusterQL => FadedClusterTemplate?.GetMinimumClusterQL(QL);
 
         public double TotalTreatmentIncrease =>
             AbilityClusterTemplates.Sum(t => t.Ability.GetTreatmentTrickle(t.GetStatIncrease(QL)))

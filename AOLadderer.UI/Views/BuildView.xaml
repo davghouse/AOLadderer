@@ -333,7 +333,7 @@
       <CheckBox Grid.Row="11" Margin="0 3 0 0"
                 IsChecked="{Binding UseProdigiousStrength}" Content="Prodigious Strength" TextBlock.Foreground="White"/>
       <CheckBox Grid.Row="12" Margin="0 3 0 0"
-                IsChecked="{Binding UseIronCircleOrProdigiousStrength}" Content="IC or PS (20 Sta, 40 Str)" TextBlock.Foreground="White"/>
+                IsChecked="{Binding UseIronCircleOrProdigiousStrength}" Content="IC or PS (40 Str, 20 Sta)" TextBlock.Foreground="White"/>
 
       <CheckBox Grid.Row="13" Margin="0 13 0 0"
                 IsChecked="{Binding UseNeuronalStimulator}" Content="Neuronal Stimulator" TextBlock.Foreground="White"/>

@@ -431,9 +431,14 @@
     </Style>
 
     <ControlTemplate x:Key="ListViewItemControlTemplate" TargetType="ListViewItem">
-      <Border x:Name="border" BorderBrush="Transparent" BorderThickness="1" Background="{TemplateBinding Background}">
-        <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
-      </Border>
+      <Grid>
+        <Border x:Name="border" BorderBrush="Transparent" BorderThickness="1" Background="{TemplateBinding Background}">
+          <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
+        </Border>
+        <Rectangle Name="StrikethroughRectangle" IsHitTestVisible="False"
+                   HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                   Height="1" StrokeThickness="1" Stroke="Transparent"/>
+      </Grid>
       <ControlTemplate.Triggers>
         <MultiTrigger>
           <MultiTrigger.Conditions>
@@ -455,6 +460,9 @@
           </MultiTrigger.Conditions>
           <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
         </MultiTrigger>
+        <DataTrigger Binding="{Binding IsChecked}" Value="True">
+          <Setter TargetName="StrikethroughRectangle" Property="Stroke" Value="White"/>
+        </DataTrigger>
       </ControlTemplate.Triggers>
     </ControlTemplate>
 
@@ -469,6 +477,12 @@
           <Setter Property="Background" Value="#122D47"/>
         </Trigger>
       </Style.Triggers>
+    </Style>
+
+    <Style TargetType="ListView">
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="BorderBrush" Value="{StaticResource LightBlueBrush}"/>
+      <Setter Property="AlternationCount" Value="2"/>
     </Style>
 
     <ControlTemplate x:Key="GridViewColumnHeaderControlTemplate" TargetType="{x:Type GridViewColumnHeader}">

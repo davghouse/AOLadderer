@@ -12,6 +12,9 @@ namespace AOLadderer.ClusterTemplates
         public override int GetStatIncrease(int implantQL)
             => Stat.GetShinyStatIncrease(implantQL);
 
+        public override int GetMinimumClusterQL(int implantQL)
+            => (int)(.86 * implantQL);
+
         public static readonly IReadOnlyList<ShinyClusterTemplate> ShinyClusterTemplates = new[]
         {
             new ShinyClusterTemplate(Skill.OneHandBlunt, ImplantSlot.RightArm),

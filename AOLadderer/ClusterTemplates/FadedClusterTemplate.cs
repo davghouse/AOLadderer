@@ -12,6 +12,9 @@ namespace AOLadderer.ClusterTemplates
         public override int GetStatIncrease(int implantQL)
             => Stat.GetFadedStatIncrease(implantQL);
 
+        public override int GetMinimumClusterQL(int implantQL)
+            => (int)(.82 * implantQL);
+
         public static readonly IReadOnlyList<FadedClusterTemplate> FadedClusterTemplates = new[]
         {
             new FadedClusterTemplate(Skill.OneHandBlunt, ImplantSlot.RightHand),

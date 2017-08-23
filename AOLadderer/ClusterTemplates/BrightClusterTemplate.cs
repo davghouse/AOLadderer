@@ -12,6 +12,9 @@ namespace AOLadderer.ClusterTemplates
         public override int GetStatIncrease(int implantQL)
             => Stat.GetBrightStatIncrease(implantQL);
 
+        public override int GetMinimumClusterQL(int implantQL)
+            => (int)(.84 * implantQL);
+
         public static readonly IReadOnlyList<BrightClusterTemplate> BrightClusterTemplates = new[]
         {
             new BrightClusterTemplate(Skill.OneHandBlunt, ImplantSlot.RightWrist),
