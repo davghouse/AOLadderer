@@ -1,12 +1,48 @@
 ﻿<UserControl x:Class="AOLadderer.UI.Views.LadderView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModels="clr-namespace:AOLadderer.UI.ViewModels"
-             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:LadderViewModel}"
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:LadderViewModel}">
+  <Grid Margin="10">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
 
+    <StackPanel Grid.Row="0" Orientation="Horizontal">
+      <TextBlock FontSize="14" FontWeight="Bold"
+                 Text="Ladder:"/>
+      <TextBlock VerticalAlignment="Center"
+                 Text=" Insert implants in order, removing previous implants only when necessary."/>
+    </StackPanel>
+
+    <ListView Grid.Row="1" Margin="0 5 0 0"
+              ItemsSource="{Binding LadderStepViewModels}"
+              Background="Transparent" BorderBrush="{StaticResource LightBlueBrush}"
+              AlternationCount="2">
+      <ListView.View>
+        <GridView AllowsColumnReorder="False">
+          <GridViewColumn Header="">
+            <GridViewColumn.CellTemplate>
+              <DataTemplate>
+                <CheckBox IsChecked="{Binding IsChecked}"/>
+              </DataTemplate>
+            </GridViewColumn.CellTemplate>
+          </GridViewColumn>
+
+          <GridViewColumn Header="QL" DisplayMemberBinding="{Binding ImplantQL}"/>
+          <GridViewColumn Header="Slot" DisplayMemberBinding="{Binding ImplantSlot}"/>
+          <GridViewColumn Header="Shiny" DisplayMemberBinding="{Binding ShinyStat}"/>
+          <GridViewColumn Header="Bright" DisplayMemberBinding="{Binding BrightStat}"/>
+          <GridViewColumn Header="Faded" DisplayMemberBinding="{Binding FadedStat}"/>
+        </GridView>
+      </ListView.View>
+    </ListView>
+
+    <TextBlock Grid.Row="2" Margin="0 5 0 0"
+               Text="{Binding AverageFinalImplantQL, StringFormat=Average QL \= {0:N}}"/>
   </Grid>
 </UserControl>

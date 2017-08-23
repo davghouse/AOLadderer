@@ -1,5 +1,6 @@
 ﻿using AOLadderer.UI.Properties;
 using AOLadderer.UI.ViewModels;
+using Microsoft.Win32;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
@@ -8,10 +9,12 @@ namespace AOLadderer.UI.Views
 {
     public partial class MainView : Window
     {
+        private readonly MainViewModel _mainViewModel;
+
         public MainView()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = _mainViewModel = new MainViewModel();
         }
 
         private void HeaderRow_MouseDown_Drag(object sender, MouseButtonEventArgs e)
@@ -19,6 +22,32 @@ namespace AOLadderer.UI.Views
             if (e.ChangedButton == MouseButton.Left)
             {
                 DragMove();
+            }
+        }
+
+        private void OpenMenuItem_Click_LoadFromFile(object sender, RoutedEventArgs e)
+        {
+            var dialog = new OpenFileDialog
+            {
+                Filter = "Ladder Files (*.ladd)|*.ladd|All Files (*.*)|*.*"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                _mainViewModel.LoadFromFile(dialog.FileName);
+            }
+        }
+
+        private void SaveAsMenuItem_Click_SaveToFile(object sender, RoutedEventArgs e)
+        {
+            var dialog = new SaveFileDialog
+            {
+                Filter = "Ladder Files (*.ladd)|*.ladd|All Files (*.*)|*.*"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                _mainViewModel.SaveToFile(dialog.FileName);
             }
         }
 

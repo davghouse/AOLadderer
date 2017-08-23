@@ -10,13 +10,14 @@ namespace AOLadderer.UI.ViewModels
     {
         public BuildViewModel()
         {
+            ImplantConfigurationViewModels = ImplantSlot.ImplantSlots
+                .Select(s => new ImplantConfigurationViewModel(s))
+                .ToArray();
             RunBasicLaddererCommand = new RelayCommand(ExecuteRunBasicLaddererCommand);
             RunAdvancedLaddererCommand = new RelayCommand(ExecuteRunAdvancedLaddererCommand);
         }
 
-        public IReadOnlyList<ImplantViewModel> ImplantViewModels { get; } = ImplantSlot.ImplantSlots
-            .Select(s => new ImplantViewModel(s))
-            .ToArray();
+        public IReadOnlyList<ImplantConfigurationViewModel> ImplantConfigurationViewModels { get; }
 
         private bool _useComposites;
         public bool UseComposites
@@ -391,7 +392,7 @@ namespace AOLadderer.UI.ViewModels
             => new Character(Agility, Intelligence, Psychic, Sense, Stamina, Strength, Treatment);
 
         private IEnumerable<ImplantTemplate> GetImplantTemplates()
-            => ImplantViewModels
+            => ImplantConfigurationViewModels
             .Where(i => !i.IsEmpty)
             .Select(i => i.GetImplantTemplate());
 

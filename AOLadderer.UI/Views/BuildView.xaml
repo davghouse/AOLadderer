@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewModels="clr-namespace:AOLadderer.UI.ViewModels"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:BuildViewModel}">
-  <Grid Margin="5 10 5 5">
+  <Grid Margin="10">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*"/>
       <ColumnDefinition Width="Auto"/>
@@ -18,7 +18,7 @@
 
     <TextBlock Grid.Row="0" Grid.Column="0"
                FontSize="14" FontWeight="Bold" Margin="0 0 0 5"
-               Text="Implant Configuration:"/>
+               Text="Implants:"/>
     <TextBlock Grid.Row="0" Grid.Column="1"
                FontSize="14" FontWeight="Bold" Margin="10 0 0 5"
                Text="Buffs:"/>
@@ -52,172 +52,172 @@
 
       <TextBlock Grid.Column="0" Grid.Row="0"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                 Text="{Binding ImplantViewModels[0].AbiSlotDescription}"/>
+                 Text="{Binding ImplantConfigurationViewModels[0].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="0" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[0].ShinyClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[0].SelectedShinyClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[0].ShinyClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[0].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="0" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[0].BrightClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[0].SelectedBrightClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[0].BrightClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[0].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="0" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[0].FadedClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[0].SelectedFadedClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[0].FadedClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[0].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="1"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                 Text="{Binding ImplantViewModels[1].AbiSlotDescription}"/>
+                 Text="{Binding ImplantConfigurationViewModels[1].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="1" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[1].ShinyClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[1].SelectedShinyClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[1].ShinyClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[1].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="1" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[1].BrightClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[1].SelectedBrightClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[1].BrightClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[1].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="1" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[1].FadedClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[1].SelectedFadedClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[1].FadedClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[1].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="2"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                 Text="{Binding ImplantViewModels[2].AbiSlotDescription}"/>
+                 Text="{Binding ImplantConfigurationViewModels[2].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="2" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[2].ShinyClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[2].SelectedShinyClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[2].ShinyClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[2].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="2" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[2].BrightClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[2].SelectedBrightClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[2].BrightClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[2].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="2" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[2].FadedClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[2].SelectedFadedClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[2].FadedClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[2].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="3"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                 Text="{Binding ImplantViewModels[3].AbiSlotDescription}"/>
+                 Text="{Binding ImplantConfigurationViewModels[3].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="3" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[3].ShinyClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[3].SelectedShinyClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[3].ShinyClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[3].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="3" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[3].BrightClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[3].SelectedBrightClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[3].BrightClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[3].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="3" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[3].FadedClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[3].SelectedFadedClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[3].FadedClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[3].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="4"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                 Text="{Binding ImplantViewModels[4].AbiSlotDescription}"/>
+                 Text="{Binding ImplantConfigurationViewModels[4].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="4" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[4].ShinyClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[4].SelectedShinyClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[4].ShinyClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[4].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="4" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[4].BrightClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[4].SelectedBrightClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[4].BrightClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[4].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="4" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[4].FadedClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[4].SelectedFadedClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[4].FadedClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[4].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="5"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                 Text="{Binding ImplantViewModels[5].AbiSlotDescription}"/>
+                 Text="{Binding ImplantConfigurationViewModels[5].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="5" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[5].ShinyClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[5].SelectedShinyClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[5].ShinyClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[5].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="5" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[5].BrightClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[5].SelectedBrightClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[5].BrightClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[5].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="5" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[5].FadedClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[5].SelectedFadedClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[5].FadedClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[5].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="6"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                 Text="{Binding ImplantViewModels[6].AbiSlotDescription}"/>
+                 Text="{Binding ImplantConfigurationViewModels[6].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="6" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[6].ShinyClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[6].SelectedShinyClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[6].ShinyClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[6].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="6" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[6].BrightClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[6].SelectedBrightClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[6].BrightClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[6].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="6" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[6].FadedClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[6].SelectedFadedClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[6].FadedClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[6].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="7"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                 Text="{Binding ImplantViewModels[7].AbiSlotDescription}"/>
+                 Text="{Binding ImplantConfigurationViewModels[7].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="7" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[7].ShinyClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[7].SelectedShinyClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[7].ShinyClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[7].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="7" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[7].BrightClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[7].SelectedBrightClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[7].BrightClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[7].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="7" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[7].FadedClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[7].SelectedFadedClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[7].FadedClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[7].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="8"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                 Text="{Binding ImplantViewModels[8].AbiSlotDescription}"/>
+                 Text="{Binding ImplantConfigurationViewModels[8].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="8" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[8].ShinyClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[8].SelectedShinyClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[8].ShinyClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[8].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="8" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[8].BrightClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[8].SelectedBrightClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[8].BrightClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[8].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="8" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[8].FadedClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[8].SelectedFadedClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[8].FadedClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[8].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="9"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                 Text="{Binding ImplantViewModels[9].AbiSlotDescription}"/>
+                 Text="{Binding ImplantConfigurationViewModels[9].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="9" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[9].ShinyClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[9].SelectedShinyClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[9].ShinyClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[9].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="9" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[9].BrightClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[9].SelectedBrightClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[9].BrightClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[9].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="9" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[9].FadedClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[9].SelectedFadedClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[9].FadedClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[9].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="10"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                 Text="{Binding ImplantViewModels[10].AbiSlotDescription}"/>
+                 Text="{Binding ImplantConfigurationViewModels[10].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="10" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[10].ShinyClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[10].SelectedShinyClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[10].ShinyClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[10].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="10" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[10].BrightClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[10].SelectedBrightClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[10].BrightClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[10].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="10" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[10].FadedClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[10].SelectedFadedClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[10].FadedClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[10].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="11"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                 Text="{Binding ImplantViewModels[11].AbiSlotDescription}"/>
+                 Text="{Binding ImplantConfigurationViewModels[11].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="11" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[11].ShinyClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[11].SelectedShinyClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[11].ShinyClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[11].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="11" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[11].BrightClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[11].SelectedBrightClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[11].BrightClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[11].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="11" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[11].FadedClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[11].SelectedFadedClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[11].FadedClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[11].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="12"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                 Text="{Binding ImplantViewModels[12].AbiSlotDescription}"/>
+                 Text="{Binding ImplantConfigurationViewModels[12].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="12" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[12].ShinyClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[12].SelectedShinyClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[12].ShinyClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[12].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="12" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[12].BrightClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[12].SelectedBrightClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[12].BrightClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[12].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="12" Margin="3"
-                ItemsSource="{Binding ImplantViewModels[12].FadedClusterOptions}"
-                SelectedItem="{Binding ImplantViewModels[12].SelectedFadedClusterOption}"/>
+                ItemsSource="{Binding ImplantConfigurationViewModels[12].FadedClusterOptions}"
+                SelectedItem="{Binding ImplantConfigurationViewModels[12].SelectedFadedClusterOption}"/>
 
       <Grid Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="13"
             Margin="0 10 0 0">
@@ -238,49 +238,49 @@
 
         <TextBlock Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0"
                    FontSize="14" FontWeight="Bold" Margin="0 0 0 5"
-                   Text="Abilities and Treatment:"/>
+                   Text="Stats:"/>
 
         <TextBlock Grid.Column="0" Grid.Row="1"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                    Text="Strength"/>
         <TextBox Grid.Column="1" Grid.Row="1" Margin="3"
-                 Text="{Binding Strength}"/>
+                 Text="{Binding Strength, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Grid.Column="0" Grid.Row="2"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                    Text="Stamina"/>
         <TextBox Grid.Column="1" Grid.Row="2" Margin="3"
-                 Text="{Binding Stamina}"/>
+                 Text="{Binding Stamina, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Grid.Column="0" Grid.Row="3"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                    Text="Sense"/>
         <TextBox Grid.Column="1" Grid.Row="3" Margin="3"
-                 Text="{Binding Sense}"/>
+                 Text="{Binding Sense, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Grid.Column="0" Grid.Row="4"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                    Text="Treatment"/>
         <TextBox Grid.Column="1" Grid.Row="4" Margin="3"
-                 Text="{Binding Treatment}"/>
+                 Text="{Binding Treatment, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Grid.Column="2" Grid.Row="1"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 0 3 0"
                    Text="Agility"/>
         <TextBox Grid.Column="3" Grid.Row="1" Margin="3"
-                 Text="{Binding Agility}"/>
+                 Text="{Binding Agility, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Grid.Column="2" Grid.Row="2"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 0 3 0"
                    Text="Intelligence"/>
         <TextBox Grid.Column="3" Grid.Row="2" Margin="3"
-                 Text="{Binding Intelligence}"/>
+                 Text="{Binding Intelligence, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Grid.Column="2" Grid.Row="3"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 0 3 0"
                    Text="Psychic"/>
         <TextBox Grid.Column="3" Grid.Row="3" Margin="3"
-                 Text="{Binding Psychic}"/>
+                 Text="{Binding Psychic, UpdateSourceTrigger=PropertyChanged}"/>
       </Grid>
     </Grid>
 

@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace AOLadderer.UI.ViewModels
 {
-    public class ImplantViewModel : ViewModelBase
+    public class ImplantConfigurationViewModel : ViewModelBase
     {
-        public ImplantViewModel(ImplantSlot implantSlot)
+        public ImplantConfigurationViewModel(ImplantSlot implantSlot)
         {
             ImplantSlot = implantSlot;
             ShinyClusterOptions = implantSlot.ShinyClusterTemplates
@@ -78,6 +78,13 @@ namespace AOLadderer.UI.ViewModels
 
         public ImplantTemplate GetImplantTemplate()
             => IsEmpty ? null : ImplantTemplate.GetImplantTemplate(ImplantSlot, ShinyStat, BrightStat, FadedStat);
+
+        public void SetImplantTemplate(ImplantTemplate implantTemplate)
+        {
+            SelectedShinyClusterOption = ShinyClusterOptions.Single(o => o.Stat == implantTemplate?.ShinyStat);
+            SelectedBrightClusterOption = BrightClusterOptions.Single(o => o.Stat == implantTemplate?.BrightStat);
+            SelectedFadedClusterOption = FadedClusterOptions.Single(o => o.Stat == implantTemplate?.FadedStat);
+        }
 
         public string AbiSlotDescription
             => IsEmpty ? ImplantSlot.ShortName : $"{GetImplantTemplate().RequiredAbility.ShortName} {ImplantSlot.ShortName}";

@@ -57,13 +57,11 @@
 
     <Menu Grid.Row="1" Padding="0 6 0 0"
           Foreground="White" FontFamily="Verdana" FontSize="12"
-          Background="{StaticResource Black60}" >
+          Background="{StaticResource Black60}">
       <!-- I would like to style these menu items but can't find the template, see: https://stackoverflow.com/q/32082576. -->
       <MenuItem Header="_File">
-        <MenuItem Header="Open..." Foreground="Black" FontFamily="Verdana" FontSize="12"/>
-        <Separator/>
-        <MenuItem Header="Save" Foreground="Black"/>
-        <MenuItem Header="Save As..." Foreground="Black"/>
+        <MenuItem Header="Open..." Foreground="Black" Click="OpenMenuItem_Click_LoadFromFile"/>
+        <MenuItem Header="Save As..." Foreground="Black" Click="SaveAsMenuItem_Click_SaveToFile"/>
       </MenuItem>
 
       <MenuItem Padding="10 0 10 0" Header="_Export">
