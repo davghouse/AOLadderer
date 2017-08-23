@@ -17,6 +17,13 @@ namespace AOLadderer.UI.ViewModels
         public LadderViewModel AdvancedLadderViewModel { get; } = new LadderViewModel();
         public ShoppingViewModel AdvancedShoppingViewModel { get; } = new ShoppingViewModel();
 
+        private int _selectedTabIndex = 0;
+        public int SelectedTabIndex
+        {
+            get => _selectedTabIndex;
+            set => Set(ref _selectedTabIndex, value);
+        }
+
         // Well, this is kind of disgusting. I'll need to look into serialization options to replace this
         // manual effort. But I don't want our serialization to affect the AOLadderer project.
         public void SaveToFile(string filePath)
@@ -193,11 +200,13 @@ namespace AOLadderer.UI.ViewModels
             {
                 BasicLadderViewModel.LadderProcess = BuildViewModel.BasicLadderProcess;
                 BasicShoppingViewModel.LadderProcess = BuildViewModel.BasicLadderProcess;
+                SelectedTabIndex = 1;
             }
             else if (e.PropertyName == nameof(BuildViewModel.AdvancedLadderProcess))
             {
                 AdvancedLadderViewModel.LadderProcess = BuildViewModel.AdvancedLadderProcess;
                 AdvancedShoppingViewModel.LadderProcess = BuildViewModel.AdvancedLadderProcess;
+                SelectedTabIndex = 3;
             }
         }
     }

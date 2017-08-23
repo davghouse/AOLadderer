@@ -71,7 +71,9 @@
     </Menu>
 
     <Grid Grid.Row="2" Background="{StaticResource DarkBlueBrush85}">
-      <TabControl Margin="10" Background="{StaticResource DarkBlueBrush}" BorderBrush="{StaticResource LightBlueBrush}" >
+      <TabControl Margin="10"
+                  SelectedIndex="{Binding SelectedTabIndex}"
+                  Background="{StaticResource DarkBlueBrush}" BorderBrush="{StaticResource LightBlueBrush}" >
         <TabItem Header="Build" DataContext="{Binding BuildViewModel}">
           <views:BuildView/>
         </TabItem>
