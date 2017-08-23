@@ -1,15 +1,21 @@
 ﻿using AOLadderer.ClusterTemplates;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Windows.Input;
 
 namespace AOLadderer.UI.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
         public MainViewModel()
-            => BuildViewModel.PropertyChanged += BuildViewModel_PropertyChanged;
+        {
+            ExportBasicLadderToAuno = new RelayCommand(ExecuteExportBasicLadderToAuno);
+            ExportAdvancedLadderToAuno = new RelayCommand(ExecuteExportAdvancedLadderToAuno);
+            BuildViewModel.PropertyChanged += BuildViewModel_PropertyChanged;
+        }
 
         public BuildViewModel BuildViewModel { get; } = new BuildViewModel();
         public LadderViewModel BasicLadderViewModel { get; } = new LadderViewModel();
@@ -25,7 +31,8 @@ namespace AOLadderer.UI.ViewModels
         }
 
         // Well, this is kind of disgusting. I'll need to look into serialization options to replace this
-        // manual effort. But I don't want our serialization to affect the AOLadderer project.
+        // manual effort. But I don't want serialization requirements to affect the AOLadderer project.
+        // Regardless, this is inflexible. But AO is in maintenance mode and this project will be too.
         public void SaveToFile(string filePath)
         {
             using (var file = new StreamWriter(filePath))
@@ -66,6 +73,7 @@ namespace AOLadderer.UI.ViewModels
                         file.WriteLine(ladderStepViewModel.Implant.AOID);
                         file.WriteLine(ladderStepViewModel.Implant.QL);
                         file.WriteLine(ladderStepViewModel.IsChecked);
+                        file.WriteLine(ladderStepViewModel.IsFinalImplant);
                     }
                     file.WriteLine(ladderViewModel.AverageFinalImplantQL);
                 }
@@ -143,8 +151,9 @@ namespace AOLadderer.UI.ViewModels
                         int aoid = int.Parse(file.ReadLine());
                         int implantQL = int.Parse(file.ReadLine());
                         bool isChecked = bool.Parse(file.ReadLine());
+                        bool isFinalImplant = bool.Parse(file.ReadLine());
                         var implant = new Implant(ImplantTemplate.ImplantTemplates.Single(t => t.AOID == aoid), implantQL);
-                        ladderStepViewModels.Add(new LadderStepViewModel(implant)
+                        ladderStepViewModels.Add(new LadderStepViewModel(implant, isFinalImplant)
                             {
                                 IsChecked = isChecked
                             });
@@ -192,6 +201,26 @@ namespace AOLadderer.UI.ViewModels
                 LoadLadderViewModelFromFile(AdvancedLadderViewModel);
                 LoadShoppingViewModelFromFile(AdvancedShoppingViewModel);
             }
+        }
+
+        public ICommand ExportBasicLadderToAuno { get; }
+        public void ExecuteExportBasicLadderToAuno()
+            => ExportToAuno(BasicLadderViewModel);
+
+        public ICommand ExportAdvancedLadderToAuno { get; }
+        public void ExecuteExportAdvancedLadderToAuno()
+            => ExportToAuno(AdvancedLadderViewModel);
+
+        // Could be exporting after loading a file, meaning we wouldn't have the ladder process object built.
+        // That's why it's necessary to save/load IsFinalImplant.
+        private void ExportToAuno(LadderViewModel ladderViewModel)
+        {
+            string baseUrl = "http://auno.org/ao/equip.php?noedit=1&";
+            string filter = string.Join("&", ladderViewModel.LadderStepViewModels
+                .Where(s => s.IsFinalImplant)
+                .Select(s => $"id3-{s.ImplantSlot.AunoSlotID}={s.ImplantTemplate.AOID}&ql3-{s.ImplantSlot.AunoSlotID}={s.ImplantQL}"));
+            string url = baseUrl + filter;
+            Process.Start(url);
         }
 
         private void BuildViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)

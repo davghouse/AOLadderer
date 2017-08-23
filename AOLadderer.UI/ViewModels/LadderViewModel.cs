@@ -14,8 +14,9 @@ namespace AOLadderer.UI.ViewModels
                 if (Set(ref _ladderProcess, value))
                 {
                     LadderStepViewModels = LadderProcess.OrderedLadderImplants
-                        .Concat(LadderProcess.OrderedFinalImplants)
-                        .Select(i => new LadderStepViewModel(i))
+                            .Select(i => new LadderStepViewModel(i))
+                        .Concat(LadderProcess.OrderedFinalImplants
+                            .Select(i => new LadderStepViewModel(i, isFinalImplant: true)))
                         .ToArray();
                     AverageFinalImplantQL = LadderProcess.AverageFinalImplantQL;
                 }

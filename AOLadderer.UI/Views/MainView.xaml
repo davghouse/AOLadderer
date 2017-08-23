@@ -67,8 +67,8 @@
       </MenuItem>
 
       <MenuItem Padding="10 0 10 0" Header="_Export">
-        <MenuItem Header="Basic to Auno" Foreground="Black"/>
-        <MenuItem Header="Advanced to Auno" Foreground="Black"/>
+        <MenuItem Header="Basic to Auno" Foreground="Black" Command="{Binding ExportBasicLadderToAuno}"/>
+        <MenuItem Header="Advanced to Auno" Foreground="Black" Command="{Binding ExportAdvancedLadderToAuno}"/>
       </MenuItem>
     </Menu>
 
