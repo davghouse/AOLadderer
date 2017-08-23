@@ -2,6 +2,7 @@
 using AOLadderer.UI.ViewModels;
 using Microsoft.Win32;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -15,6 +16,19 @@ namespace AOLadderer.UI.Views
         {
             InitializeComponent();
             DataContext = _mainViewModel = new MainViewModel();
+        }
+
+        private string _currentFilePath;
+        private string CurrentFilePath
+        {
+            get => _currentFilePath;
+            set
+            {
+                _currentFilePath = value;
+                Title = CurrentFilePath == null ? "AO Ladderer"
+                    : $"{Path.GetFileName(CurrentFilePath)} - AO Ladderer";
+                TitleTextBlock.Text = Title;
+            }
         }
 
         private void HeaderRow_MouseDown_Drag(object sender, MouseButtonEventArgs e)
@@ -35,6 +49,19 @@ namespace AOLadderer.UI.Views
             if (dialog.ShowDialog() == true)
             {
                 _mainViewModel.LoadFromFile(dialog.FileName);
+                CurrentFilePath = dialog.FileName;
+            }
+        }
+
+        private void SaveMenuItem_Click_SaveToFile(object sender, RoutedEventArgs e)
+        {
+            if (CurrentFilePath != null)
+            {
+                _mainViewModel.SaveToFile(CurrentFilePath);
+            }
+            else
+            {
+                SaveAsMenuItem_Click_SaveToFile(sender, e);
             }
         }
 
@@ -48,6 +75,7 @@ namespace AOLadderer.UI.Views
             if (dialog.ShowDialog() == true)
             {
                 _mainViewModel.SaveToFile(dialog.FileName);
+                CurrentFilePath = dialog.FileName;
             }
         }
 

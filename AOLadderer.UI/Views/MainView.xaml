@@ -42,7 +42,7 @@
              Source="/Icons/Ladder.ico" Margin="1"/>
       <TextBlock Grid.Column="1" Margin="5 0 0 0" VerticalAlignment="Center"
                  Style="{StaticResource WhiteTextBlockStyle}"
-                 Text="AO Ladderer"/>
+                 Name="TitleTextBlock" Text="AO Ladderer"/>
       <Button Grid.Column="2"
               Click="MinimizeButton_Click_MinimizeApplication"
               ToolTip="Minimize">
@@ -61,6 +61,8 @@
       <!-- I would like to style these menu items but can't find the template, see: https://stackoverflow.com/q/32082576. -->
       <MenuItem Header="_File">
         <MenuItem Header="Open..." Foreground="Black" Click="OpenMenuItem_Click_LoadFromFile"/>
+        <Separator/>
+        <MenuItem Header="Save" Foreground="Black" Click="SaveMenuItem_Click_SaveToFile"/>
         <MenuItem Header="Save As..." Foreground="Black" Click="SaveAsMenuItem_Click_SaveToFile"/>
       </MenuItem>
 
