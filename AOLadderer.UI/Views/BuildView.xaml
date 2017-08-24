@@ -1,5 +1,6 @@
 ﻿<UserControl x:Class="AOLadderer.UI.Views.BuildView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -304,6 +305,7 @@
         <RowDefinition Height="*"/>
         <RowDefinition Height="Auto"/>
         <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
       </Grid.RowDefinitions>
 
       <CheckBox Grid.Row="0"
@@ -338,12 +340,21 @@
       <CheckBox Grid.Row="13" Margin="0 13 0 0"
                 IsChecked="{Binding UseNeuronalStimulator}" Content="Neuronal Stimulator" TextBlock.Foreground="White"/>
 
-      <Button Grid.Row="15"
+      <fa:ImageAwesome Grid.Row="14"
+                       Icon="Gear" Spin="True" SpinDuration="5"
+                       MaxHeight="50" MaxWidth="50" VerticalAlignment="Bottom"
+                       Visibility="{Binding IsLaddererRunning, Converter={StaticResource BoolToVisibilityConverter}}"
+                       Foreground="{StaticResource LightBlueBrush}"
+                       ToolTip="This could take a few minutes!"/>
+
+      <Button Grid.Row="15" Margin="0 5 0 0"
               Style="{StaticResource TextButtonStyle}"
-              Content="Run Basic Ladderer" Command="{Binding RunBasicLaddererCommand}"/>
+              Content="Run Basic Ladderer" Command="{Binding RunBasicLaddererCommand}"
+              IsEnabled="{Binding IsLaddererRunning, Converter={StaticResource BoolToNegationConverter}}"/>
       <Button Grid.Row="16" Margin="0 5 0 0"
               Style="{StaticResource TextButtonStyle}"
-              Content="Run Advanced Ladderer" Command="{Binding RunAdvancedLaddererCommand}"/>
+              Content="Run Advanced Ladderer" Command="{Binding RunAdvancedLaddererCommand}"
+              IsEnabled="{Binding IsLaddererRunning, Converter={StaticResource BoolToNegationConverter}}"/>
     </Grid>
   </Grid>
 </UserControl>

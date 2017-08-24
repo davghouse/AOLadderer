@@ -2,6 +2,7 @@
 using AOLadderer.Stats;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace AOLadderer.UI.ViewModels
@@ -396,6 +397,13 @@ namespace AOLadderer.UI.ViewModels
             .Where(i => !i.IsEmpty)
             .Select(i => i.GetImplantTemplate());
 
+        private bool _isLaddererRunning;
+        public bool IsLaddererRunning
+        {
+            get => _isLaddererRunning;
+            private set => Set(ref _isLaddererRunning, value);
+        }
+
         private BasicLadderProcess _basicLadderProcess;
         public BasicLadderProcess BasicLadderProcess
         {
@@ -411,11 +419,25 @@ namespace AOLadderer.UI.ViewModels
         }
 
         public ICommand RunBasicLaddererCommand { get; }
-        private void ExecuteRunBasicLaddererCommand()
-            => BasicLadderProcess = new BasicLadderProcess(GetCharacter(), GetImplantTemplates());
+        private async void ExecuteRunBasicLaddererCommand()
+        {
+            var character = GetCharacter();
+            var implantTemplates = GetImplantTemplates();
+
+            IsLaddererRunning = true;
+            BasicLadderProcess = await Task.Run(() => new BasicLadderProcess(character, implantTemplates));
+            IsLaddererRunning = false;
+        }
 
         public ICommand RunAdvancedLaddererCommand { get; }
-        private void ExecuteRunAdvancedLaddererCommand()
-            => AdvancedLadderProcess = new AdvancedLadderProcess(GetCharacter(), GetImplantTemplates());
+        private async void ExecuteRunAdvancedLaddererCommand()
+        {
+            var character = GetCharacter();
+            var implantTemplates = GetImplantTemplates();
+
+            IsLaddererRunning = true;
+            AdvancedLadderProcess = await Task.Run(() => new AdvancedLadderProcess(character, implantTemplates));
+            IsLaddererRunning = false;
+        }
     }
 }
