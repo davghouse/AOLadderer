@@ -17,5 +17,16 @@ namespace AOLadderer.UI
                 typeof(DependencyObject),
                 new FrameworkPropertyMetadata(Int32.MaxValue));
         }
+
+        // http://madprops.org/blog/wpf-textbox-selectall-on-focus/
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            EventManager.RegisterClassHandler(
+                typeof(TextBox),
+                TextBox.GotFocusEvent,
+                new RoutedEventHandler((sender, _) => (sender as TextBox).SelectAll()));
+
+            base.OnStartup(e);
+        }
     }
 }
