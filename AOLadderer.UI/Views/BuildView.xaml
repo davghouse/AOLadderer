@@ -247,29 +247,17 @@
         <TextBox Grid.Column="1" Grid.Row="1" Margin="3"
                  Text="{Binding Strength, UpdateSourceTrigger=PropertyChanged}"/>
 
-        <TextBlock Grid.Column="0" Grid.Row="2"
-                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                   Text="Stamina"/>
-        <TextBox Grid.Column="1" Grid.Row="2" Margin="3"
-                 Text="{Binding Stamina, UpdateSourceTrigger=PropertyChanged}"/>
-
-        <TextBlock Grid.Column="0" Grid.Row="3"
-                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                   Text="Sense"/>
-        <TextBox Grid.Column="1" Grid.Row="3" Margin="3"
-                 Text="{Binding Sense, UpdateSourceTrigger=PropertyChanged}"/>
-
-        <TextBlock Grid.Column="0" Grid.Row="4"
-                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
-                   Text="Treatment"/>
-        <TextBox Grid.Column="1" Grid.Row="4" Margin="3"
-                 Text="{Binding Treatment, UpdateSourceTrigger=PropertyChanged}"/>
-
         <TextBlock Grid.Column="2" Grid.Row="1"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 0 3 0"
                    Text="Agility"/>
         <TextBox Grid.Column="3" Grid.Row="1" Margin="3"
                  Text="{Binding Agility, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="2"
+                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
+                   Text="Stamina"/>
+        <TextBox Grid.Column="1" Grid.Row="2" Margin="3"
+                 Text="{Binding Stamina, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Grid.Column="2" Grid.Row="2"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 0 3 0"
@@ -277,11 +265,23 @@
         <TextBox Grid.Column="3" Grid.Row="2" Margin="3"
                  Text="{Binding Intelligence, UpdateSourceTrigger=PropertyChanged}"/>
 
+        <TextBlock Grid.Column="0" Grid.Row="3"
+                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
+                   Text="Sense"/>
+        <TextBox Grid.Column="1" Grid.Row="3" Margin="3"
+                 Text="{Binding Sense, UpdateSourceTrigger=PropertyChanged}"/>
+
         <TextBlock Grid.Column="2" Grid.Row="3"
                    HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10 0 3 0"
                    Text="Psychic"/>
         <TextBox Grid.Column="3" Grid.Row="3" Margin="3"
                  Text="{Binding Psychic, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="4"
+                   HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
+                   Text="Treatment"/>
+        <TextBox Grid.Column="1" Grid.Row="4" Margin="3"
+                 Text="{Binding Treatment, UpdateSourceTrigger=PropertyChanged}"/>
       </Grid>
     </Grid>
 
