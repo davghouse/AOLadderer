@@ -10,11 +10,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOLadderer", "AOLadderer\AOLadderer.csproj", "{93237129-659A-4A6A-AB16-8CAB6D3E9FAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOLadderer", "AOLadderer\AOLadderer.csproj", "{93237129-659A-4A6A-AB16-8CAB6D3E9FAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOLadderer.UnitTests", "AOLadderer.UnitTests\AOLadderer.UnitTests.csproj", "{9B26C7F3-5E90-469E-9FC7-C96FD160DBBC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AOLadderer.UnitTests", "AOLadderer.UnitTests\AOLadderer.UnitTests.csproj", "{9B26C7F3-5E90-469E-9FC7-C96FD160DBBC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOLadderer.UI", "AOLadderer.UI\AOLadderer.UI.csproj", "{B0F6E70A-3D59-450C-88F7-648710885453}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Screenshots", "Screenshots", "{19A18E1F-ECB0-4FAF-9069-58B436D7EFA2}"
+	ProjectSection(SolutionItems) = preProject
+		Screenshots\AdvancedLadder.png = Screenshots\AdvancedLadder.png
+		Screenshots\AdvancedShopping.png = Screenshots\AdvancedShopping.png
+		Screenshots\BasicLadder.png = Screenshots\BasicLadder.png
+		Screenshots\BasicShopping.png = Screenshots\BasicShopping.png
+		Screenshots\Build.png = Screenshots\Build.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,5 +46,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{19A18E1F-ECB0-4FAF-9069-58B436D7EFA2} = {4E93CFE3-4573-4A07-BD08-3211B0FD1266}
 	EndGlobalSection
 EndGlobal
