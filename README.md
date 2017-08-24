@@ -128,6 +128,7 @@ For convenience the app supports this combined buff directly.
 **You'll have to tell the app about your ability to swap items (other than Explosifs), by manually increasing your starting abilities.
 Don't think of these as your actual abilities, think of them as your effective abilities for the purposes of equipping implants.
 They are your abilities that can be gotten simultaneously not with the other listed abilities, but with the listed Treatment.**
+I almost never bother telling it about any swaps other than Explosifs.
 
 Another tip: if R/L-Wrist and L-Hand are important for your setup, consider using the app on those three alone, and then doing the rest of your implants.
 This is OK because those aren't ladder slots, so the app will never use them when laddering up the rest.
