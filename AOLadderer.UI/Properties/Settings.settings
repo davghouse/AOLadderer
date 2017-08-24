@@ -1,7 +1,63 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AOLadderer.UI.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MainViewHeight" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">732</Value>
+    </Setting>
+    <Setting Name="MainViewWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">762</Value>
+    </Setting>
+    <Setting Name="MainViewTop" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">NaN</Value>
+    </Setting>
+    <Setting Name="MainViewLeft" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">NaN</Value>
+    </Setting>
+    <Setting Name="LadderCheckboxColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">28</Value>
+    </Setting>
+    <Setting Name="LadderQLColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">36</Value>
+    </Setting>
+    <Setting Name="LadderSlotColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">82</Value>
+    </Setting>
+    <Setting Name="LadderShinyColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">128</Value>
+    </Setting>
+    <Setting Name="LadderBrightColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">128</Value>
+    </Setting>
+    <Setting Name="LadderFadedColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">128</Value>
+    </Setting>
+    <Setting Name="ShoppingShinyMinQLColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">46</Value>
+    </Setting>
+    <Setting Name="ShoppingShinyStatColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">128</Value>
+    </Setting>
+    <Setting Name="ShoppingShinyCheckboxColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">28</Value>
+    </Setting>
+    <Setting Name="ShoppingBrightMinQLColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">46</Value>
+    </Setting>
+    <Setting Name="ShoppingBrightStatColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">128</Value>
+    </Setting>
+    <Setting Name="ShoppingBrightCheckboxColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">28</Value>
+    </Setting>
+    <Setting Name="ShoppingFadedMinQLColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">46</Value>
+    </Setting>
+    <Setting Name="ShoppingFadedStatColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">128</Value>
+    </Setting>
+    <Setting Name="ShoppingFadedCheckboxColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">28</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

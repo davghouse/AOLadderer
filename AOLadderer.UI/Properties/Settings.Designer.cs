@@ -22,5 +22,233 @@ namespace AOLadderer.UI.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("732")]
+        public double MainViewHeight {
+            get {
+                return ((double)(this["MainViewHeight"]));
+            }
+            set {
+                this["MainViewHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("762")]
+        public double MainViewWidth {
+            get {
+                return ((double)(this["MainViewWidth"]));
+            }
+            set {
+                this["MainViewWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NaN")]
+        public double MainViewTop {
+            get {
+                return ((double)(this["MainViewTop"]));
+            }
+            set {
+                this["MainViewTop"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("NaN")]
+        public double MainViewLeft {
+            get {
+                return ((double)(this["MainViewLeft"]));
+            }
+            set {
+                this["MainViewLeft"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("28")]
+        public double LadderCheckboxColumnWidth {
+            get {
+                return ((double)(this["LadderCheckboxColumnWidth"]));
+            }
+            set {
+                this["LadderCheckboxColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("36")]
+        public double LadderQLColumnWidth {
+            get {
+                return ((double)(this["LadderQLColumnWidth"]));
+            }
+            set {
+                this["LadderQLColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("82")]
+        public double LadderSlotColumnWidth {
+            get {
+                return ((double)(this["LadderSlotColumnWidth"]));
+            }
+            set {
+                this["LadderSlotColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
+        public double LadderShinyColumnWidth {
+            get {
+                return ((double)(this["LadderShinyColumnWidth"]));
+            }
+            set {
+                this["LadderShinyColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
+        public double LadderBrightColumnWidth {
+            get {
+                return ((double)(this["LadderBrightColumnWidth"]));
+            }
+            set {
+                this["LadderBrightColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
+        public double LadderFadedColumnWidth {
+            get {
+                return ((double)(this["LadderFadedColumnWidth"]));
+            }
+            set {
+                this["LadderFadedColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("46")]
+        public double ShoppingShinyMinQLColumnWidth {
+            get {
+                return ((double)(this["ShoppingShinyMinQLColumnWidth"]));
+            }
+            set {
+                this["ShoppingShinyMinQLColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
+        public double ShoppingShinyStatColumnWidth {
+            get {
+                return ((double)(this["ShoppingShinyStatColumnWidth"]));
+            }
+            set {
+                this["ShoppingShinyStatColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("28")]
+        public double ShoppingShinyCheckboxColumnWidth {
+            get {
+                return ((double)(this["ShoppingShinyCheckboxColumnWidth"]));
+            }
+            set {
+                this["ShoppingShinyCheckboxColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("46")]
+        public double ShoppingBrightMinQLColumnWidth {
+            get {
+                return ((double)(this["ShoppingBrightMinQLColumnWidth"]));
+            }
+            set {
+                this["ShoppingBrightMinQLColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
+        public double ShoppingBrightStatColumnWidth {
+            get {
+                return ((double)(this["ShoppingBrightStatColumnWidth"]));
+            }
+            set {
+                this["ShoppingBrightStatColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("28")]
+        public double ShoppingBrightCheckboxColumnWidth {
+            get {
+                return ((double)(this["ShoppingBrightCheckboxColumnWidth"]));
+            }
+            set {
+                this["ShoppingBrightCheckboxColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("46")]
+        public double ShoppingFadedMinQLColumnWidth {
+            get {
+                return ((double)(this["ShoppingFadedMinQLColumnWidth"]));
+            }
+            set {
+                this["ShoppingFadedMinQLColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("128")]
+        public double ShoppingFadedStatColumnWidth {
+            get {
+                return ((double)(this["ShoppingFadedStatColumnWidth"]));
+            }
+            set {
+                this["ShoppingFadedStatColumnWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("28")]
+        public double ShoppingFadedCheckboxColumnWidth {
+            get {
+                return ((double)(this["ShoppingFadedCheckboxColumnWidth"]));
+            }
+            set {
+                this["ShoppingFadedCheckboxColumnWidth"] = value;
+            }
+        }
     }
 }

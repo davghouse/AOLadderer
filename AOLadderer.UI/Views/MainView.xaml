@@ -4,12 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:properties="clr-namespace:AOLadderer.UI.Properties"
         xmlns:viewModels="clr-namespace:AOLadderer.UI.ViewModels"
         xmlns:views="clr-namespace:AOLadderer.UI.Views"
         mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:MainViewModel}"
         Style="{StaticResource WindowStyle}" Background="Transparent"
         BorderBrush="{StaticResource LightBlueBrush50}" BorderThickness="1"
-        Title="AO Ladderer" Height="702" Width="797">
+        Title="AO Ladderer"
+        Height="{Binding Source={x:Static properties:Settings.Default}, Path=MainViewHeight, Mode=TwoWay}"
+        Width="{Binding Source={x:Static properties:Settings.Default}, Path=MainViewWidth, Mode=TwoWay}"
+        Top="{Binding Source={x:Static properties:Settings.Default}, Path=MainViewTop, Mode=TwoWay}"
+        Left="{Binding Source={x:Static properties:Settings.Default}, Path=MainViewLeft, Mode=TwoWay}">
   <Window.Resources>
     <Style TargetType="TextBlock">
       <Setter Property="Foreground" Value="White"/>
