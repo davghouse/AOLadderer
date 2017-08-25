@@ -437,9 +437,9 @@
         <Border x:Name="border" BorderBrush="Transparent" BorderThickness="1" Background="{TemplateBinding Background}">
           <GridViewRowPresenter Content="{TemplateBinding Content}" Columns="{TemplateBinding GridView.ColumnCollection}"/>
         </Border>
-        <Rectangle Name="StrikethroughRectangle" IsHitTestVisible="False"
-                   HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                   Height="1" StrokeThickness="1" Stroke="Transparent"/>
+        <Rectangle Name="HighlightRectangle" IsHitTestVisible="False"
+                   HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                   Fill="Transparent"/>
       </Grid>
       <ControlTemplate.Triggers>
         <MultiTrigger>
@@ -463,7 +463,7 @@
           <Setter Property="BorderBrush" TargetName="border" Value="Transparent"/>
         </MultiTrigger>
         <DataTrigger Binding="{Binding IsChecked}" Value="True">
-          <Setter TargetName="StrikethroughRectangle" Property="Stroke" Value="White"/>
+          <Setter TargetName="HighlightRectangle" Property="Fill" Value="#40FFFFFF"/>
         </DataTrigger>
       </ControlTemplate.Triggers>
     </ControlTemplate>
