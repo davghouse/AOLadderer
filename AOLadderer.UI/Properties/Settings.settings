@@ -59,5 +59,8 @@
     <Setting Name="ShoppingFadedCheckboxColumnWidth" Type="System.Double" Scope="User">
       <Value Profile="(Default)">28</Value>
     </Setting>
+    <Setting Name="LadderReqColumnWidth" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">36</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

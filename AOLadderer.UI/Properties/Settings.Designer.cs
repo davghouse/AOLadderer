@@ -250,5 +250,17 @@ namespace AOLadderer.UI.Properties {
                 this["ShoppingFadedCheckboxColumnWidth"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("36")]
+        public double LadderReqColumnWidth {
+            get {
+                return ((double)(this["LadderReqColumnWidth"]));
+            }
+            set {
+                this["LadderReqColumnWidth"] = value;
+            }
+        }
     }
 }

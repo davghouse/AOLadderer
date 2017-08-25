@@ -34,6 +34,8 @@
 
           <GridViewColumn Header="QL" DisplayMemberBinding="{Binding ImplantQL}"
                           Width="{Binding Source={x:Static properties:Settings.Default}, Path=LadderQLColumnWidth, Mode=TwoWay}"/>
+          <GridViewColumn Header="Req" DisplayMemberBinding="{Binding RequiredAbility.ShortName}"
+                          Width="{Binding Source={x:Static properties:Settings.Default}, Path=LadderReqColumnWidth, Mode=TwoWay}"/>
           <GridViewColumn Header="Slot" DisplayMemberBinding="{Binding ImplantSlot}"
                           Width="{Binding Source={x:Static properties:Settings.Default}, Path=LadderSlotColumnWidth, Mode=TwoWay}"/>
           <GridViewColumn Header="Shiny" DisplayMemberBinding="{Binding ShinyStat}"

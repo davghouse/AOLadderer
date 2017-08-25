@@ -1,4 +1,6 @@
-﻿namespace AOLadderer.UI.ViewModels
+﻿using AOLadderer.Stats;
+
+namespace AOLadderer.UI.ViewModels
 {
     public class LadderStepViewModel : ViewModelBase
     {
@@ -21,8 +23,9 @@
         public int ImplantQL => Implant.QL;
         public ImplantSlot ImplantSlot => Implant.ImplantSlot;
         public ImplantTemplate ImplantTemplate => Implant.ImplantTemplate;
-        public string ShinyStat => Implant.ShinyStat?.Name;
-        public string BrightStat => Implant.BrightStat?.Name;
-        public string FadedStat => Implant.FadedStat?.Name;
+        public Ability RequiredAbility => Implant.RequiredAbility;
+        public Stat ShinyStat => Implant.ShinyStat;
+        public Stat BrightStat => Implant.BrightStat;
+        public Stat FadedStat => Implant.FadedStat;
     }
 }
