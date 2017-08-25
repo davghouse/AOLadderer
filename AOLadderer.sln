@@ -19,8 +19,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AOLadderer.UI", "AOLadderer
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Screenshots", "Screenshots", "{19A18E1F-ECB0-4FAF-9069-58B436D7EFA2}"
 	ProjectSection(SolutionItems) = preProject
-		Screenshots\AdvancedLadder.png = Screenshots\AdvancedLadder.png
-		Screenshots\AdvancedShopping.png = Screenshots\AdvancedShopping.png
 		Screenshots\BasicLadder.png = Screenshots\BasicLadder.png
 		Screenshots\BasicShopping.png = Screenshots\BasicShopping.png
 		Screenshots\Build.png = Screenshots\Build.png

@@ -8,8 +8,6 @@ Latest release [here](https://github.com/davghouse/AOLadderer/releases/tag/v2.0.
 ![Build](/Screenshots/Build.png)
 ![Basic Ladder](/Screenshots/BasicLadder.png)
 ![Basic Shopping](/Screenshots/BasicShopping.png)
-![Advanced Ladder](/Screenshots/AdvancedLadder.png)
-![Advanced Shopping](/Screenshots/AdvancedShopping.png)
 
 Background
 ----------
