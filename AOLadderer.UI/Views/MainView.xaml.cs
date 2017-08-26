@@ -1,6 +1,7 @@
 ﻿using AOLadderer.UI.Properties;
 using AOLadderer.UI.ViewModels;
 using Microsoft.Win32;
+using System;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
@@ -50,11 +51,22 @@ namespace AOLadderer.UI.Views
 
             if (dialog.ShowDialog() == true)
             {
-                string save = File.ReadAllText(dialog.FileName);
-                _mainViewModel.LoadSave(save);
 
-                CurrentSavePath = dialog.FileName;
-                CurrentSave = save;
+                try
+                {
+                    string save = File.ReadAllText(dialog.FileName);
+                    _mainViewModel.LoadSave(save);
+
+                    CurrentSavePath = dialog.FileName;
+                    CurrentSave = save;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+$@"Error loading file ""{dialog.FileName}"". Old .lad files aren't supported, only new .ladd files are.
+
+{ex.ToString()}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
