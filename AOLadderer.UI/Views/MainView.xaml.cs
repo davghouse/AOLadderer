@@ -18,18 +18,20 @@ namespace AOLadderer.UI.Views
             DataContext = _mainViewModel = new MainViewModel();
         }
 
-        private string _currentFilePath;
-        private string CurrentFilePath
+        private string _currentSavePath;
+        private string CurrentSavePath
         {
-            get => _currentFilePath;
+            get => _currentSavePath;
             set
             {
-                _currentFilePath = value;
-                Title = CurrentFilePath == null ? "AO Ladderer"
-                    : $"{Path.GetFileName(CurrentFilePath)} - AO Ladderer";
+                _currentSavePath = value;
+                Title = CurrentSavePath == null ? "AO Ladderer"
+                    : $"{Path.GetFileName(CurrentSavePath)} - AO Ladderer";
                 TitleTextBlock.Text = Title;
             }
         }
+
+        private string CurrentSave { get; set; }
 
         private void HeaderRow_MouseDown_Drag(object sender, MouseButtonEventArgs e)
         {
@@ -48,16 +50,22 @@ namespace AOLadderer.UI.Views
 
             if (dialog.ShowDialog() == true)
             {
-                _mainViewModel.LoadFromFile(dialog.FileName);
-                CurrentFilePath = dialog.FileName;
+                string save = File.ReadAllText(dialog.FileName);
+                _mainViewModel.LoadSave(save);
+
+                CurrentSavePath = dialog.FileName;
+                CurrentSave = save;
             }
         }
 
         private void SaveMenuItem_Click_SaveToFile(object sender, RoutedEventArgs e)
         {
-            if (CurrentFilePath != null)
+            if (CurrentSavePath != null)
             {
-                _mainViewModel.SaveToFile(CurrentFilePath);
+                string save = _mainViewModel.GetSave();
+                File.WriteAllText(CurrentSavePath, save);
+
+                CurrentSave = save;
             }
             else
             {
@@ -74,8 +82,11 @@ namespace AOLadderer.UI.Views
 
             if (dialog.ShowDialog() == true)
             {
-                _mainViewModel.SaveToFile(dialog.FileName);
-                CurrentFilePath = dialog.FileName;
+                string save = _mainViewModel.GetSave();
+                File.WriteAllText(dialog.FileName, save);
+
+                CurrentSavePath = dialog.FileName;
+                CurrentSave = save;
             }
         }
 
@@ -83,7 +94,32 @@ namespace AOLadderer.UI.Views
             => WindowState = WindowState.Minimized;
 
         private void CloseButton_Click_CloseApplication(object sender, RoutedEventArgs e)
-            => Close();
+        {
+            if (CurrentSavePath != null)
+            {
+                string save = _mainViewModel.GetSave();
+
+                if (save != CurrentSave)
+                {
+                    var result = MessageBox.Show(
+                        $"Save ladder file \"{CurrentSavePath}\"?",
+                        "Save",
+                        button: MessageBoxButton.YesNoCancel,
+                        icon: MessageBoxImage.Question,
+                        defaultResult: MessageBoxResult.Cancel);
+
+                    if (result == MessageBoxResult.Cancel)
+                        return;
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        File.WriteAllText(CurrentSavePath, save);
+                    }
+                }
+            }
+
+            Close();
+        }
 
         protected override void OnClosing(CancelEventArgs e)
         {

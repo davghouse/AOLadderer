@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows.Input;
 
 namespace AOLadderer.UI.ViewModels
@@ -33,83 +34,84 @@ namespace AOLadderer.UI.ViewModels
         // Well, this is kind of disgusting. I'll need to look into serialization options to replace this
         // manual effort. But I don't want serialization requirements to affect the AOLadderer project.
         // Regardless, this is inflexible. But AO is in maintenance mode and this project will be too.
-        public void SaveToFile(string filePath)
+        public string GetSave()
         {
-            using (var file = new StreamWriter(filePath))
+            var saveBuilder = new StringBuilder();
+
+            foreach (var implantConfigurationViewModel in BuildViewModel.ImplantConfigurationViewModels)
             {
-                foreach (var implantConfigurationViewModel in BuildViewModel.ImplantConfigurationViewModels)
-                {
-                    file.WriteLine(implantConfigurationViewModel.GetImplantTemplate()?.AOID);
-                }
-
-                file.WriteLine(BuildViewModel.UseComposites);
-                file.WriteLine(BuildViewModel.UseCompositesPay2Win);
-                file.WriteLine(BuildViewModel.UseSurgeryClinicEffect);
-                file.WriteLine(BuildViewModel.UseSuperiorFirstAid);
-                file.WriteLine(BuildViewModel.UseEnhancedSenses);
-                file.WriteLine(BuildViewModel.UseFelineGrace);
-                file.WriteLine(BuildViewModel.UseEssenceOfBehemoth);
-                file.WriteLine(BuildViewModel.UseGauntlet);
-                file.WriteLine(BuildViewModel.UseExtruderBar);
-                file.WriteLine(BuildViewModel.UseExplosifs);
-                file.WriteLine(BuildViewModel.UseIronCircle);
-                file.WriteLine(BuildViewModel.UseProdigiousStrength);
-                file.WriteLine(BuildViewModel.UseIronCircleOrProdigiousStrength);
-                file.WriteLine(BuildViewModel.UseNeuronalStimulator);
-
-                file.WriteLine(BuildViewModel.Strength);
-                file.WriteLine(BuildViewModel.Stamina);
-                file.WriteLine(BuildViewModel.Sense);
-                file.WriteLine(BuildViewModel.Agility);
-                file.WriteLine(BuildViewModel.Intelligence);
-                file.WriteLine(BuildViewModel.Psychic);
-                file.WriteLine(BuildViewModel.Treatment);
-
-                void SaveLadderViewModelToFile(LadderViewModel ladderViewModel)
-                {
-                    file.WriteLine(ladderViewModel.LadderStepViewModels.Count);
-                    foreach (var ladderStepViewModel in ladderViewModel.LadderStepViewModels)
-                    {
-                        file.WriteLine(ladderStepViewModel.Implant.AOID);
-                        file.WriteLine(ladderStepViewModel.Implant.QL);
-                        file.WriteLine(ladderStepViewModel.IsChecked);
-                        file.WriteLine(ladderStepViewModel.IsFinalImplant);
-                    }
-                    file.WriteLine(ladderViewModel.AverageFinalImplantQL);
-                }
-
-                void SaveClusterPurchasesToFile(IReadOnlyList<ClusterPurchaseViewModel> clusterPurchases)
-                {
-                    file.WriteLine(clusterPurchases.Count);
-                    foreach (var clusterPurchase in clusterPurchases)
-                    {
-                        file.WriteLine(clusterPurchase.Stat.Name);
-                        file.WriteLine(clusterPurchase.MinimumClusterQL);
-                        file.WriteLine(clusterPurchase.IsChecked);
-                    }
-                }
-
-                void SaveShoppingViewModelToFile(ShoppingViewModel shoppingViewModel)
-                {
-                    SaveClusterPurchasesToFile(shoppingViewModel.ShinyClusterPurchases);
-                    SaveClusterPurchasesToFile(shoppingViewModel.BrightClusterPurchases);
-                    SaveClusterPurchasesToFile(shoppingViewModel.FadedClusterPurchases);
-                }
-
-                SaveLadderViewModelToFile(BasicLadderViewModel);
-                SaveShoppingViewModelToFile(BasicShoppingViewModel);
-                SaveLadderViewModelToFile(AdvancedLadderViewModel);
-                SaveShoppingViewModelToFile(AdvancedShoppingViewModel);
+                saveBuilder.AppendLine(implantConfigurationViewModel.GetImplantTemplate()?.AOID.ToString());
             }
+
+            saveBuilder.AppendLine(BuildViewModel.UseComposites.ToString());
+            saveBuilder.AppendLine(BuildViewModel.UseCompositesPay2Win.ToString());
+            saveBuilder.AppendLine(BuildViewModel.UseSurgeryClinicEffect.ToString());
+            saveBuilder.AppendLine(BuildViewModel.UseSuperiorFirstAid.ToString());
+            saveBuilder.AppendLine(BuildViewModel.UseEnhancedSenses.ToString());
+            saveBuilder.AppendLine(BuildViewModel.UseFelineGrace.ToString());
+            saveBuilder.AppendLine(BuildViewModel.UseEssenceOfBehemoth.ToString());
+            saveBuilder.AppendLine(BuildViewModel.UseGauntlet.ToString());
+            saveBuilder.AppendLine(BuildViewModel.UseExtruderBar.ToString());
+            saveBuilder.AppendLine(BuildViewModel.UseExplosifs.ToString());
+            saveBuilder.AppendLine(BuildViewModel.UseIronCircle.ToString());
+            saveBuilder.AppendLine(BuildViewModel.UseProdigiousStrength.ToString());
+            saveBuilder.AppendLine(BuildViewModel.UseIronCircleOrProdigiousStrength.ToString());
+            saveBuilder.AppendLine(BuildViewModel.UseNeuronalStimulator.ToString());
+
+            saveBuilder.AppendLine(BuildViewModel.Strength.ToString());
+            saveBuilder.AppendLine(BuildViewModel.Stamina.ToString());
+            saveBuilder.AppendLine(BuildViewModel.Sense.ToString());
+            saveBuilder.AppendLine(BuildViewModel.Agility.ToString());
+            saveBuilder.AppendLine(BuildViewModel.Intelligence.ToString());
+            saveBuilder.AppendLine(BuildViewModel.Psychic.ToString());
+            saveBuilder.AppendLine(BuildViewModel.Treatment.ToString());
+
+            void SaveLadderViewModel(LadderViewModel ladderViewModel)
+            {
+                saveBuilder.AppendLine(ladderViewModel.LadderStepViewModels.Count.ToString());
+                foreach (var ladderStepViewModel in ladderViewModel.LadderStepViewModels)
+                {
+                    saveBuilder.AppendLine(ladderStepViewModel.Implant.AOID.ToString());
+                    saveBuilder.AppendLine(ladderStepViewModel.Implant.QL.ToString());
+                    saveBuilder.AppendLine(ladderStepViewModel.IsChecked.ToString());
+                    saveBuilder.AppendLine(ladderStepViewModel.IsFinalImplant.ToString());
+                }
+                saveBuilder.AppendLine(ladderViewModel.AverageFinalImplantQL.ToString());
+            }
+
+            void SaveClusterPurchases(IReadOnlyList<ClusterPurchaseViewModel> clusterPurchases)
+            {
+                saveBuilder.AppendLine(clusterPurchases.Count.ToString());
+                foreach (var clusterPurchase in clusterPurchases)
+                {
+                    saveBuilder.AppendLine(clusterPurchase.Stat.Name);
+                    saveBuilder.AppendLine(clusterPurchase.MinimumClusterQL.ToString());
+                    saveBuilder.AppendLine(clusterPurchase.IsChecked.ToString());
+                }
+            }
+
+            void SaveShoppingViewModel(ShoppingViewModel shoppingViewModel)
+            {
+                SaveClusterPurchases(shoppingViewModel.ShinyClusterPurchases);
+                SaveClusterPurchases(shoppingViewModel.BrightClusterPurchases);
+                SaveClusterPurchases(shoppingViewModel.FadedClusterPurchases);
+            }
+
+            SaveLadderViewModel(BasicLadderViewModel);
+            SaveShoppingViewModel(BasicShoppingViewModel);
+            SaveLadderViewModel(AdvancedLadderViewModel);
+            SaveShoppingViewModel(AdvancedShoppingViewModel);
+
+            return saveBuilder.ToString();
         }
 
-        public void LoadFromFile(string filePath)
+        public void LoadSave(string save)
         {
-            using (var file = new StreamReader(filePath))
+            using (var saveReader = new StringReader(save))
             {
                 foreach (var implantConfigurationViewModel in BuildViewModel.ImplantConfigurationViewModels)
                 {
-                    if (int.TryParse(file.ReadLine(), out int aoid))
+                    if (int.TryParse(saveReader.ReadLine(), out int aoid))
                     {
                         implantConfigurationViewModel.SetImplantTemplate(ImplantTemplate.ImplantTemplates.Single(t => t.AOID == aoid));
                     }
@@ -119,48 +121,48 @@ namespace AOLadderer.UI.ViewModels
                     }
                 }
 
-                BuildViewModel.UseComposites = bool.Parse(file.ReadLine());
-                BuildViewModel.UseCompositesPay2Win = bool.Parse(file.ReadLine());
-                BuildViewModel.UseSurgeryClinicEffect = bool.Parse(file.ReadLine());
-                BuildViewModel.UseSuperiorFirstAid = bool.Parse(file.ReadLine());
-                BuildViewModel.UseEnhancedSenses = bool.Parse(file.ReadLine());
-                BuildViewModel.UseFelineGrace = bool.Parse(file.ReadLine());
-                BuildViewModel.UseEssenceOfBehemoth = bool.Parse(file.ReadLine());
-                BuildViewModel.UseGauntlet = bool.Parse(file.ReadLine());
-                BuildViewModel.UseExtruderBar = bool.Parse(file.ReadLine());
-                BuildViewModel.UseExplosifs = bool.Parse(file.ReadLine());
-                BuildViewModel.UseIronCircle = bool.Parse(file.ReadLine());
-                BuildViewModel.UseProdigiousStrength = bool.Parse(file.ReadLine());
-                BuildViewModel.UseIronCircleOrProdigiousStrength = bool.Parse(file.ReadLine());
-                BuildViewModel.UseNeuronalStimulator = bool.Parse(file.ReadLine());
+                BuildViewModel.UseComposites = bool.Parse(saveReader.ReadLine());
+                BuildViewModel.UseCompositesPay2Win = bool.Parse(saveReader.ReadLine());
+                BuildViewModel.UseSurgeryClinicEffect = bool.Parse(saveReader.ReadLine());
+                BuildViewModel.UseSuperiorFirstAid = bool.Parse(saveReader.ReadLine());
+                BuildViewModel.UseEnhancedSenses = bool.Parse(saveReader.ReadLine());
+                BuildViewModel.UseFelineGrace = bool.Parse(saveReader.ReadLine());
+                BuildViewModel.UseEssenceOfBehemoth = bool.Parse(saveReader.ReadLine());
+                BuildViewModel.UseGauntlet = bool.Parse(saveReader.ReadLine());
+                BuildViewModel.UseExtruderBar = bool.Parse(saveReader.ReadLine());
+                BuildViewModel.UseExplosifs = bool.Parse(saveReader.ReadLine());
+                BuildViewModel.UseIronCircle = bool.Parse(saveReader.ReadLine());
+                BuildViewModel.UseProdigiousStrength = bool.Parse(saveReader.ReadLine());
+                BuildViewModel.UseIronCircleOrProdigiousStrength = bool.Parse(saveReader.ReadLine());
+                BuildViewModel.UseNeuronalStimulator = bool.Parse(saveReader.ReadLine());
 
-                BuildViewModel.Strength = int.Parse(file.ReadLine());
-                BuildViewModel.Stamina = int.Parse(file.ReadLine());
-                BuildViewModel.Sense = int.Parse(file.ReadLine());
-                BuildViewModel.Agility = int.Parse(file.ReadLine());
-                BuildViewModel.Intelligence = int.Parse(file.ReadLine());
-                BuildViewModel.Psychic = int.Parse(file.ReadLine());
-                BuildViewModel.Treatment = double.Parse(file.ReadLine());
+                BuildViewModel.Strength = int.Parse(saveReader.ReadLine());
+                BuildViewModel.Stamina = int.Parse(saveReader.ReadLine());
+                BuildViewModel.Sense = int.Parse(saveReader.ReadLine());
+                BuildViewModel.Agility = int.Parse(saveReader.ReadLine());
+                BuildViewModel.Intelligence = int.Parse(saveReader.ReadLine());
+                BuildViewModel.Psychic = int.Parse(saveReader.ReadLine());
+                BuildViewModel.Treatment = double.Parse(saveReader.ReadLine());
 
-                void LoadLadderViewModelFromFile(LadderViewModel ladderViewModel)
+                void LoadLadderViewModel(LadderViewModel ladderViewModel)
                 {
-                    int ladderStepCount = int.Parse(file.ReadLine());
+                    int ladderStepCount = int.Parse(saveReader.ReadLine());
                     var ladderStepViewModels = new List<LadderStepViewModel>();
                     for (int i = 1; i <= ladderStepCount; ++i)
                     {
-                        int aoid = int.Parse(file.ReadLine());
-                        int implantQL = int.Parse(file.ReadLine());
-                        bool isChecked = bool.Parse(file.ReadLine());
-                        bool isFinalImplant = bool.Parse(file.ReadLine());
+                        int aoid = int.Parse(saveReader.ReadLine());
+                        int implantQL = int.Parse(saveReader.ReadLine());
+                        bool isChecked = bool.Parse(saveReader.ReadLine());
+                        bool isFinalImplant = bool.Parse(saveReader.ReadLine());
                         var implant = new Implant(ImplantTemplate.ImplantTemplates.Single(t => t.AOID == aoid), implantQL);
                         ladderStepViewModels.Add(new LadderStepViewModel(implant, isFinalImplant)
-                            {
-                                IsChecked = isChecked
-                            });
+                        {
+                            IsChecked = isChecked
+                        });
                     }
                     ladderViewModel.LadderStepViewModels = ladderStepViewModels;
 
-                    if (double.TryParse(file.ReadLine(), out double averageFinalImplantQL))
+                    if (double.TryParse(saveReader.ReadLine(), out double averageFinalImplantQL))
                     {
                         ladderViewModel.AverageFinalImplantQL = averageFinalImplantQL;
                     }
@@ -170,36 +172,36 @@ namespace AOLadderer.UI.ViewModels
                     }
                 }
 
-                IReadOnlyList<ClusterPurchaseViewModel> LoadClusterPurchasesFromFile(IEnumerable<ClusterTemplate> clusterTemplates)
+                IReadOnlyList<ClusterPurchaseViewModel> LoadClusterPurchases(IEnumerable<ClusterTemplate> clusterTemplates)
                 {
-                    int clusterPurchasesCount = int.Parse(file.ReadLine());
+                    int clusterPurchasesCount = int.Parse(saveReader.ReadLine());
                     var clusterPurchaseViewModels = new List<ClusterPurchaseViewModel>();
                     for (int i = 1; i <= clusterPurchasesCount; ++i)
                     {
-                        string statName = file.ReadLine();
-                        int minimumClusterQL = int.Parse(file.ReadLine());
-                        bool isChecked = bool.Parse(file.ReadLine());
+                        string statName = saveReader.ReadLine();
+                        int minimumClusterQL = int.Parse(saveReader.ReadLine());
+                        bool isChecked = bool.Parse(saveReader.ReadLine());
                         var clusterTemplate = clusterTemplates.Single(t => t.Stat.Name == statName);
                         clusterPurchaseViewModels.Add(new ClusterPurchaseViewModel(clusterTemplate, minimumClusterQL)
-                            {
-                                IsChecked = isChecked
-                            });
+                        {
+                            IsChecked = isChecked
+                        });
                     }
 
                     return clusterPurchaseViewModels;
                 }
 
-                void LoadShoppingViewModelFromFile(ShoppingViewModel shoppingViewModel)
+                void LoadShoppingViewModel(ShoppingViewModel shoppingViewModel)
                 {
-                    shoppingViewModel.ShinyClusterPurchases = LoadClusterPurchasesFromFile(ShinyClusterTemplate.ShinyClusterTemplates);
-                    shoppingViewModel.BrightClusterPurchases = LoadClusterPurchasesFromFile(BrightClusterTemplate.BrightClusterTemplates);
-                    shoppingViewModel.FadedClusterPurchases = LoadClusterPurchasesFromFile(FadedClusterTemplate.FadedClusterTemplates);
+                    shoppingViewModel.ShinyClusterPurchases = LoadClusterPurchases(ShinyClusterTemplate.ShinyClusterTemplates);
+                    shoppingViewModel.BrightClusterPurchases = LoadClusterPurchases(BrightClusterTemplate.BrightClusterTemplates);
+                    shoppingViewModel.FadedClusterPurchases = LoadClusterPurchases(FadedClusterTemplate.FadedClusterTemplates);
                 }
 
-                LoadLadderViewModelFromFile(BasicLadderViewModel);
-                LoadShoppingViewModelFromFile(BasicShoppingViewModel);
-                LoadLadderViewModelFromFile(AdvancedLadderViewModel);
-                LoadShoppingViewModelFromFile(AdvancedShoppingViewModel);
+                LoadLadderViewModel(BasicLadderViewModel);
+                LoadShoppingViewModel(BasicShoppingViewModel);
+                LoadLadderViewModel(AdvancedLadderViewModel);
+                LoadShoppingViewModel(AdvancedShoppingViewModel);
             }
         }
 
