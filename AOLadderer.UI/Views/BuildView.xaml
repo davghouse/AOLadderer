@@ -49,174 +49,226 @@
         <RowDefinition Height="*"/>
       </Grid.RowDefinitions>
 
-      <!-- TODO: Hopefully there's reuse this row markup, but a quick attempt didn't succeed so just copy/pasting. -->
+      <!-- TODO: Hopefully there's a way to reuse this row markup, but a quick attempt didn'work so just copy/pasting. -->
 
       <TextBlock Grid.Column="0" Grid.Row="0"
+                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_ToggleImplantSlotAvailability"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                  Text="{Binding ImplantConfigurationViewModels[0].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="0" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[0].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[0].ShinyClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[0].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="0" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[0].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[0].BrightClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[0].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="0" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[0].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[0].FadedClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[0].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="1"
+                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_ToggleImplantSlotAvailability"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                  Text="{Binding ImplantConfigurationViewModels[1].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="1" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[1].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[1].ShinyClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[1].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="1" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[1].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[1].BrightClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[1].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="1" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[1].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[1].FadedClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[1].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="2"
+                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_ToggleImplantSlotAvailability"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                  Text="{Binding ImplantConfigurationViewModels[2].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="2" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[2].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[2].ShinyClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[2].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="2" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[2].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[2].BrightClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[2].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="2" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[2].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[2].FadedClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[2].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="3"
+                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_ToggleImplantSlotAvailability"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                  Text="{Binding ImplantConfigurationViewModels[3].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="3" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[3].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[3].ShinyClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[3].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="3" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[3].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[3].BrightClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[3].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="3" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[3].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[3].FadedClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[3].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="4"
+                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_ToggleImplantSlotAvailability"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                  Text="{Binding ImplantConfigurationViewModels[4].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="4" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[4].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[4].ShinyClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[4].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="4" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[4].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[4].BrightClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[4].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="4" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[4].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[4].FadedClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[4].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="5"
+                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_ToggleImplantSlotAvailability"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                  Text="{Binding ImplantConfigurationViewModels[5].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="5" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[5].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[5].ShinyClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[5].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="5" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[5].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[5].BrightClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[5].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="5" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[5].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[5].FadedClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[5].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="6"
+                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_ToggleImplantSlotAvailability"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                  Text="{Binding ImplantConfigurationViewModels[6].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="6" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[6].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[6].ShinyClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[6].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="6" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[6].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[6].BrightClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[6].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="6" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[6].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[6].FadedClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[6].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="7"
+                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_ToggleImplantSlotAvailability"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                  Text="{Binding ImplantConfigurationViewModels[7].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="7" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[7].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[7].ShinyClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[7].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="7" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[7].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[7].BrightClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[7].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="7" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[7].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[7].FadedClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[7].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="8"
+                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_ToggleImplantSlotAvailability"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                  Text="{Binding ImplantConfigurationViewModels[8].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="8" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[8].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[8].ShinyClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[8].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="8" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[8].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[8].BrightClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[8].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="8" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[8].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[8].FadedClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[8].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="9"
+                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_ToggleImplantSlotAvailability"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                  Text="{Binding ImplantConfigurationViewModels[9].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="9" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[9].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[9].ShinyClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[9].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="9" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[9].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[9].BrightClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[9].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="9" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[9].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[9].FadedClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[9].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="10"
+                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_ToggleImplantSlotAvailability"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                  Text="{Binding ImplantConfigurationViewModels[10].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="10" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[10].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[10].ShinyClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[10].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="10" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[10].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[10].BrightClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[10].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="10" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[10].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[10].FadedClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[10].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="11"
+                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_ToggleImplantSlotAvailability"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                  Text="{Binding ImplantConfigurationViewModels[11].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="11" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[11].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[11].ShinyClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[11].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="11" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[11].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[11].BrightClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[11].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="11" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[11].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[11].FadedClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[11].SelectedFadedClusterOption}"/>
 
       <TextBlock Grid.Column="0" Grid.Row="12"
+                 MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_ToggleImplantSlotAvailability"
                  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0 0 3 0"
                  Text="{Binding ImplantConfigurationViewModels[12].AbiSlotDescription}"/>
       <ComboBox Grid.Column="1" Grid.Row="12" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[12].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[12].ShinyClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[12].SelectedShinyClusterOption}"/>
       <ComboBox Grid.Column="2" Grid.Row="12" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[12].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[12].BrightClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[12].SelectedBrightClusterOption}"/>
       <ComboBox Grid.Column="3" Grid.Row="12" Margin="3"
+                IsEnabled="{Binding ImplantConfigurationViewModels[12].IsImplantSlotAvailable}"
                 ItemsSource="{Binding ImplantConfigurationViewModels[12].FadedClusterOptions}"
                 SelectedItem="{Binding ImplantConfigurationViewModels[12].SelectedFadedClusterOption}"/>
 

@@ -300,5 +300,29 @@ namespace AOLadderer.UnitTests.LadderProcesses
             Assert.AreEqual(0, ladderProcess.OrderedLadderImplants.Count);
             Assert.AreEqual(0, ladderProcess.OrderedFinalImplants.Count);
         }
+
+        [TestMethod, Timeout(60000)]
+        public void DegenerateLadderDoesntTakeForeverEvenWhenHighNumberOfFinalImplantsAsLadderImplants()
+        {
+            var finalImplantTemplates = new[]
+            {
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Head, Skill.TimeAndSpace, Skill.NanoPool, Ability.Sense),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Eye, Skill.AimedShot, Skill.Treatment, Skill.TimeAndSpace),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Ear, null, Skill.Concealment, Ability.Intelligence),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Chest, Ability.Stamina, Skill.BioMetamor, Skill.SensoryImpr),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.RightArm, Ability.Strength, null, null),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftArm, null, Ability.Strength, null),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Waist, ArmorClass.FireAC, MaxHealthOrNano.MaxHealth, Skill.EvadeClsC),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.RightWrist, Skill.RunSpeed, Skill.NanoResist, Skill.MultMelee),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftWrist, Skill.MultMelee, Skill.RunSpeed, Skill.NanoResist),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Leg, Ability.Agility, Skill.EvadeClsC, ArmorClass.MeleeMaAC),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.RightHand, Skill.MartialArts, Skill.TimeAndSpace, Skill.Treatment),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftHand, null, ArmorClass.FireAC, Skill.MartialArts),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Feet, Skill.EvadeClsC, Ability.Agility, Skill.DuckExp),
+            };
+            Assert.AreEqual(9, finalImplantTemplates.Count(t => t.RaisesLadderStats));
+
+            var ladderProcess = new DegenerateLadderProcess(_character, finalImplantTemplates);
+        }
     }
 }

@@ -67,6 +67,13 @@ namespace AOLadderer.UI.ViewModels
             }
         }
 
+        private bool _isImplantSlotAvailable = true;
+        public bool IsImplantSlotAvailable
+        {
+            get => _isImplantSlotAvailable;
+            set => Set(ref _isImplantSlotAvailable, value);
+        }
+
         public bool IsEmpty
             => (SelectedShinyClusterOption?.IsEmpty ?? true)
             && (SelectedBrightClusterOption?.IsEmpty ?? true)
@@ -88,6 +95,9 @@ namespace AOLadderer.UI.ViewModels
 
         public string AbiSlotDescription
             => IsEmpty ? ImplantSlot.ShortName : $"{GetImplantTemplate().RequiredAbility.ShortName} {ImplantSlot.ShortName}";
+
+        public void ToggleImplantSlotAvailability()
+            => IsImplantSlotAvailable = !IsImplantSlotAvailable;
 
         public class ClusterOption
         {

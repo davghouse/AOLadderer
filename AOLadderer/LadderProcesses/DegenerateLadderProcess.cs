@@ -3,9 +3,10 @@ using System.Linq;
 
 namespace AOLadderer.LadderProcesses
 {
-    // Given a character with some (or none) initially equipped *ladder* implants and their final implant templates,
+    // Given a character with some (or none) initially equipped (ladder) implants and their final implant templates,
     // find the optimal order of final implants, where a requirement is filling in initially empty slots first.
-    // This is done by considering every permutation of two different groups of ladder implants (in empty/full slots).
+    // This is done by considering every permutation of two different groups of ladder implants (in empty/full slots,
+    // where we just assume all implants initially in the full slots are ladder implants, because that's how we use it.)
     public sealed class DegenerateLadderProcess : LadderProcess
     {
         private readonly IReadOnlyList<Implant> _initiallyEquippedImplants;
@@ -33,8 +34,6 @@ namespace AOLadderer.LadderProcesses
         {
             foreach (var initiallyEmptyEquipOrder in GetAllPossibleEquipOrders(_finalLadderImplantTemplatesInInitiallyEmptyImplantSlots))
             {
-                // Before, we were unequipping all implants and re-equipping the initial ones at the end of this loop body.
-                // Turns out just creating a new character based on the original character is better for performance.
                 var workingCharacter = new Character(_character);
 
                 foreach (var finalLadderImplantTemplate in initiallyEmptyEquipOrder)
@@ -63,6 +62,8 @@ namespace AOLadderer.LadderProcesses
                             .Concat(initiallyFullEquipOrder)
                             .Select(t => workingCharacter.GetImplant(t.ImplantSlot))
                             .ToArray();
+
+                        if (AverageFinalImplantQL == 200) return;
                     }
 
                     workingCharacter.SetImplants(_initiallyEquippedImplants, areSlotsKnownToBeEmpty: false);

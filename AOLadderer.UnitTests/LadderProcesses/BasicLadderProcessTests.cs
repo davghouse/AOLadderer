@@ -2,7 +2,6 @@
 using AOLadderer.Stats;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace AOLadderer.UnitTests.LadderProcesses
@@ -107,13 +106,7 @@ namespace AOLadderer.UnitTests.LadderProcesses
 
             var ladderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
 
-            // Heuristic chooses the ladder implant adding the most treatment when there are ties.
-            // We're not worrying about detecting when no ladder implants will help, so at least
-            // one always gets chosen.
-            Assert.AreEqual(
-                LadderImplantGroup.LadderImplantGroups[6].LadderImplantTemplates[0],
-                ladderProcess.OrderedLadderImplants[0].ImplantTemplate);
-            Assert.AreEqual(1, ladderProcess.OrderedLadderImplants.Count);
+            Assert.AreEqual(0, ladderProcess.OrderedLadderImplants.Count);
             Assert.AreEqual(200, ladderProcess.AverageFinalImplantQL);
             Assert.AreEqual(200 * 11, ladderProcess.TotalFinalImplantQL);
         }
@@ -182,6 +175,103 @@ namespace AOLadderer.UnitTests.LadderProcesses
             var ladderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
 
             Assert.IsTrue(121 <= ladderProcess.AverageFinalImplantQL);
+        }
+
+        [TestMethod, Timeout(1000)]
+        public void BasicLadderIsFastWhenMaxNumberOfLadderImplantsButVeryHighStartingStats()
+        {
+            _character = new Character(
+                agilityValue: 500, intelligenceValue: 500, psychicValue: 500,
+                senseValue: 500, staminaValue: 500, strengthValue: 500, treatmentValue: 1000);
+
+            _finalImplantTemplates = new[]
+            {
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Head, Skill.TimeAndSpace, Skill.NanoPool, Ability.Sense),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Eye, Skill.AimedShot, Skill.Treatment, Skill.TimeAndSpace),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Ear, null, Skill.Concealment, Ability.Intelligence),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Chest, Ability.Stamina, Skill.BioMetamor, Skill.SensoryImpr),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.RightArm, Ability.Strength, null, null),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftArm, null, Ability.Strength, null),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Waist, ArmorClass.FireAC, MaxHealthOrNano.MaxHealth, Ability.Stamina),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.RightWrist, Skill.RunSpeed, Skill.NanoResist, Skill.MultMelee),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftWrist, Skill.MultMelee, Skill.RunSpeed, Skill.NanoResist),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Leg, Ability.Agility, Skill.EvadeClsC, ArmorClass.MeleeMaAC),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.RightHand, Skill.MartialArts, Skill.TimeAndSpace, Skill.Treatment),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftHand, null, ArmorClass.FireAC, Skill.MartialArts),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.Feet, Skill.EvadeClsC, Ability.Agility, Skill.DuckExp),
+            };
+            Assert.AreEqual(10, _finalImplantTemplates.Count(t => t.RaisesLadderStats));
+
+            var ladderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
+
+            Assert.AreEqual(200, ladderProcess.AverageFinalImplantQL);
+        }
+
+        [TestMethod]
+        public void BasicLadderDoesntUseUnavailableImplantSlots()
+        {
+            _finalImplantTemplates = _finalImplantTemplates.Where(t => t.ImplantSlot != ImplantSlot.Head).ToArray();
+            var fullLadderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
+            var restrictedLadderProcess = new BasicLadderProcess(_character, _finalImplantTemplates, new[] { ImplantSlot.Head } );
+
+            Assert.IsTrue(fullLadderProcess.OrderedLadderImplants.Any(i => i.ImplantSlot == ImplantSlot.Head));
+            Assert.IsFalse(restrictedLadderProcess.OrderedLadderImplants.Any(i => i.ImplantSlot == ImplantSlot.Head));
+            Assert.IsTrue(fullLadderProcess.AverageFinalImplantQL > restrictedLadderProcess.AverageFinalImplantQL);
+            // Throw in a regression test, hopefully won't ever drop below this.
+            Assert.AreEqual(168.6, fullLadderProcess.AverageFinalImplantQL);
+            Assert.AreEqual(153.4, restrictedLadderProcess.AverageFinalImplantQL);
+        }
+
+        [TestMethod]
+        public void BasicLadderUsesOneLadderImplantWhenTheresOnlyOneAvailable()
+        {
+            _finalImplantTemplates = new[]
+            {
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.RightWrist, Skill.RunSpeed, Skill.NanoResist, Skill.MultMelee),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftWrist, Skill.MultMelee, Skill.RunSpeed, Skill.NanoResist),
+                ImplantTemplate.GetImplantTemplate(ImplantSlot.LeftHand, null, ArmorClass.FireAC, Skill.MartialArts),
+            };
+
+            var basicLadderProcess = new BasicLadderProcess(_character, _finalImplantTemplates,
+                unavailableImplantSlots: ImplantSlot.LadderImplantSlots.Where(s => s != ImplantSlot.RightHand));
+
+            Assert.AreEqual(ImplantSlot.RightHand, basicLadderProcess.OrderedLadderImplants.Single().ImplantSlot);
+            Assert.IsTrue(basicLadderProcess.AverageFinalImplantQL > 138);
+        }
+
+        [TestMethod]
+        public void BasicLadderUsesASingleLadderImplantIfThatsAllThatsNecessary()
+        {
+            _character = new Character(
+                agilityValue: 410, intelligenceValue: 410, psychicValue: 410,
+                senseValue: 410, staminaValue: 410, strengthValue: 410, treatmentValue: 907);
+
+            var basicLadderProcess = new BasicLadderProcess(_character, _finalImplantTemplates);
+
+            Assert.AreEqual(ImplantSlot.Head, basicLadderProcess.OrderedLadderImplants.Single().ImplantSlot);
+            Assert.AreEqual(200, basicLadderProcess.AverageFinalImplantQL);
+        }
+
+        [TestMethod]
+        public void BasicLadderProcessUsesAFewLadderImplantsIfThatsAllThatsAvailable()
+        {
+            var availableImplantSlots = new[]
+            {
+                ImplantSlot.Head, ImplantSlot.RightHand, ImplantSlot.Leg,
+                ImplantSlot.RightWrist, ImplantSlot.LeftWrist, ImplantSlot.LeftHand
+            };
+
+            _finalImplantTemplates = _finalImplantTemplates
+                .Where(t => availableImplantSlots.Contains(t.ImplantSlot))
+                .ToArray();
+
+            var basicLadderProcess = new BasicLadderProcess(_character, _finalImplantTemplates,
+                unavailableImplantSlots: ImplantSlot.ImplantSlots.Except(availableImplantSlots));
+
+            Assert.IsTrue(basicLadderProcess.OrderedLadderImplants.All(i => availableImplantSlots.Contains(i.ImplantSlot)));
+            Assert.IsTrue(basicLadderProcess.OrderedFinalImplants.All(i => availableImplantSlots.Contains(i.ImplantSlot)));
+            // Throw in a regression test, hopefully won't ever drop below this.
+            Assert.AreEqual(928, basicLadderProcess.TotalFinalImplantQL);
         }
     }
 }

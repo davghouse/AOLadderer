@@ -40,7 +40,7 @@ namespace AOLadderer.UI.ViewModels
 
             foreach (var implantConfigurationViewModel in BuildViewModel.ImplantConfigurationViewModels)
             {
-                saveBuilder.AppendLine(implantConfigurationViewModel.GetImplantTemplate()?.AOID.ToString());
+                saveBuilder.AppendLine($"{implantConfigurationViewModel.GetImplantTemplate()?.AOID},{implantConfigurationViewModel.IsImplantSlotAvailable}");
             }
 
             saveBuilder.AppendLine(BuildViewModel.UseComposites.ToString());
@@ -111,7 +111,8 @@ namespace AOLadderer.UI.ViewModels
             {
                 foreach (var implantConfigurationViewModel in BuildViewModel.ImplantConfigurationViewModels)
                 {
-                    if (int.TryParse(saveReader.ReadLine(), out int aoid))
+                    string[] lineParts = saveReader.ReadLine().Split(',');
+                    if (int.TryParse(lineParts[0], out int aoid))
                     {
                         implantConfigurationViewModel.SetImplantTemplate(ImplantTemplate.ImplantTemplates.Single(t => t.AOID == aoid));
                     }
@@ -119,6 +120,8 @@ namespace AOLadderer.UI.ViewModels
                     {
                         implantConfigurationViewModel.SetImplantTemplate(null);
                     }
+
+                    implantConfigurationViewModel.IsImplantSlotAvailable = lineParts.Length > 1 ? bool.Parse(lineParts[1]) : true;
                 }
 
                 BuildViewModel.UseComposites = bool.Parse(saveReader.ReadLine());

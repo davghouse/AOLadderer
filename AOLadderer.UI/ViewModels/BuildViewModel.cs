@@ -394,8 +394,13 @@ namespace AOLadderer.UI.ViewModels
 
         private IEnumerable<ImplantTemplate> GetImplantTemplates()
             => ImplantConfigurationViewModels
-            .Where(i => !i.IsEmpty)
+            .Where(i => !i.IsEmpty && i.IsImplantSlotAvailable)
             .Select(i => i.GetImplantTemplate());
+
+        private IEnumerable<ImplantSlot> GetUnavailableImplantSlots()
+            => ImplantConfigurationViewModels
+            .Where(i => !i.IsImplantSlotAvailable)
+            .Select(i => i.ImplantSlot);
 
         private bool _isLaddererRunning;
         public bool IsLaddererRunning
@@ -423,9 +428,11 @@ namespace AOLadderer.UI.ViewModels
         {
             var character = GetCharacter();
             var implantTemplates = GetImplantTemplates();
+            var unavailableImplantSlots = GetUnavailableImplantSlots();
 
             IsLaddererRunning = true;
-            BasicLadderProcess = await Task.Run(() => new BasicLadderProcess(character, implantTemplates));
+            BasicLadderProcess = await Task.Run(()
+                => new BasicLadderProcess(character, implantTemplates, unavailableImplantSlots));
             IsLaddererRunning = false;
         }
 
@@ -434,9 +441,11 @@ namespace AOLadderer.UI.ViewModels
         {
             var character = GetCharacter();
             var implantTemplates = GetImplantTemplates();
+            var unavailableImplantSlots = GetUnavailableImplantSlots();
 
             IsLaddererRunning = true;
-            AdvancedLadderProcess = await Task.Run(() => new AdvancedLadderProcess(character, implantTemplates));
+            AdvancedLadderProcess = await Task.Run(()
+                => new AdvancedLadderProcess(character, implantTemplates, unavailableImplantSlots));
             IsLaddererRunning = false;
         }
     }
