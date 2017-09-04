@@ -3,7 +3,7 @@
 
 Implant laddering tool for the sci-fi MMORPG Anarchy Online. 
 
-Latest release [here](https://github.com/davghouse/AOLadderer/releases/tag/v2.1.0) (built for W10, but I think it works on W7 too).
+Latest release [here](https://github.com/davghouse/AOLadderer/releases/tag/v2.2.0) (built for W10, but I think it works on W7 too).
 
 If you don't have Windows you can use an earlier, cross-platform release [here](https://github.com/davghouse/AOLadderer/releases/tag/v1.3.3).
 
@@ -75,7 +75,7 @@ For many characters, laddering implants is a part of this process.
 Usage
 -----
 
-For Windows 10 users, download the latest release and double-click on AOLadder.UI.exe (you may be prompted to download .NET 4.7).
+For Windows 10 users, download the latest release and double-click on AOLadder.UI.exe.
 Earlier versions of Windows aren't supported, but there's a chance it might work on them.
 Users without Windows 10 can use an old (cross-platform) version of the application found [here](https://github.com/davghouse/AOLadderer/releases/tag/v1.3.3).
 
@@ -86,6 +86,12 @@ Make sure there are no important implant slots full; it's assumed all slots are 
 There are options to cast buffs on yourself if you don't want to get them in-game beforehand. Be careful not to double-count.
 Then run one of the ladderers, build the exact implants shown, and equip them in the displayed order.
 Don't remove ladder implants until absolutely necessary, and remember to swap Explosifs if you're using them.
+
+And as an optional feature you can ctrl+left-click on the names of implant slots to mark them as unavailable.
+For example, you might want to take special measures to equip Touch of the Gripper, and then ctrl+left-click the Right-Arm slot to make sure it's not used for laddering.
+You'd then want to add to your Strength the 29 points that Touch of the Gripper provides, because otherwise the ladderer won't know about it.
+You can use this functionality to create a highly customized ladder process like you're used to, laddering up single ladder implants a time, then marking the slot as unavailable.
+Instead of the ladderer giving you a complete ladder process, you can just use it to take care of the math you were doing before.
 
 Usefulness
 ----------
@@ -99,12 +105,13 @@ Comparing implant configurations for a level 48 froob Nano-Technician:
 | AO Ladderer (v1.3.3) | 140.62     | http://auno.org/ao/equip.php?saveid=193165 | 145         |
 
 The first strategy uses no ladder implants, just equipping required implants in the order which maximizes their average QL (this order is non-obvious).
-The second strategy was done by hand, twinking naturally. The third uses AO Ladderer's basic solution.
+The second strategy was done by hand, twinking naturally. The third uses the basic ladder.
 Matter Crea is listed because it's the most important stat for that specific character.
-The average QL from the app is slightly higher, but the Matter Crea is 2 points less, which could be a big deal.
+The average QL from the ladderer is slightly higher, but the Matter Crea is 2 points less, which could be a big deal.
 
-This app provides a decent approximation for people wanting to equip a low to mid-level character.
-If you need to make an extreme PvP twink I don't recommend it, but if you want to get a decent PvM twink up and running quickly then it can be very convenient.
+The ladderer provides a decent approximation for people wanting to equip a low to mid-level character.
+It is very good at being frugal with the amount of ladder implants that you have to create.
+For the basic ladder, you'll never have to build more than 10 ladder implants, and it'll usually be less than that.
 
 Tips
 ----
@@ -113,9 +120,9 @@ For instance, on low level characters I almost always twink with Explosifs.
 These can be equipped on most characters with zero implant support.
 For this reason, and because implants only require a single ability, it's fine to pretend we have a pair of Explosifs that adds +20 to every ability, rather than just Agi/Sen, Str/Sta, or Int/Psy.
 There is one caveat: the Str/Sta combination doesn't provide any Treatment trickle, so either don't add +20 to Str/Sta, or don't add +2.5 to your Treatment.
-This swap is so common the app supports it directly.
+This swap is so common the ladderer supports it directly.
 Just remember, if you tell it about this swap you can't also tell it about Treatment buffing weapons like the Quartz rifle.
-There's no way to tell the app (yet) that sometimes you have +10 Treatment and +8 Sta, and other times you have +20 Str/Sta/Agi/Sen/Int/Psy.
+There's no way to tell the ladderer (yet) that sometimes you have +10 Treatment and +8 Sta, and other times you have +20 Str/Sta/Agi/Sen/Int/Psy.
 You could tell it about a +25 Tsakachumi and Explosifs though; +25 Agi, +20 Str/Sta/Sen/Int/Psy, as long as you can get the Tsak on without implants.
 
 This same strategy can be applied to any equipment slots not being used for Treatment buffing.
@@ -123,33 +130,35 @@ Just be able to equip the swaps without implant support, and don't over-count Tr
 It can also be applied to buffs; you don't have to choose between Prodigious Strength and Iron Circle.
 One gives +40 Str, one gives +20 Sta and Str.
 For the purposes of laddering implants they effectively provide +40 Str and +20 Sta; cancel one when you need the other.
-For convenience the app supports this combined buff directly.
+For convenience the ladderer supports this combined buff directly.
 
-**You'll have to tell the app about your ability to swap items (other than Explosifs), by manually increasing your starting abilities.
+**You'll have to tell the ladderer about your ability to swap items (other than Explosifs), by manually increasing your starting abilities.
 Don't think of these as your actual abilities, think of them as your effective abilities for the purposes of equipping implants.
 They are your abilities that can be gotten simultaneously not with the other listed abilities, but with the listed Treatment.**
 I almost never bother telling it about any swaps other than Explosifs.
 
-Another tip: if R/L-Wrist and L-Hand are important for your setup, consider using the app on those three alone, and then doing the rest of your implants.
-This is OK because those aren't ladder slots, so the app will never use them when laddering up the rest.
+If R/L-Wrist and L-Hand are important for your setup, consider using the ladderer on those three alone, and then doing the rest of your implants.
+This is OK because those aren't ladder slots, so the ladderer will never use them when laddering up the rest.
 
-And one more tip: if you really want, you can build each implant in the ladder one at a time.
+If you really want, you can build each implant in the ladder one at a time.
 Before building an implant, swap around whatever gear you want in order to maximize the QL you can equip, and build that QL instead.
 Then you can just think of the ladder as a loose guide.
 It will represent a good order in which to equip implants, where you know you'll get final implants of at least the listed QLs.
 This could be easier for some people than trying to accurately set their effective initial abilities/Treatment.
 
+And read about ctrl+left-clicking in the Usage section above if you haven't already.
+
 Algorithm
 ---------
 
-Intuitively, the 'Basic' solver uses a greedy algorithm that proceeds recursively as follows:
+Intuitively, the basic ladder process uses a greedy algorithm that proceeds recursively as follows:
 
 Equip the ladder implant that would yield the highest average final implant QL if we were to equip all of our final implants immediately afterwards (in the optimal order--found by brute force).
 Stop equipping ladder implants when we run out of slots for them, or when the addition of the next one no longer increases the average QL.
 
-The 'Advanced' solver adds another layer of recursion on top:
+The advanced ladder process adds another layer of recursion on top:
 
-Get the set of ladder implants found by the basic solver, and then ladder those implants up via the basic solver (and then use those laddered ladder implants to equip the final implants).
+Get the set of ladder implants found by the basic ladder process, and then ladder those implants up via the basic ladder process (and then use those laddered ladder implants to equip the final implants).
 Going any further than one level deep isn't worth it, as we very quickly run into diminishing returns.
 
 More details:
