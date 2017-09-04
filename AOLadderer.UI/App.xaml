@@ -58,6 +58,13 @@
       <GradientStop Color="{StaticResource MiddleBlueColor}" Offset="4"/>
     </LinearGradientBrush>
 
+    <LinearGradientBrush x:Key="DisabledComboBoxBrush" StartPoint="0,0" EndPoint="0,1">
+      <GradientStop Color="{StaticResource MiddleBlueColor}" Offset="0"/>
+      <GradientStop Color="Gray" Offset=".06"/>
+      <GradientStop Color="Black" Offset=".45"/>
+      <GradientStop Color="Gray" Offset="4"/>
+    </LinearGradientBrush>
+
     <Style TargetType="Button">
       <Setter Property="Background" Value="Transparent"/>
       <Setter Property="BorderBrush" Value="Transparent"/>
@@ -358,7 +365,7 @@
                       </Trigger>
                       <Trigger Property="IsEnabled" Value="False">
                         <Setter Property="Fill" TargetName="Arrow" Value="Gray"/>
-                        <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource DisabledButtonBrush}"/>
+                        <Setter Property="Background" TargetName="templateRoot" Value="{StaticResource DisabledComboBoxBrush}"/>
                         <Setter Property="BorderBrush" TargetName="templateRoot" Value="{StaticResource MiddleDarkBlueBrush}"/>
                       </Trigger>
                     </ControlTemplate.Triggers>
