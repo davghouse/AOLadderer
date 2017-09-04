@@ -90,7 +90,7 @@ Don't remove ladder implants until absolutely necessary, and remember to swap Ex
 And as an optional feature you can ctrl+left-click on the names of implant slots to mark them as unavailable.
 For example, you might want to take special measures to equip Touch of the Gripper, and then ctrl+left-click the Right-Arm slot to make sure it's not used for laddering.
 You'd then want to add to your Strength the 29 points that Touch of the Gripper provides, because otherwise the ladderer won't know about it.
-You can use this functionality to create a highly customized ladder process like you're used to, laddering up single ladder implants a time, then marking the slot as unavailable.
+You can also use this functionality to create a highly customized ladder process like you're used to, laddering up single ladder implants a time, then marking the slot as unavailable.
 Instead of the ladderer giving you a complete ladder process, you can just use it to take care of the math you were doing before.
 
 Usefulness
