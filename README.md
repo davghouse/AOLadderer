@@ -45,16 +45,16 @@ Across all 13 Shiny sets, a cluster for each skill and each ability occurs exact
 This is true for the 13 Bright and 13 Faded sets as well.
 Example implants:
 
-| Slot | QL  | Ability Req      | Treatment Req. | Shiny         | Bright         | Faded       |
+| Slot | QL  | Ability Req      | Treatment Req  | Shiny         | Bright         | Faded       |
 | ---- | --- | ---------------- | -------------- | ------------- | -------------- | ----------- |
-| Feet | 1   | 6 Agility        | 11             | 6 Concealment | 3 Martial Arts | 2 Duck-Exp  |
+| Feet | 1   | 6 Agility        | 11             | 6 Concealment | 3 Martial Arts | <Empty>     |
 | Head | 200 | 404 Intelligence | 951            | 105 Chemistry | 63 Nano Pool   | 42 Tutoring |
 
 Equivalent, minimal representation of the above implants:
 
 | QL  | Shiny       | Bright       | Faded    |
 | --- | ----------- | ------------ | -------- |
-| 1   | Concealment | Martial Arts | Duck-Exp |
+| 1   | Concealment | Martial Arts | <Empty>  |
 | 200 | Chemistry   | Nano Pool    | Tutoring |
 
 **Implant laddering** is the process of using implants (and other items) to equip higher QL implants.
