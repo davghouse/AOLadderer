@@ -5,14 +5,6 @@ namespace AOLadderer.Helpers
 {
     public static class IEnumerableExtensions
     {
-        public static IEnumerable<T> Prepend<T>(this IEnumerable<T> values, T value)
-        {
-            yield return value;
-
-            foreach (T item in values)
-                yield return item;
-        }
-
         public static bool IsSupersetOf<T>(this IReadOnlyCollection<T> first, IReadOnlyCollection<T> second)
             => first.Count > second.Count && second.All(v => first.Contains(v));
 
