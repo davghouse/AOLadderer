@@ -1,0 +1,25 @@
+﻿@page "/"
+
+@functions {
+    Stats stats = new Stats();
+}
+
+<div class="container">
+  <h2>Implants</h2>
+  <ImplantConfig></ImplantConfig>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-md-8">
+      <h2>Stats</h2>
+      <StatsConfig Stats="stats"></StatsConfig>
+    </div>
+
+    <div class="col-md-4">
+      <h2>Buffs</h2>
+      <BuffsConfig OnBuffAdded="stats.Add"
+                   OnBuffRemoved="stats.Remove"></BuffsConfig>
+    </div>
+  </div>
+</div>
