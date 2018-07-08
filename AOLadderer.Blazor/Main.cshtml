@@ -5,21 +5,47 @@
 }
 
 <div class="container">
-  <h2>Implants</h2>
-  <ImplantConfig></ImplantConfig>
+  <nav class="navbar navbar-light bg-primary">
+    <a class="navbar-brand" href="/">
+      <img src="/favicon.ico" width="30" height="30" class="d-inline-block align-top" alt=""> AO Ladderer
+    </a>
+  </nav>
 
-  <hr />
-
-  <div class="row">
-    <div class="col-md-8">
-      <h2>Stats</h2>
-      <StatsConfig Stats="stats"></StatsConfig>
+  <div class="row justify-content-around mt-3 mt-lg-5">
+    <div class="col-xl-3 col-lg-3 mb-4">
+      <ul class="nav nav-pills flex-lg-column">
+        <li class="nav-item">
+          <a class="active nav-link" href="#implants-section" role="tab">Implants</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#stats-and-buffs-section" role="tab">Stats &amp; Buffs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" role="tab">Ladder</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" role="tab">Shopping List</a>
+        </li>
+      </ul>
     </div>
 
-    <div class="col-md-4">
-      <h2>Buffs</h2>
-      <BuffsConfig OnBuffAdded="stats.Add"
-                   OnBuffRemoved="stats.Remove"></BuffsConfig>
+    <div class="col-md-9 col-lg-8">
+      <h2 id="implants-section">Implants</h2>
+      <ImplantConfig></ImplantConfig>
+
+      <hr />
+
+      <h2 id="stats-and-buffs-section">Stats &amp; Buffs</h2>
+      <div class="row">
+        <div class="col-md-8">
+          <StatsConfig Stats="stats"></StatsConfig>
+        </div>
+
+        <div class="col-md-4">
+          <BuffsConfig OnBuffAdded="stats.Add"
+                       OnBuffRemoved="stats.Remove"></BuffsConfig>
+        </div>
+      </div>
     </div>
   </div>
 </div>

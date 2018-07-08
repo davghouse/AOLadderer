@@ -1,16 +1,25 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width">
-    <title>AOLadderer.Blazor</title>
-    <base href="/" />
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/site.css" rel="stylesheet" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width">
+  <title>AO Ladderer</title>
+  <base href="/" />
+  <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />  
+  <link href="css/styles-app-loading.css" rel="stylesheet" />
 </head>
 <body>
-    <app>Loading...</app>
+  <app>
+    <!-- Thanks for the loading animation, Tomas Trajan! (https://medium.com/@tomastrajan/how-to-style-angular-application-loading-with-angular-cli-like-a-boss-cdd4f5358554) -->
+    <div class="app-loading">
+      <img src="/favicon.ico" alt="Loading..." />
+      <svg class="app-loading__spinner" viewBox="25 25 50 50">
+        <circle class="app-loading__spinner-path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+      </svg>
+    </div>
+  </app>
 
-    <script type="blazor-boot"></script>
+  <script type="blazor-boot">
+  </script>
 </body>
 </html>
