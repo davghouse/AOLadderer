@@ -8,20 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.4.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.4.0" />
-    <DotNetCliToolReference Include="Microsoft.AspNetCore.Blazor.Cli" Version="0.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Browser" Version="0.7.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="0.7.0" PrivateAssets="all" />
+
+    <DotNetCliToolReference Include="Microsoft.AspNetCore.Blazor.Cli" Version="0.7.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\favicon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\AOLadderer\AOLadderer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Content Update="App.cshtml">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+      <Generator>MSBuild:BlazorGenerateDeclaration</Generator>
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Components\BuffsConfig.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -34,6 +32,26 @@
     <Content Update="Main.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="wwwroot\index.html">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="_ViewImports.cshtml">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+      <Generator>MSBuild:BlazorGenerateDeclaration</Generator>
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <_BlazorGenerateDeclarationContent Remove="Main.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Main.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AOLadderer\AOLadderer.csproj" />
   </ItemGroup>
 
 </Project>
