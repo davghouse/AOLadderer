@@ -1,0 +1,48 @@
+﻿@functions {
+    [Parameter] StatsModel Model { get; set; }
+
+    protected override void OnParametersSet()
+    {
+      Model.OnBuffsApplied += StateHasChanged;
+    }
+}
+
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <label for="stats-config-strength">Strength</label>
+    <input id="stats-config-strength" type="number" class="form-control" bind="Model.EffectiveStrength" />
+  </div>
+  <div class="form-group col-md-6">
+    <label for="stats-config-agility">Agility</label>
+    <input id="stats-config-agility" type="number" class="form-control" bind="Model.EffectiveAgility" />
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <label for="stats-config-stamina">Stamina</label>
+    <input id="stats-config-stamina" type="number" class="form-control" bind="Model.EffectiveStamina" />
+  </div>
+  <div class="form-group col-md-6">
+    <label for="stats-config-intelligence">Intelligence</label>
+    <input id="stats-config-intelligence" type="number" class="form-control" bind="Model.EffectiveIntelligence" />
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <label for="stats-config-sense">Sense</label>
+    <input id="stats-config-sense" type="number" class="form-control" bind="Model.EffectiveSense" />
+  </div>
+  <div class="form-group col-md-6">
+    <label for="stats-config-psychic">Psychic</label>
+    <input id="stats-config-psychic" type="number" class="form-control" bind="Model.EffectivePsychic" />
+  </div>
+</div>
+
+<div class="form-row">
+  <div class="form-group col-md-6">
+    <label for="stats-config-treatment">Treatment</label>
+    <input id="stats-config-treatment" type="number" class="form-control" bind="Model.EffectiveTreatment" />
+  </div>
+</div>

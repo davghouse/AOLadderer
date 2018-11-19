@@ -29,7 +29,16 @@
     <Content Update="Components\StatsConfig.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-    <Content Update="Main.cshtml">
+    <Content Update="Pages\Main.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\Shop.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\Ladder.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\Build.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="wwwroot\index.html">
@@ -40,14 +49,6 @@
       <Generator>MSBuild:BlazorGenerateDeclaration</Generator>
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <_BlazorGenerateDeclarationContent Remove="Main.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Main.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

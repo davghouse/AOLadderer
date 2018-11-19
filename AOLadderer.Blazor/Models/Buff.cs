@@ -1,10 +1,10 @@
 ﻿using AOLadderer.Stats;
 
-namespace AOLadderer.Blazor.Services
+namespace AOLadderer.Blazor.Models
 {
     public class Buff
     {
-        public static readonly Buff Composites = new Buff("Composites", allAbilities: 12, treatment: 20); 
+        public static readonly Buff Composites = new Buff("Composites", allAbilities: 12, treatment: 20);
         public static readonly Buff Composites_Pay2Win = new Buff("Composites (Pay2Win)", allAbilities: 20, treatment: 35);
         public static readonly Buff SurgeryClinicEffect = new Buff("Surgery Clinic Effect", treatment: 100);
         public static readonly Buff SuperiorFirstAid = new Buff("Superior First Aid", treatment: 80);
@@ -16,7 +16,6 @@ namespace AOLadderer.Blazor.Services
         public static readonly Buff Explosifs = new Buff("Explosifs", allAbilities: 20, treatmentDoesntTrickle: true);
         public static readonly Buff IronCircle = new Buff("Iron Circle", strength: 20, stamina: 20);
         public static readonly Buff ProdigiousStrength = new Buff("Prodigious Strength", strength: 40);
-        public static readonly Buff IronCircleOrProdigiousStrength = new Buff("Iron Circle/Prodigious Strength", strength: 40, stamina: 20);
         public static readonly Buff NeuronalStimulator = new Buff("Neuronal Stimulator", intelligence: 23, psychic: 23);
 
         private Buff(

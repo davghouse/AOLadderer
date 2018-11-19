@@ -1,0 +1,12 @@
+﻿.navbar {
+  margin-bottom: 32px;
+}
+
+.nav-page {
+  padding: 32px;
+  margin-bottom: 32px;
+}
+
+th > label {
+  margin-bottom: 0;
+}

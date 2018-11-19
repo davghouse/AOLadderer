@@ -1,0 +1,64 @@
+﻿@functions {
+  [Parameter] ImplantsModel Model { get; set; }
+
+  string GetHtmlID(ImplantSlot slot, string brightness)
+      => $"implant-config-{slot.ShortName.ToLower()}-{brightness}";
+}
+
+<table class="table table-borderless implant-editor">
+  <thead>
+    <tr>
+      <th></th>
+      <th class="text-center">
+        <label for="@GetHtmlID(ImplantSlot.ImplantSlots.First(), "shiny")">Shiny</label>
+      </th>
+      <th class="text-center">
+        <label for="@GetHtmlID(ImplantSlot.ImplantSlots.First(), "bright")">Bright</label>
+      </th>
+      <th class="text-center">
+        <label for="@GetHtmlID(ImplantSlot.ImplantSlots.First(), "faded")">Faded</label>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @foreach (ImplantModel implant in Model)
+    {
+      <tr>
+        <th class="text-right align-middle">
+          <label for="@GetHtmlID(implant.Slot, "shiny")">@implant.GetLabel()</label>
+        </th>
+
+        <td>
+          <select id="@GetHtmlID(implant.Slot, "shiny")" class="form-control" bind="implant.ShinyClusterSelection">
+            <option></option>
+            @foreach (var option in implant.ShinyClusterOptions)
+            {
+              <option>@option</option>
+            }
+          </select>
+        </td>
+
+        <td>
+          <select id="@GetHtmlID(implant.Slot, "bright")" class="form-control" bind="implant.BrightClusterSelection">
+            <option></option>
+            @foreach (var option in implant.BrightClusterOptions)
+            {
+              <option>@option</option>
+            }
+          </select>
+        </td>
+
+        <td>
+          <select id="@GetHtmlID(implant.Slot, "faded")" class="form-control" bind="implant.FadedClusterSelection">
+            <option></option>
+            @foreach (var option in implant.FadedClusterOptions)
+            {
+              <option>@option</option>
+            }
+          </select>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

@@ -1,0 +1,21 @@
+﻿@inherits BlazorLayoutComponent
+
+<div class="container">
+  <nav class="navbar navbar-light bg-primary rounded-bottom">
+    <a class="navbar-brand" href="/">
+      <img src="/favicon.ico" width="30" height="30" class="d-inline-block align-top"> &nbsp; AO Ladderer
+    </a>
+  </nav>
+
+  <nav class="nav nav-tabs nav-fill">
+    <NavLink href="/build" class="nav-link nav-item">Build</NavLink>
+    <NavLink href="/ladder" class="nav-link nav-item">Ladder</NavLink>
+    <NavLink href="/shopping" class="nav-link nav-item">Shopping</NavLink>
+  </nav>
+
+  <div class="nav-page border-left border-bottom border-right border-secondary rounded-bottom">
+    @Body
+
+    <div class="clearfix"></div>
+  </div>
+</div>
