@@ -2,29 +2,23 @@
 
 @page "/build"
 
-@functions {
-  ImplantsModel Implants { get; set; } = new ImplantsModel();
-  StatsModel Stats { get; set; } = new StatsModel();
-  BuffsModel Buffs { get; set; } = new BuffsModel();
-}
-
 <h5 id="build-section">Implants</h5>
 <hr class="border-secondary" style="margin-top: 0;" />
 
-<ImplantsComponent Model="this.Implants"></ImplantsComponent>
+<ImplantsComponent Model="AppState.Implants"></ImplantsComponent>
 
 <h5 style="margin-top: 32px;">Stats &amp; Buffs</h5>
 <hr class="border-secondary" style="margin-top: 0;" />
 
 <div class="row">
   <div class="col-md-8">
-    <StatsComponent Model="this.Stats"></StatsComponent>
+    <StatsComponent Model="AppState.Stats"></StatsComponent>
   </div>
 
   <div class="col-md-4">
     <hr class="border-secondary d-block d-sm-block d-md-none" />
 
-    <BuffsComponent Model="this.Buffs" ModelChanged="@Stats.Apply"></BuffsComponent>
+    <BuffsComponent Model="AppState.Buffs" ModelChanged="@AppState.Stats.Apply"></BuffsComponent>
   </div>
 </div>
 
