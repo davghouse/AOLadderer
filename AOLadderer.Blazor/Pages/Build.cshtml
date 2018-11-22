@@ -2,23 +2,31 @@
 
 @page "/build"
 
+@functions {
+    protected void HandleBuffsChanged()
+    {
+      AppState.Stats.Apply(AppState.Buffs);
+      AppState.InvalidateLadder();
+    }
+}
+
 <h5 id="build-section">Implants</h5>
 <hr class="border-secondary" style="margin-top: 0;" />
 
-<ImplantsComponent Model="AppState.Implants"></ImplantsComponent>
+<ImplantsComponent Model="AppState.Implants" ModelChanged="AppState.InvalidateLadder"></ImplantsComponent>
 
 <h5 style="margin-top: 32px;">Stats &amp; Buffs</h5>
 <hr class="border-secondary" style="margin-top: 0;" />
 
 <div class="row">
   <div class="col-md-8">
-    <StatsComponent Model="AppState.Stats"></StatsComponent>
+    <StatsComponent Model="AppState.Stats" ModelChanged="AppState.InvalidateLadder"></StatsComponent>
   </div>
 
   <div class="col-md-4">
     <hr class="border-secondary d-block d-sm-block d-md-none" />
 
-    <BuffsComponent Model="AppState.Buffs" ModelChanged="@AppState.Stats.Apply"></BuffsComponent>
+    <BuffsComponent Model="AppState.Buffs" ModelChanged="HandleBuffsChanged"></BuffsComponent>
   </div>
 </div>
 

@@ -1,8 +1,9 @@
 ﻿@functions {
-  [Parameter] ImplantsModel Model { get; set; }
+    [Parameter] ImplantsModel Model { get; set; }
+    [Parameter] Action ModelChanged { get; set; }
 
-  string GetHtmlID(ImplantSlot slot, string brightness)
-      => $"implant-config-{slot.ShortName.ToLower()}-{brightness}";
+    string GetHtmlID(ImplantSlot slot, string brightness)
+        => $"implant-config-{slot.ShortName.ToLower()}-{brightness}";
 }
 
 <table class="table table-borderless implant-editor">
@@ -30,31 +31,34 @@
         </th>
 
         <td>
-          <select id="@GetHtmlID(implant.Slot, "shiny")" class="form-control" bind="implant.ShinyClusterSelection">
+          <select id="@GetHtmlID(implant.Slot, "shiny")" class="form-control"
+                  onchange="@(e => { implant.ShinyClusterSelection = Convert.ToString(e.Value); ModelChanged?.Invoke(); })">
             <option></option>
             @foreach (var option in implant.ShinyClusterOptions)
             {
-              <option value="@option">@option</option>
+              <option value="@option" selected="@(option.Equals(implant.ShinyClusterSelection))">@option</option>
             }
           </select>
         </td>
 
         <td>
-          <select id="@GetHtmlID(implant.Slot, "bright")" class="form-control" bind="implant.BrightClusterSelection">
+          <select id="@GetHtmlID(implant.Slot, "bright")" class="form-control"
+                  onchange="@(e => { implant.BrightClusterSelection = Convert.ToString(e.Value); ModelChanged?.Invoke(); })">
             <option></option>
             @foreach (var option in implant.BrightClusterOptions)
             {
-              <option value="@option">@option</option>
+              <option value="@option" selected="@(option.Equals(implant.BrightClusterSelection))">@option</option>
             }
           </select>
         </td>
 
         <td>
-          <select id="@GetHtmlID(implant.Slot, "faded")" class="form-control" bind="implant.FadedClusterSelection">
+          <select id="@GetHtmlID(implant.Slot, "faded")" class="form-control"
+                  onchange="@(e => { implant.FadedClusterSelection = Convert.ToString(e.Value); ModelChanged?.Invoke(); })">
             <option></option>
             @foreach (var option in implant.FadedClusterOptions)
             {
-              <option value="@option">@option</option>
+              <option value="@option" selected="@(option.Equals(implant.FadedClusterSelection))">@option</option>
             }
           </select>
         </td>

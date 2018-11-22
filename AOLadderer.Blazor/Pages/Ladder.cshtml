@@ -2,6 +2,20 @@
 
 @page "/ladder"
 
+@functions {
+    protected override Task OnInitAsync()
+      => Task.Run(AppState.InitializeLadder);
+}
+
+<p>
+  <strong>Instructions:</strong> Insert implants in order, removing previous implants only when necessary.
+</p>
+
+@if (AppState.Ladder != null)
+{
+  <LadderComponent Model="AppState.Ladder"></LadderComponent>
+}
+
 <hr class="border-secondary" />
 
 <NavLink href="/build" class="btn btn-primary btn-lg float-left">&lt; Build</NavLink>

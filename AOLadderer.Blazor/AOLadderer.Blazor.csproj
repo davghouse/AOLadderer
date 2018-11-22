@@ -20,6 +20,9 @@
       <Generator>MSBuild:BlazorGenerateDeclaration</Generator>
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Components\LadderComponent.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Components\BuffsConfig.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

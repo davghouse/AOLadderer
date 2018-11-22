@@ -1,0 +1,33 @@
+﻿@functions {
+    [Parameter] LadderModel Model { get; set; }
+}
+
+<table class="table table-striped table-hover">
+  <thead>
+    <tr>
+      <th>QL</th>
+      <th>Slot</th>
+      <th>Shiny</th>
+      <th>Bright</th>
+      <th>Faded</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @foreach (LadderStepModel step in Model)
+    {
+      <tr class="@(step.IsCompleted ? "text-secondary" : null)"
+          onclick="@(e => step.IsCompleted = !step.IsCompleted)">
+        <td>@step.ImplantQL</td>
+        <td>@step.ImplantSlot.Name</td>
+        <td>@step.ShinyStat?.Name</td>
+        <td>@step.BrightStat?.Name</td>
+        <td>@step.FadedStat?.Name</td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<p>
+  <strong>Average QL of final implants:</strong> @(Model.AverageFinalImplantQL.ToString("N"))
+</p>

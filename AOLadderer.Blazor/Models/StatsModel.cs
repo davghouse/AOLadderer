@@ -4,75 +4,65 @@ namespace AOLadderer.Blazor.Models
 {
     public class StatsModel
     {
-        public int StrengthBuff { get; set; }
-        public int AgilityBuff { get; set; }
-        public int StaminaBuff { get; set; }
-        public int IntelligenceBuff { get; set; }
-        public int SenseBuff { get; set; }
-        public int PsychicBuff { get; set; }
-        public double TreatmentBuff { get; set; }
+        private int
+            strengthBuff, agilityBuff, staminaBuff, intelligenceBuff, senseBuff, psychicBuff,
+            baseStrength, baseAgility, baseStamina, baseIntelligence, baseSense, basePsychic;
+        private double
+            treatmentBuff, baseTreatment;
 
-        public int BaseStrength { get; set; }
-        public int BaseAgility { get; set; }
-        public int BaseStamina { get; set; }
-        public int BaseIntelligence { get; set; }
-        public int BaseSense { get; set; }
-        public int BasePsychic { get; set; }
-        public double BaseTreatment { get; set; }
-
-        public int EffectiveStrength
+        public int Strength
         {
-            get => BaseStrength + StrengthBuff;
-            set => BaseStrength = value - StrengthBuff;
+            get => baseStrength + strengthBuff;
+            set => baseStrength = value - strengthBuff;
         }
 
-        public int EffectiveAgility
+        public int Agility
         {
-            get => BaseAgility + AgilityBuff;
-            set => BaseAgility = value - AgilityBuff;
+            get => baseAgility + agilityBuff;
+            set => baseAgility = value - agilityBuff;
         }
 
-        public int EffectiveStamina
+        public int Stamina
         {
-            get => BaseStamina + StaminaBuff;
-            set => BaseStamina = value - StaminaBuff;
+            get => baseStamina + staminaBuff;
+            set => baseStamina = value - staminaBuff;
         }
 
-        public int EffectiveIntelligence
+        public int Intelligence
         {
-            get => BaseIntelligence + IntelligenceBuff;
-            set => BaseIntelligence = value - IntelligenceBuff;
+            get => baseIntelligence + intelligenceBuff;
+            set => baseIntelligence = value - intelligenceBuff;
         }
 
-        public int EffectiveSense
+        public int Sense
         {
-            get => BaseSense + SenseBuff;
-            set => BaseSense = value - SenseBuff;
+            get => baseSense + senseBuff;
+            set => baseSense = value - senseBuff;
         }
 
-        public int EffectivePsychic
+        public int Psychic
         {
-            get => BasePsychic + PsychicBuff;
-            set => BasePsychic = value - PsychicBuff;
+            get => basePsychic + psychicBuff;
+            set => basePsychic = value - psychicBuff;
         }
 
-        public double EffectiveTreatment
+        public double Treatment
         {
-            get => BaseTreatment + TreatmentBuff;
-            set => BaseTreatment = value - TreatmentBuff;
+            get => baseTreatment + treatmentBuff;
+            set => baseTreatment = value - treatmentBuff;
         }
 
         public event Action OnBuffsApplied;
 
         public void Apply(BuffsModel buffs)
         {
-            StrengthBuff = buffs.Strength;
-            AgilityBuff = buffs.Agility;
-            StaminaBuff = buffs.Stamina;
-            IntelligenceBuff = buffs.Intelligence;
-            SenseBuff = buffs.Sense;
-            PsychicBuff = buffs.Psychic;
-            TreatmentBuff = buffs.Treatment;
+            strengthBuff = buffs.Strength;
+            agilityBuff = buffs.Agility;
+            staminaBuff = buffs.Stamina;
+            intelligenceBuff = buffs.Intelligence;
+            senseBuff = buffs.Sense;
+            psychicBuff = buffs.Psychic;
+            treatmentBuff = buffs.Treatment;
             OnBuffsApplied?.Invoke();
         }
     }
