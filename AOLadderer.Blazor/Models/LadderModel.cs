@@ -4,42 +4,42 @@ using System.Linq;
 
 namespace AOLadderer.Blazor.Models
 {
-    public class LadderStepModel
+    public class LadderModel : IReadOnlyCollection<LadderModel.StepModel>
     {
-        public LadderStepModel(Implant implant)
+        public class StepModel
         {
-            ImplantQL = implant.QL;
-            ImplantSlot = implant.ImplantSlot;
-            ShinyStat = implant.ShinyStat;
-            BrightStat = implant.BrightStat;
-            FadedStat = implant.FadedStat;
+            public StepModel(Implant implant)
+            {
+                ImplantQL = implant.QL;
+                ImplantSlot = implant.ImplantSlot?.Name;
+                ShinyStat = implant.ShinyStat?.Name;
+                BrightStat = implant.BrightStat?.Name;
+                FadedStat = implant.FadedStat?.Name;
+            }
+
+            public int ImplantQL { get; }
+            public string ImplantSlot { get; }
+            public string ShinyStat { get; }
+            public string BrightStat { get; }
+            public string FadedStat { get; }
+            public bool IsChecked { get; set; }
         }
 
-        public bool IsCompleted { get; set; }
-        public int ImplantQL { get; set; }
-        public ImplantSlot ImplantSlot { get; set; }
-        public Stat ShinyStat { get; set; }
-        public Stat BrightStat { get; set; }
-        public Stat FadedStat { get; set; }
-    }
+        private readonly IReadOnlyCollection<StepModel> steps;
 
-    public class LadderModel : IReadOnlyCollection<LadderStepModel>
-    {
-        private readonly IReadOnlyCollection<LadderStepModel> steps;
-
-        public LadderModel(LadderProcess process)
+        public LadderModel(LadderProcess ladder)
         {
-            steps = process.OrderedLadderImplants
-                .Concat(process.OrderedFinalImplants)
-                .Select(i => new LadderStepModel(i))
+            steps = ladder.OrderedLadderImplants
+                .Concat(ladder.OrderedFinalImplants)
+                .Select(i => new StepModel(i))
                 .ToArray();
-            AverageFinalImplantQL = process.AverageFinalImplantQL;
+            AverageFinalImplantQL = ladder.AverageFinalImplantQL;
         }
 
         public double AverageFinalImplantQL { get; }
 
         public int Count => steps.Count;
-        public IEnumerator<LadderStepModel> GetEnumerator() => steps.GetEnumerator();
+        public IEnumerator<StepModel> GetEnumerator() => steps.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => steps.GetEnumerator();
     }
 }

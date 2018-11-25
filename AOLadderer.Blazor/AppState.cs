@@ -11,25 +11,28 @@ namespace AOLadderer.Blazor
         public static StatsModel Stats { get; set; } = new StatsModel();
         public static BuffsModel Buffs { get; set; } = new BuffsModel();
         public static LadderModel Ladder { get; set; }
+        public static ShoppingModel Shopping { get; set; }
 
         public static void InvalidateLadder()
         {
             Debug.WriteLine("Invalidating ladder...");
             Ladder = null;
+            Shopping = null;
         }
 
         public static void InitializeLadder()
         {
-            if (Ladder != null) return;
+            if (Ladder != null && Shopping != null) return;
 
             var character = new Character(Stats.Agility, Stats.Intelligence, Stats.Psychic, Stats.Sense, Stats.Stamina, Stats.Strength, Stats.Treatment);
             var implantTemplates = Implants.Select(i => i.GetImplantTemplate()).Where(i => i != null).ToArray();
 
             Debug.WriteLine("Building ladder...");
-            var ladderProcess = new BasicLadderProcess(character, implantTemplates);
+            var ladder = new BasicLadderProcess(character, implantTemplates);
 
             Debug.WriteLine("Ladder built.");
-            Ladder = new LadderModel(ladderProcess);
+            Ladder = new LadderModel(ladder);
+            Shopping = new ShoppingModel(ladder);
         }
     }
 }

@@ -15,21 +15,22 @@
 
 <ImplantsComponent Model="AppState.Implants" ModelChanged="AppState.InvalidateLadder"></ImplantsComponent>
 
-<h5 style="margin-top: 32px;">Stats &amp; Buffs</h5>
-<hr class="border-secondary" style="margin-top: 0;" />
-
 <div class="row">
   <div class="col-md-8">
+    <h5>Stats</h5>
+    <hr class="border-secondary" style="margin-top: 0;" />
+
     <StatsComponent Model="AppState.Stats" ModelChanged="AppState.InvalidateLadder"></StatsComponent>
   </div>
 
   <div class="col-md-4">
-    <hr class="border-secondary d-block d-sm-block d-md-none" />
+    <h5>Buffs</h5>
+    <hr class="border-secondary" style="margin-top: 0;" />
 
     <BuffsComponent Model="AppState.Buffs" ModelChanged="HandleBuffsChanged"></BuffsComponent>
   </div>
 </div>
 
-<hr class="border-secondary" style="margin: 32px 0;" />
+<hr class="border-secondary" />
 
 <NavLink href="/ladder" class="btn btn-primary btn-lg float-right">Ladder &gt;</NavLink>

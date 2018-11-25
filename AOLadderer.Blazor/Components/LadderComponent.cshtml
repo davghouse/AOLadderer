@@ -5,6 +5,7 @@
 <table class="table table-striped table-hover">
   <thead>
     <tr>
+      <th style="width: 1%;"></th>
       <th>QL</th>
       <th>Slot</th>
       <th>Shiny</th>
@@ -14,15 +15,16 @@
   </thead>
 
   <tbody>
-    @foreach (LadderStepModel step in Model)
+    @foreach (var step in Model)
     {
-      <tr class="@(step.IsCompleted ? "text-secondary" : null)"
-          onclick="@(e => step.IsCompleted = !step.IsCompleted)">
+      <tr class="@(step.IsChecked ? "text-secondary" : null)"
+          onclick="@(e => step.IsChecked = !step.IsChecked)">
+        <td><input type="checkbox" bind="step.IsChecked" /></td>
         <td>@step.ImplantQL</td>
-        <td>@step.ImplantSlot.Name</td>
-        <td>@step.ShinyStat?.Name</td>
-        <td>@step.BrightStat?.Name</td>
-        <td>@step.FadedStat?.Name</td>
+        <td>@step.ImplantSlot</td>
+        <td>@step.ShinyStat</td>
+        <td>@step.BrightStat</td>
+        <td>@step.FadedStat</td>
       </tr>
     }
   </tbody>
