@@ -3,21 +3,21 @@ using System.Diagnostics;
 
 namespace AOLadderer.Blazor
 {
-    public static class AppState
+    public class AppState
     {
-        public static BuildModel Build { get; set; } = new BuildModel();
-        public static bool UseAdvancedLadderProcess { get; set; }
-        public static LadderModel Ladder { get; set; }
-        public static ShoppingModel Shopping { get; set; }
+        public BuildModel Build { get; set; } = new BuildModel();
+        public bool UseAdvancedLadderProcess { get; set; }
+        public LadderModel Ladder { get; set; }
+        public ShoppingModel Shopping { get; set; }
 
-        public static void InvalidateLadder()
+        public void InvalidateLadder()
         {
             Debug.WriteLine("Invalidating ladder...");
             Ladder = null;
             Shopping = null;
         }
 
-        public static void InitializeLadder()
+        public void InitializeLadder()
         {
             if (Ladder != null && Shopping != null) return;
 

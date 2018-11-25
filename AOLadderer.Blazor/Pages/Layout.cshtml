@@ -1,10 +1,16 @@
 ﻿@inherits BlazorLayoutComponent
 
 <div class="container">
-  <nav class="navbar navbar-light bg-primary rounded-bottom">
+  <nav class="navbar navbar-light navbar-expand bg-primary rounded-bottom">
     <a class="navbar-brand" href="/">
       <img src="/favicon.ico" width="30" height="30" class="d-inline-block align-top"> &nbsp; AO Ladderer
     </a>
+
+    <div class="navbar-collapse justify-content-end">
+      <nav class="navbar-nav">
+        <CopyPermalinkComponent></CopyPermalinkComponent>
+      </nav>
+    </div>
   </nav>
 
   <nav class="nav nav-tabs nav-fill">

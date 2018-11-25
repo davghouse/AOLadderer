@@ -5,7 +5,7 @@
 
 <div class="form-check">
   <input class="form-check-input" type="radio" name="buffs-config-composites" id="buffs-config-none"
-         checked="@(!Model.Composites.HasValue)" onchange="@(e => { Model.Composites = null; ModelChanged?.Invoke(); })" />
+         checked="@(Model.Composites == CompositesBuff.None)" onchange="@(e => { Model.Composites = CompositesBuff.None; ModelChanged?.Invoke(); })" />
   <label class="form-check-label" for="buffs-config-none">None</label>
 </div>
 
@@ -75,7 +75,7 @@
 
 <div class="form-check">
   <input class="form-check-input" type="radio" name="buffs-config-str-sta-buff" id="buffs-config-none2"
-         checked="@(!Model.StrengthAndStamina.HasValue)" onchange="@(e => { Model.StrengthAndStamina = null; ModelChanged?.Invoke(); })" />
+         checked="@(Model.StrengthAndStamina == StrengthAndStaminaBuff.None)" onchange="@(e => { Model.StrengthAndStamina = StrengthAndStaminaBuff.None; ModelChanged?.Invoke(); })" />
   <label class="form-check-label" for="buffs-config-none2">None</label>
 </div>
 

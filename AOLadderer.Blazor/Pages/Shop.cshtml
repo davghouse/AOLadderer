@@ -1,17 +1,21 @@
 ﻿@layout Layout
 
+@inject AppState Model
+
 @page "/shopping"
 
 @functions {
     protected override Task OnInitAsync()
-      => Task.Run(AppState.InitializeLadder);
+      => Task.Run(Model.InitializeLadder);
 }
 
-@if (AppState.Shopping != null)
+@if (Model.Shopping != null)
 {
-  <ShoppingComponent Model="AppState.Shopping"></ShoppingComponent>
+  <ShoppingComponent Model="Model.Shopping"></ShoppingComponent>
 }
 
 <hr class="border-secondary" />
 
-<NavLink href="/ladder" class="btn btn-primary btn-lg float-left">&lt; Ladder</NavLink>
+<NavLink href="/ladder" class="btn btn-primary btn-lg float-left">
+  <span class="oi oi-chevron-left"></span> Ladder
+</NavLink>

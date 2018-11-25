@@ -20,6 +20,9 @@
       <Generator>MSBuild:BlazorGenerateDeclaration</Generator>
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Components\CopyPermalinkComponent.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Components\BuildComponent.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
@@ -39,6 +42,9 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Pages\Main.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Pages\Permalink.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
     <Content Update="Pages\Shop.cshtml">

@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AOLadderer.Blazor.Models
 {
-    public class StatsModel
+    public class StatsModel : IUrlTokenSerializable
     {
         private int
             strengthBuff, agilityBuff, staminaBuff, intelligenceBuff, senseBuff, psychicBuff,
@@ -64,6 +65,28 @@ namespace AOLadderer.Blazor.Models
             psychicBuff = buffs.Psychic;
             treatmentBuff = buffs.Treatment;
             OnBuffsApplied?.Invoke();
+        }
+
+        public void UrlTokenDeserialize(Queue<object> data)
+        {
+            baseStrength = Convert.ToInt32(data.Dequeue());
+            baseAgility = Convert.ToInt32(data.Dequeue());
+            baseStamina = Convert.ToInt32(data.Dequeue());
+            baseIntelligence = Convert.ToInt32(data.Dequeue());
+            baseSense = Convert.ToInt32(data.Dequeue());
+            basePsychic = Convert.ToInt32(data.Dequeue());
+            baseTreatment = Convert.ToDouble(data.Dequeue());
+        }
+
+        public void UrlTokenSerialize(Queue<object> data)
+        {
+            data.Enqueue(baseStrength);
+            data.Enqueue(baseAgility);
+            data.Enqueue(baseStamina);
+            data.Enqueue(baseIntelligence);
+            data.Enqueue(baseSense);
+            data.Enqueue(basePsychic);
+            data.Enqueue(baseTreatment);
         }
     }
 }

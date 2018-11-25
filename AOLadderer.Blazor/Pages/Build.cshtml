@@ -2,21 +2,25 @@
 
 @page "/build"
 
+@inject AppState Model
+
 @functions {
   protected void HandleAlgorithmChanged(UIChangeEventArgs args)
   {
-    AppState.UseAdvancedLadderProcess = Convert.ToBoolean(args.Value);
-    AppState.InvalidateLadder();
+    Model.UseAdvancedLadderProcess = Convert.ToBoolean(args.Value);
+    Model.InvalidateLadder();
   }
 }
 
-<BuildComponent Model="AppState.Build" ModelChanged="AppState.InvalidateLadder"></BuildComponent>
+<BuildComponent Model="Model.Build" ModelChanged="Model.InvalidateLadder"></BuildComponent>
 
 <hr class="border-secondary" />
 
 <label class="float-left">
-  <input type="checkbox" checked="@AppState.UseAdvancedLadderProcess" onchange="@HandleAlgorithmChanged" />
+  <input type="checkbox" checked="@Model.UseAdvancedLadderProcess" onchange="@HandleAlgorithmChanged" />
   Use slow algorithm for slightly better implant QL
 </label>
 
-<NavLink href="/ladder" class="btn btn-primary btn-lg float-right">Ladder &gt;</NavLink>
+<NavLink href="/ladder" class="btn btn-primary btn-lg float-right">
+  Ladder <span class="oi oi-chevron-right"></span>
+</NavLink>

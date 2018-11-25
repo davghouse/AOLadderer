@@ -1,4 +1,5 @@
 ﻿using AOLadderer.ClusterTemplates;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +21,9 @@ namespace AOLadderer.Blazor.Models
         }
 
         public ImplantSlot Slot { get; }
-        public string ShinyClusterSelection { get; set; }
-        public string BrightClusterSelection { get; set; }
-        public string FadedClusterSelection { get; set; }
+        public string ShinyClusterSelection { get; set; } = string.Empty; // Empty string is more compact than null when serialized.
+        public string BrightClusterSelection { get; set; } = string.Empty; // Empty string is more compact than null when serialized.
+        public string FadedClusterSelection { get; set; } = string.Empty; // Empty string is more compact than null when serialized.
         public bool IsUnavailable { get; set; }
 
         public IReadOnlyCollection<string> ShinyClusterOptions => shinyClusterHash.Keys;
@@ -48,7 +49,7 @@ namespace AOLadderer.Blazor.Models
         }
     }
 
-    public class ImplantsModel : IReadOnlyCollection<ImplantModel>
+    public class ImplantsModel : IReadOnlyCollection<ImplantModel>, IUrlTokenSerializable
     {
         private readonly IReadOnlyCollection<ImplantModel> implants
             = ImplantSlot.ImplantSlots
@@ -57,6 +58,29 @@ namespace AOLadderer.Blazor.Models
 
         public int Count => implants.Count;
         public IEnumerator<ImplantModel> GetEnumerator() => implants.GetEnumerator();
+
+        public void UrlTokenDeserialize(Queue<object> data)
+        {
+            foreach (ImplantModel implant in implants)
+            {
+                implant.ShinyClusterSelection = Convert.ToString(data.Dequeue());
+                implant.BrightClusterSelection = Convert.ToString(data.Dequeue());
+                implant.FadedClusterSelection = Convert.ToString(data.Dequeue());
+                implant.IsUnavailable = Convert.ToInt32(data.Dequeue()) == 1;
+            }
+        }
+
+        public void UrlTokenSerialize(Queue<object> data)
+        {
+            foreach (ImplantModel implant in implants)
+            {
+                data.Enqueue(implant.ShinyClusterSelection);
+                data.Enqueue(implant.BrightClusterSelection);
+                data.Enqueue(implant.FadedClusterSelection);
+                data.Enqueue(implant.IsUnavailable ? 1 : 0);
+            }
+        }
+
         IEnumerator IEnumerable.GetEnumerator() => implants.GetEnumerator();
     }
 }

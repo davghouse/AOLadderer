@@ -1,9 +1,10 @@
 ﻿using AOLadderer.LadderProcesses;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace AOLadderer.Blazor.Models
 {
-    public class BuildModel
+    public class BuildModel : IUrlTokenSerializable
     {
         public ImplantsModel Implants { get; } = new ImplantsModel();
         public StatsModel Stats { get; } = new StatsModel();
@@ -28,6 +29,22 @@ namespace AOLadderer.Blazor.Models
                 return new AdvancedLadderProcess(character, implantTemplates, unavailableImplantSlots);
 
             return new BasicLadderProcess(character, implantTemplates, unavailableImplantSlots);
+        }
+
+        public void UrlTokenDeserialize(Queue<object> data)
+        {
+            Implants.UrlTokenDeserialize(data);
+            Stats.UrlTokenDeserialize(data);
+            Buffs.UrlTokenDeserialize(data);
+
+            Stats.Apply(Buffs);
+        }
+
+        public void UrlTokenSerialize(Queue<object> data)
+        {
+            Implants.UrlTokenSerialize(data);
+            Stats.UrlTokenSerialize(data);
+            Buffs.UrlTokenSerialize(data);
         }
     }
 }
