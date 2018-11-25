@@ -20,6 +20,9 @@
       <Generator>MSBuild:BlazorGenerateDeclaration</Generator>
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Components\ExportToAunoComponent.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Components\CopyPermalinkComponent.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

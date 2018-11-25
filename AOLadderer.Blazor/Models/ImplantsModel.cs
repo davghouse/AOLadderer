@@ -58,6 +58,7 @@ namespace AOLadderer.Blazor.Models
 
         public int Count => implants.Count;
         public IEnumerator<ImplantModel> GetEnumerator() => implants.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => implants.GetEnumerator();
 
         public void UrlTokenDeserialize(Queue<object> data)
         {
@@ -80,7 +81,5 @@ namespace AOLadderer.Blazor.Models
                 data.Enqueue(implant.IsUnavailable ? 1 : 0);
             }
         }
-
-        IEnumerator IEnumerable.GetEnumerator() => implants.GetEnumerator();
     }
 }
