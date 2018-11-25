@@ -20,16 +20,16 @@ namespace AOLadderer.Blazor.Models
         }
 
         public ImplantSlot Slot { get; }
-
         public string ShinyClusterSelection { get; set; }
         public string BrightClusterSelection { get; set; }
         public string FadedClusterSelection { get; set; }
+        public bool IsUnavailable { get; set; }
 
         public IReadOnlyCollection<string> ShinyClusterOptions => shinyClusterHash.Keys;
         public IReadOnlyCollection<string> BrightClusterOptions => brightClusterHash.Keys;
         public IReadOnlyCollection<string> FadedClusterOptions => fadedClusterHash.Keys;
         
-        public ImplantTemplate GetImplantTemplate()
+        public ImplantTemplate CreateImplantTemplate()
         {
             shinyClusterHash.TryGetValue(ShinyClusterSelection ?? string.Empty, out ShinyClusterTemplate shinyCluster);
             brightClusterHash.TryGetValue(BrightClusterSelection ?? string.Empty, out BrightClusterTemplate brightCluster);
@@ -41,7 +41,7 @@ namespace AOLadderer.Blazor.Models
 
         public string GetLabel()
         {
-            ImplantTemplate template = GetImplantTemplate();
+            ImplantTemplate template = CreateImplantTemplate();
             if (template == null) return Slot.ShortName;
 
             return $"{template.RequiredAbility.ShortName} {Slot.ShortName}";

@@ -10,3 +10,7 @@
 th > label {
   margin-bottom: 0;
 }
+
+.form-control:disabled, .form-control[readonly] {
+  background-color: #444;
+}

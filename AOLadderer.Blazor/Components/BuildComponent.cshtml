@@ -1,0 +1,25 @@
+﻿@functions {
+  [Parameter] BuildModel Model { get; set; }
+  [Parameter] Action ModelChanged { get; set; }
+}
+
+<h5>Implants</h5>
+<hr class="border-secondary" style="margin-top: 0;" />
+
+<ImplantsComponent Model="Model.Implants" ModelChanged="ModelChanged"></ImplantsComponent>
+
+<div class="row">
+  <div class="col-md-8">
+    <h5>Stats</h5>
+    <hr class="border-secondary" style="margin-top: 0;" />
+
+    <StatsComponent Model="Model.Stats" ModelChanged="ModelChanged"></StatsComponent>
+  </div>
+
+  <div class="col-md-4">
+    <h5>Buffs</h5>
+    <hr class="border-secondary" style="margin-top: 0;" />
+
+    <BuffsComponent Model="Model.Buffs" ModelChanged="() => Model.Stats.Apply(Model.Buffs)"></BuffsComponent>
+  </div>
+</div>
