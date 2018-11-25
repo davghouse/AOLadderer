@@ -3,11 +3,17 @@
 @page "/build"
 
 @functions {
-    protected void HandleBuffsChanged()
-    {
-      AppState.Stats.Apply(AppState.Buffs);
-      AppState.InvalidateLadder();
-    }
+  protected void HandleBuffsChanged()
+  {
+    AppState.Stats.Apply(AppState.Buffs);
+    AppState.InvalidateLadder();
+  }
+
+  protected void HandleAlgorithmChanged(UIChangeEventArgs args)
+  {
+    AppState.UseAdvancedLadderProcess = Convert.ToBoolean(args.Value);
+    AppState.InvalidateLadder();
+  }
 }
 
 <h5 id="build-section">Implants</h5>
@@ -32,5 +38,9 @@
 </div>
 
 <hr class="border-secondary" />
+
+<label class="float-left">
+  <input type="checkbox" checked="@AppState.UseAdvancedLadderProcess" onchange="@HandleAlgorithmChanged" /> Use slow algorithm for slightly better final implant QL.
+</label>
 
 <NavLink href="/ladder" class="btn btn-primary btn-lg float-right">Ladder &gt;</NavLink>

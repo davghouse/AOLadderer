@@ -10,6 +10,7 @@ namespace AOLadderer.Blazor
         public static ImplantsModel Implants { get; set; } = new ImplantsModel();
         public static StatsModel Stats { get; set; } = new StatsModel();
         public static BuffsModel Buffs { get; set; } = new BuffsModel();
+        public static bool UseAdvancedLadderProcess { get; set; }
         public static LadderModel Ladder { get; set; }
         public static ShoppingModel Shopping { get; set; }
 
@@ -28,7 +29,8 @@ namespace AOLadderer.Blazor
             var implantTemplates = Implants.Select(i => i.GetImplantTemplate()).Where(i => i != null).ToArray();
 
             Debug.WriteLine("Building ladder...");
-            var ladder = new BasicLadderProcess(character, implantTemplates);
+            LadderProcess ladder = UseAdvancedLadderProcess ? new AdvancedLadderProcess(character, implantTemplates)
+                : (LadderProcess)new BasicLadderProcess(character, implantTemplates);
 
             Debug.WriteLine("Ladder built.");
             Ladder = new LadderModel(ladder);
