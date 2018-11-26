@@ -6,7 +6,7 @@
 
     protected async Task HandleClick()
     {
-      Uri url = UriHelper.ToAbsoluteUri($"/permalink?{Model.Build.UrlTokenSerialize()}");
+      Uri url = UriHelper.ToAbsoluteUri($"permalink?{Model.Build.UrlTokenSerialize()}");
       WasJustCopied = await JSRuntime.Current.InvokeAsync<bool>("copyToClipboard", url.ToString());
     }
 

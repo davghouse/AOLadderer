@@ -9,5 +9,5 @@
   Uri url = new Uri(UriHelper.GetAbsoluteUri());
   string token = url.Query.TrimStart('?');
   Model.Build.UrlTokenDeserialize(token);
-  UriHelper.NavigateTo("/build");
+  UriHelper.NavigateTo("build");
 }
