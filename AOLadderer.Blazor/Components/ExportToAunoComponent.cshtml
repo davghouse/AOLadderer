@@ -3,7 +3,7 @@
 @functions {
     protected async Task HandleClick()
     {
-      Model.InitializeLadder();
+      Model.InitializeLadderProcess();
       await JSRuntime.Current.InvokeAsync<bool>("openInBlankTab",
           Model.ExportToAuno.BuildExportUrl());
     }

@@ -6,13 +6,21 @@
 
 @functions {
     protected override Task OnInitAsync()
-      => Task.Run(Model.InitializeLadder);
+      => Model.InitializeLadderProcess();
 }
 
-<h5>Insert implants in order, removing previous implants only when necessary</h5>
-
-@if (Model.Ladder != null)
+@if (Model.Ladder == null)
 {
+  <LoadingPlaceholderComponent></LoadingPlaceholderComponent>
+}
+else if (Model.Ladder.Count == 0)
+{
+  <BuildPlaceholderComponent></BuildPlaceholderComponent>
+}
+else
+{
+  <h5>Insert implants in order, removing previous implants only when necessary</h5>
+
   <LadderComponent Model="Model.Ladder"></LadderComponent>
 
   <p>

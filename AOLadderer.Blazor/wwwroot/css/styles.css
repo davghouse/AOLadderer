@@ -14,3 +14,48 @@ th > label {
 .form-control:disabled, .form-control[readonly] {
   background-color: #444;
 }
+
+.animate--pulse-1 {
+  animation: pulse-1 1s linear infinite;
+}
+
+.animate--pulse-2 {
+  animation: pulse-2 1s linear infinite;
+}
+
+.animate--pulse-3 {
+  animation: pulse-3 1s linear infinite;
+}
+
+@keyframes pulse-1 {
+  0% { opacity: 1; }
+  25% { opacity: .5; }
+  50% { opacity: 0; }
+  75% { opacity: .5; }
+  100% { opacity: 1; }
+}
+
+@keyframes pulse-2 {
+  0% { opacity: .5; }
+  25% { opacity: 1; }
+  50% { opacity: .5; }
+  75% { opacity: 0; }
+  100% { opacity: .5; }
+}
+
+@keyframes pulse-3 {
+  0% { opacity: 0; }
+  25% { opacity: .5; }
+  50% { opacity: 1; }
+  75% { opacity: .5; }
+  100% { opacity: 0; }
+}
+
+.app-loading-indicator {
+  position: absolute;
+  width: 230px;
+  height: 70px;
+  margin: -35px 0 0 -115px;
+  left: 50%;
+  top: 50%;
+}

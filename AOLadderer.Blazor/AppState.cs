@@ -1,5 +1,6 @@
 ﻿using AOLadderer.Blazor.Models;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace AOLadderer.Blazor
 {
@@ -7,32 +8,34 @@ namespace AOLadderer.Blazor
     {
         public BuildModel Build { get; set; } = new BuildModel();
         public bool UseAdvancedLadderProcess { get; set; }
-        public bool IsInitialized { get; set; }
+        public bool HasBuiltLadderProcess { get; set; }
         public LadderModel Ladder { get; set; }
         public ShoppingModel Shopping { get; set; }
         public ExportToAunoModel ExportToAuno { get; set; }
 
-        public void InvalidateLadder()
+        public void InvalidateLadderProcess()
         {
-            Debug.WriteLine("Invalidating ladder...");
+            Debug.WriteLine("Invalidating ladder process...");
             Ladder = null;
             Shopping = null;
             ExportToAuno = null;
-            IsInitialized = false;
+            HasBuiltLadderProcess = false;
         }
 
-        public void InitializeLadder()
+        public async Task InitializeLadderProcess()
         {
-            if (IsInitialized) return;
+            if (HasBuiltLadderProcess) return;
 
-            Debug.WriteLine("Building ladder...");
-            LadderProcess ladder = Build.CreateLadderProcess(UseAdvancedLadderProcess);
+            Debug.WriteLine("Building ladder process...");
+            // Browsers are single-threaded so this will actually still block the UI.
+            // See: https://github.com/aspnet/Blazor/issues/560
+            LadderProcess ladder = await Task.Run(() => Build.CreateLadderProcess(UseAdvancedLadderProcess));
 
-            Debug.WriteLine("Ladder built.");
+            Debug.WriteLine("Ladder process built.");
             Ladder = new LadderModel(ladder);
             Shopping = new ShoppingModel(ladder);
             ExportToAuno = new ExportToAunoModel(ladder);
-            IsInitialized = true;
+            HasBuiltLadderProcess = true;
         }
     }
 }

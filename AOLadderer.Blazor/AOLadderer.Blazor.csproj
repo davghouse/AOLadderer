@@ -20,6 +20,12 @@
       <Generator>MSBuild:BlazorGenerateDeclaration</Generator>
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+    <Content Update="Components\BuildPlaceholderComponent.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Components\LoadingPlaceholderComponent.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Components\ExportToAunoComponent.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

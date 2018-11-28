@@ -8,11 +8,11 @@
   protected void HandleAlgorithmChanged(UIChangeEventArgs args)
   {
     Model.UseAdvancedLadderProcess = Convert.ToBoolean(args.Value);
-    Model.InvalidateLadder();
+    Model.InvalidateLadderProcess();
   }
 }
 
-<BuildComponent Model="Model.Build" ModelChanged="Model.InvalidateLadder"></BuildComponent>
+<BuildComponent Model="Model.Build" ModelChanged="Model.InvalidateLadderProcess"></BuildComponent>
 
 <hr class="border-secondary" />
 
