@@ -44,13 +44,7 @@ namespace AOLadderer.Blazor.Models
                 if (UseExplosifs) yield return Buff.Explosifs;
                 if (StrengthAndStamina == StrengthAndStaminaBuff.IronCircle) yield return Buff.IronCircle;
                 if (StrengthAndStamina == StrengthAndStaminaBuff.ProdigiousStrength) yield return Buff.ProdigiousStrength;
-
-                if (StrengthAndStamina == StrengthAndStaminaBuff.IronCircleOrProdigiousStrength)
-                {
-                    yield return Buff.IronCircle;
-                    yield return Buff.ProdigiousStrength;
-                }
-
+                if (StrengthAndStamina == StrengthAndStaminaBuff.IronCircleOrProdigiousStrength) yield return Buff.IronCircleOrProdigiousStrength;
                 if (UseNeuronalStimulator) yield return Buff.NeuronalStimulator;
             }
         }

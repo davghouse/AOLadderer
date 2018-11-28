@@ -65,8 +65,8 @@
         </td>
 
         <td>
-          <label>
-            Off <br />
+          <label title="Mark the slot as not available for laddering (because it's already occupied).">
+            N/A <br />
             <input type="checkbox" class="form-control" checked="@implant.IsUnavailable"
                    onchange="@(e => { implant.IsUnavailable = Convert.ToBoolean(e.Value); ModelChanged?.Invoke(); })"/>
           </label>

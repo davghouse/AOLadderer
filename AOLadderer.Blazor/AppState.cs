@@ -32,6 +32,7 @@ namespace AOLadderer.Blazor
             Ladder = new LadderModel(ladder);
             Shopping = new ShoppingModel(ladder);
             ExportToAuno = new ExportToAunoModel(ladder);
+            IsInitialized = true;
         }
     }
 }

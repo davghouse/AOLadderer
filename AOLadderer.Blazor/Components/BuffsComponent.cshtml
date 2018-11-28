@@ -4,12 +4,6 @@
 }
 
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="buffs-config-composites" id="buffs-config-none"
-         checked="@(Model.Composites == CompositesBuff.None)" onchange="@(e => { Model.Composites = CompositesBuff.None; ModelChanged?.Invoke(); })" />
-  <label class="form-check-label" for="buffs-config-none">None</label>
-</div>
-
-<div class="form-check">
   <input class="form-check-input" type="radio" name="buffs-config-composites" id="buffs-config-composites"
          checked="@(Model.Composites == CompositesBuff.Standard)" onchange="@(e => { Model.Composites = CompositesBuff.Standard; ModelChanged?.Invoke(); })" />
   <label class="form-check-label" for="buffs-config-composites">Composites</label>
@@ -19,6 +13,12 @@
   <input class="form-check-input" type="radio" name="buffs-config-composites" id="buffs-config-composites-pay2win"
          checked="@(Model.Composites == CompositesBuff.Pay2Win)" onchange="@(e => { Model.Composites = CompositesBuff.Pay2Win; ModelChanged?.Invoke(); })" />
   <label class="form-check-label" for="buffs-config-composites-pay2win">Composites (Pay2Win)</label>
+</div>
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="buffs-config-composites" id="buffs-config-none"
+         checked="@(Model.Composites == CompositesBuff.None)" onchange="@(e => { Model.Composites = CompositesBuff.None; ModelChanged?.Invoke(); })" />
+  <label class="form-check-label" for="buffs-config-none">None</label>
 </div>
 
 <hr class="border-secondary" />
@@ -74,12 +74,6 @@
 <hr class="border-secondary" />
 
 <div class="form-check">
-  <input class="form-check-input" type="radio" name="buffs-config-str-sta-buff" id="buffs-config-none2"
-         checked="@(Model.StrengthAndStamina == StrengthAndStaminaBuff.None)" onchange="@(e => { Model.StrengthAndStamina = StrengthAndStaminaBuff.None; ModelChanged?.Invoke(); })" />
-  <label class="form-check-label" for="buffs-config-none2">None</label>
-</div>
-
-<div class="form-check">
   <input class="form-check-input" type="radio" name="buffs-config-str-sta-buff" id="buffs-config-iron-circle"
          checked="@(Model.StrengthAndStamina == StrengthAndStaminaBuff.IronCircle)" onchange="@(e => { Model.StrengthAndStamina = StrengthAndStaminaBuff.IronCircle; ModelChanged?.Invoke(); })" />
   <label class="form-check-label" for="buffs-config-iron-circle">
@@ -102,6 +96,12 @@
   <label class="form-check-label" for="buffs-config-ic-or-ps">
     IC or PS (40 Str, 20 Sta)
   </label>
+</div>
+
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="buffs-config-str-sta-buff" id="buffs-config-none2"
+         checked="@(Model.StrengthAndStamina == StrengthAndStaminaBuff.None)" onchange="@(e => { Model.StrengthAndStamina = StrengthAndStaminaBuff.None; ModelChanged?.Invoke(); })" />
+  <label class="form-check-label" for="buffs-config-none2">None</label>
 </div>
 
 <hr class="border-secondary" />
