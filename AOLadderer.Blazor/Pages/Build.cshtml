@@ -4,22 +4,9 @@
 
 @inject AppState Model
 
-@functions {
-  protected void HandleAlgorithmChanged(UIChangeEventArgs args)
-  {
-    Model.UseAdvancedLadderProcess = Convert.ToBoolean(args.Value);
-    Model.InvalidateLadderProcess();
-  }
-}
-
 <BuildComponent Model="Model.Build" ModelChanged="Model.InvalidateLadderProcess"></BuildComponent>
 
 <hr class="border-secondary" />
-
-<label class="float-left">
-  <input type="checkbox" checked="@Model.UseAdvancedLadderProcess" onchange="@HandleAlgorithmChanged" />
-  Use more laddering implants for slightly higher QL <span class="text-muted">(really slow)</span>
-</label>
 
 <NavLink href="ladder" class="btn btn-primary btn-lg float-right">
   Ladder <span class="oi oi-chevron-right"></span>

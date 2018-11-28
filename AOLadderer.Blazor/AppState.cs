@@ -7,7 +7,6 @@ namespace AOLadderer.Blazor
     public class AppState
     {
         public BuildModel Build { get; set; } = new BuildModel();
-        public bool UseAdvancedLadderProcess { get; set; }
         public bool HasBuiltLadderProcess { get; set; }
         public LadderModel Ladder { get; set; }
         public ShoppingModel Shopping { get; set; }
@@ -29,7 +28,7 @@ namespace AOLadderer.Blazor
             Debug.WriteLine("Building ladder process...");
             // Browsers are single-threaded so this will actually still block the UI.
             // See: https://github.com/aspnet/Blazor/issues/560
-            LadderProcess ladder = await Task.Run(() => Build.CreateLadderProcess(UseAdvancedLadderProcess));
+            LadderProcess ladder = await Task.Run(() => Build.CreateLadderProcess());
 
             Debug.WriteLine("Ladder process built.");
             Ladder = new LadderModel(ladder);

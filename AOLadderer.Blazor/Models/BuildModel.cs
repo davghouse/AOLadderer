@@ -10,7 +10,7 @@ namespace AOLadderer.Blazor.Models
         public StatsModel Stats { get; } = new StatsModel();
         public BuffsModel Buffs { get; } = new BuffsModel();
 
-        public LadderProcess CreateLadderProcess(bool useAdvancedLadderProcess = false)
+        public LadderProcess CreateLadderProcess()
         {
             var character = new Character(
                 Stats.Agility, Stats.Intelligence, Stats.Psychic,
@@ -24,9 +24,6 @@ namespace AOLadderer.Blazor.Models
                 .Where(i => i.IsUnavailable)
                 .Select(i => i.Slot)
                 .ToArray();
-
-            if (useAdvancedLadderProcess)
-                return new AdvancedLadderProcess(character, implantTemplates, unavailableImplantSlots);
 
             return new BasicLadderProcess(character, implantTemplates, unavailableImplantSlots);
         }
