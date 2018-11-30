@@ -1,0 +1,77 @@
+﻿@functions {
+    [Parameter] ImplantsModel Model { get; set; }
+    [Parameter] Action ModelChanged { get; set; }
+
+    string GetHtmlID(ImplantSlot slot, string brightness)
+        => $"implant-config-{slot.ShortName.ToLower()}-{brightness}";
+}
+
+<table class="table table-borderless implant-editor">
+  <thead>
+    <tr>
+      <th></th>
+      <th class="text-center">
+        <label for="@GetHtmlID(ImplantSlot.ImplantSlots.First(), "shiny")">Shiny</label>
+      </th>
+      <th class="text-center">
+        <label for="@GetHtmlID(ImplantSlot.ImplantSlots.First(), "bright")">Bright</label>
+      </th>
+      <th class="text-center">
+        <label for="@GetHtmlID(ImplantSlot.ImplantSlots.First(), "faded")">Faded</label>
+      </th>
+      <th style="width: 1%;"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    @foreach (ImplantModel implant in Model)
+    {
+      <tr>
+        <th class="text-right align-middle @(implant.IsUnavailable ? "text-secondary" : null)">
+          <label for="@GetHtmlID(implant.Slot, "shiny")">@implant.GetLabel()</label>
+        </th>
+
+        <td>
+          <select id="@GetHtmlID(implant.Slot, "shiny")" class="form-control" disabled="@implant.IsUnavailable"
+                  onchange="@(e => { implant.ShinyClusterSelection = Convert.ToString(e.Value); ModelChanged?.Invoke(); })">
+            <option></option>
+            @foreach (var option in implant.ShinyClusterOptions)
+            {
+              <option value="@option" selected="@(option.Equals(implant.ShinyClusterSelection))">@option</option>
+            }
+          </select>
+        </td>
+
+        <td>
+          <select id="@GetHtmlID(implant.Slot, "bright")" class="form-control" disabled="@implant.IsUnavailable"
+                  onchange="@(e => { implant.BrightClusterSelection = Convert.ToString(e.Value); ModelChanged?.Invoke(); })">
+            <option></option>
+            @foreach (var option in implant.BrightClusterOptions)
+            {
+              <option value="@option" selected="@(option.Equals(implant.BrightClusterSelection))">@option</option>
+            }
+          </select>
+        </td>
+
+        <td>
+          <select id="@GetHtmlID(implant.Slot, "faded")" class="form-control" disabled="@implant.IsUnavailable"
+                  onchange="@(e => { implant.FadedClusterSelection = Convert.ToString(e.Value); ModelChanged?.Invoke(); })">
+            <option></option>
+            @foreach (var option in implant.FadedClusterOptions)
+            {
+              <option value="@option" selected="@(option.Equals(implant.FadedClusterSelection))">@option</option>
+            }
+          </select>
+        </td>
+
+        <td>
+          <label title="Mark the slot as not available for laddering (because it's already occupied).">
+            N/A <br />
+            <input type="checkbox" class="form-control" checked="@implant.IsUnavailable"
+                   onchange="@(e => { implant.IsUnavailable = Convert.ToBoolean(e.Value); ModelChanged?.Invoke(); })"/>
+          </label>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

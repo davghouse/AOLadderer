@@ -1,0 +1,29 @@
+﻿@layout Layout
+
+@inject AppState Model
+
+@page "/shopping"
+
+@functions {
+    protected override Task OnInitAsync()
+      => Model.InitializeLadderProcess();
+}
+
+@if (Model.Shopping == null)
+{
+  <LoadingPlaceholderComponent></LoadingPlaceholderComponent>
+}
+else if (Model.Ladder.Count == 0)
+{
+  <BuildPlaceholderComponent></BuildPlaceholderComponent>
+}
+else
+{
+  <ShoppingComponent Model="Model.Shopping"></ShoppingComponent>
+}
+
+<hr class="border-secondary" />
+
+<NavLink href="ladder" class="btn btn-primary btn-lg float-left">
+  <span class="oi oi-chevron-left"></span> Ladder
+</NavLink>

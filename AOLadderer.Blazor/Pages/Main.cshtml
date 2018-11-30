@@ -1,0 +1,9 @@
+﻿@page "/"
+@inject IUriHelper UriHelper
+
+@functions {
+  protected override void OnInit()
+  {
+    UriHelper.NavigateTo("build");
+  }
+}

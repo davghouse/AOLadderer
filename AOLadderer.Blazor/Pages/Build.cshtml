@@ -1,0 +1,13 @@
+﻿@layout Layout
+
+@page "/build"
+
+@inject AppState Model
+
+<BuildComponent Model="Model.Build" ModelChanged="Model.InvalidateLadderProcess"></BuildComponent>
+
+<hr class="border-secondary" />
+
+<NavLink href="ladder" class="btn btn-primary btn-lg float-right">
+  Ladder <span class="oi oi-chevron-right"></span>
+</NavLink>

@@ -1,4 +1,4 @@
-﻿using AOLadderer.Helpers;
+﻿using AOLadderer.UI.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 

@@ -1,5 +1,4 @@
-﻿using AOLadderer.Helpers;
-using AOLadderer.Stats;
+﻿using AOLadderer.Stats;
 using System.Collections.Generic;
 using System.Linq;
 
