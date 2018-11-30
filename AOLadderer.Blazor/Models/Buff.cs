@@ -16,7 +16,7 @@ namespace AOLadderer.Blazor.Models
         public static readonly Buff Explosifs = new Buff(allAbilities: 20, treatmentDoesntTrickle: true);
         public static readonly Buff IronCircle = new Buff(strength: 20, stamina: 20);
         public static readonly Buff ProdigiousStrength = new Buff(strength: 40);
-        public static readonly Buff IronCircleOrProdigiousStrength = new Buff(stamina: 40, strength: 20);
+        public static readonly Buff IronCircleOrProdigiousStrength = new Buff(strength: 40, stamina: 20);
         public static readonly Buff NeuronalStimulator = new Buff(intelligence: 23, psychic: 23);
 
         private Buff(
