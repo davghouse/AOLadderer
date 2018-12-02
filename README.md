@@ -73,9 +73,9 @@ For many characters, laddering implants is a part of this process.
 Usage
 -----
 
-For Windows 10 users, download the latest release and double-click on AOLadder.UI.exe.
+For Windows 10 users, download the latest release, extract, and double-click on the AO Ladderer exe.
 Earlier versions of Windows aren't supported, but there's a chance it might work on them.
-Users without Windows 10 can use an old (cross-platform) version of the application found [here](https://github.com/davghouse/AOLadderer/releases/tag/v1.3.3).
+Users without Windows 10 can use a slower web-based version [here](https://ao-ladderer.github.io) (requires a modern browser), or an old cross-platform version [here](https://github.com/davghouse/AOLadderer/releases/tag/v1.3.3).
 
 Choose your implant configuration and input the abilities and Treatment you'll have at the time of equipping.
 I do this by having an actual character and equipping it with gear I think will be good for implant laddering.
