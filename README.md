@@ -7,7 +7,7 @@ Latest release [here](https://github.com/davghouse/AOLadderer/releases/tag/v2.2.
 
 Forum post [here](https://forums.anarchy-online.com/showthread.php?617115-AO-Ladderer-Implant-laddering-tool).
 
-If you don't have Windows you can use an earlier, cross-platform release [here](https://github.com/davghouse/AOLadderer/releases/tag/v1.3.3).
+There's a slower web-based version [here](https://ao-ladderer.github.io) (requires a modern browser), and an old cross-platform version [here](https://github.com/davghouse/AOLadderer/releases/tag/v1.3.3).
 
 ![Build](/Screenshots/Build.png)
 ![Basic Ladder](/Screenshots/BasicLadder.png)
