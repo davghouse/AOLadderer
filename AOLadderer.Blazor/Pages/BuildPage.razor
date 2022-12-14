@@ -1,10 +1,7 @@
-﻿@layout Layout
+﻿@page "/build"
+@inject AppState appState
 
-@page "/build"
-
-@inject AppState Model
-
-<BuildComponent Model="Model.Build" ModelChanged="Model.InvalidateLadderProcess"></BuildComponent>
+<Build Model="appState.Build" ModelChanged="appState.InvalidateLadderProcess"></Build>
 
 <hr class="border-secondary" />
 

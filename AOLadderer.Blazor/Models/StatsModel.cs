@@ -69,13 +69,13 @@ namespace AOLadderer.Blazor.Models
 
         public void UrlTokenDeserialize(Queue<object> data)
         {
-            baseStrength = Convert.ToInt32(data.Dequeue());
-            baseAgility = Convert.ToInt32(data.Dequeue());
-            baseStamina = Convert.ToInt32(data.Dequeue());
-            baseIntelligence = Convert.ToInt32(data.Dequeue());
-            baseSense = Convert.ToInt32(data.Dequeue());
-            basePsychic = Convert.ToInt32(data.Dequeue());
-            baseTreatment = Convert.ToDouble(data.Dequeue());
+            baseStrength = Convert.ToInt32(Convert.ToString(data.Dequeue()));
+            baseAgility = Convert.ToInt32(Convert.ToString(data.Dequeue()));
+            baseStamina = Convert.ToInt32(Convert.ToString(data.Dequeue()));
+            baseIntelligence = Convert.ToInt32(Convert.ToString(data.Dequeue()));
+            baseSense = Convert.ToInt32(Convert.ToString(data.Dequeue()));
+            basePsychic = Convert.ToInt32(Convert.ToString(data.Dequeue()));
+            baseTreatment = Convert.ToDouble(Convert.ToString(data.Dequeue()));
         }
 
         public void UrlTokenSerialize(Queue<object> data)

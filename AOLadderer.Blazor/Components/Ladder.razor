@@ -1,5 +1,5 @@
-﻿@functions {
-    [Parameter] LadderModel Model { get; set; }
+﻿@code {
+    [Parameter] public LadderModel Model { get; set; }
 }
 
 <table class="table table-striped table-hover">
@@ -18,7 +18,7 @@
     @foreach (var step in Model)
     {
       <tr class="@(step.IsChecked ? "text-secondary" : null)"
-          onclick="@(e => step.IsChecked = !step.IsChecked)">
+          @onclick="e => step.IsChecked = !step.IsChecked">
         <td><input type="checkbox" bind="step.IsChecked" /></td>
         <td>@step.ImplantQL</td>
         <td>@step.ImplantSlot</td>

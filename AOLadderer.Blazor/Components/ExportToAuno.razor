@@ -1,0 +1,15 @@
+﻿@inject IJSRuntime jsRuntime
+@inject AppState appState
+
+@code {
+    protected async Task HandleClick()
+    {
+        await appState.InitializeLadderProcess();
+        await jsRuntime.InvokeAsync<bool>("openInBlankTab",
+            appState.ExportToAuno.BuildExportUrl());
+    }
+}
+
+<a class="nav-link nav-item" style="cursor: pointer;" @onclick="HandleClick">
+  <span class="oi oi-external-link"></span> Export to Auno
+</a>

@@ -1,11 +1,11 @@
-﻿@functions {
-    [Parameter] StatsModel Model { get; set; }
-    [Parameter] Action ModelChanged { get; set; }
+﻿@code {
+    [Parameter] public StatsModel Model { get; set; }
+    [Parameter] public Action ModelChanged { get; set; }
 
     protected override void OnParametersSet()
     {
-      Model.OnBuffsApplied += StateHasChanged;
-      Model.OnBuffsApplied += ModelChanged;
+        Model.OnBuffsApplied += StateHasChanged;
+        Model.OnBuffsApplied += ModelChanged;
     }
 }
 
@@ -13,12 +13,12 @@
   <div class="form-group col-md-6">
     <label for="stats-config-strength">Strength</label>
     <input id="stats-config-strength" type="number" class="form-control"
-           value="@Model.Strength" onchange="@(e => { Model.Strength = Convert.ToInt32(e.Value); ModelChanged?.Invoke(); })" />
+           value="@Model.Strength" @onchange="e => { Model.Strength = Convert.ToInt32(e.Value); ModelChanged?.Invoke(); }" />
   </div>
   <div class="form-group col-md-6">
     <label for="stats-config-agility">Agility</label>
     <input id="stats-config-agility" type="number" class="form-control"
-           value="@Model.Agility" onchange="@(e => { Model.Agility = Convert.ToInt32(e.Value); ModelChanged?.Invoke(); })" />
+           value="@Model.Agility" @onchange="e => { Model.Agility = Convert.ToInt32(e.Value); ModelChanged?.Invoke(); }" />
   </div>
 </div>
 
@@ -26,12 +26,12 @@
   <div class="form-group col-md-6">
     <label for="stats-config-stamina">Stamina</label>
     <input id="stats-config-stamina" type="number" class="form-control"
-           value="@Model.Stamina" onchange="@(e => { Model.Stamina = Convert.ToInt32(e.Value); ModelChanged?.Invoke(); })" />
+           value="@Model.Stamina" @onchange="e => { Model.Stamina = Convert.ToInt32(e.Value); ModelChanged?.Invoke(); }" />
   </div>
   <div class="form-group col-md-6">
     <label for="stats-config-intelligence">Intelligence</label>
     <input id="stats-config-intelligence" type="number" class="form-control"
-           value="@Model.Intelligence" onchange="@(e => { Model.Intelligence = Convert.ToInt32(e.Value); ModelChanged?.Invoke(); })" />
+           value="@Model.Intelligence" @onchange="e => { Model.Intelligence = Convert.ToInt32(e.Value); ModelChanged?.Invoke(); }" />
   </div>
 </div>
 
@@ -39,12 +39,12 @@
   <div class="form-group col-md-6">
     <label for="stats-config-sense">Sense</label>
     <input id="stats-config-sense" type="number" class="form-control"
-           value="@Model.Sense" onchange="@(e => { Model.Sense = Convert.ToInt32(e.Value); ModelChanged?.Invoke(); })" />
+           value="@Model.Sense" @onchange="e => { Model.Sense = Convert.ToInt32(e.Value); ModelChanged?.Invoke(); }" />
   </div>
   <div class="form-group col-md-6">
     <label for="stats-config-psychic">Psychic</label>
     <input id="stats-config-psychic" type="number" class="form-control"
-           value="@Model.Psychic" onchange="@(e => { Model.Psychic = Convert.ToInt32(e.Value); ModelChanged?.Invoke(); })" />
+           value="@Model.Psychic" @onchange="e => { Model.Psychic = Convert.ToInt32(e.Value); ModelChanged?.Invoke(); }" />
   </div>
 </div>
 
@@ -52,6 +52,6 @@
   <div class="form-group col-md-6">
     <label for="stats-config-treatment">Treatment</label>
     <input id="stats-config-treatment" type="number" class="form-control"
-           value="@Model.Treatment" onchange="@(e => { Model.Treatment = Convert.ToDouble(e.Value); ModelChanged?.Invoke(); })" />
+           value="@Model.Treatment" @onchange="e => { Model.Treatment = Convert.ToDouble(e.Value); ModelChanged?.Invoke(); }" />
   </div>
 </div>

@@ -1,6 +1,6 @@
-﻿@functions {
-    [Parameter] ImplantsModel Model { get; set; }
-    [Parameter] Action ModelChanged { get; set; }
+﻿@code {
+    [Parameter] public ImplantsModel Model { get; set; }
+    [Parameter] public Action ModelChanged { get; set; }
 
     string GetHtmlID(ImplantSlot slot, string brightness)
         => $"implant-config-{slot.ShortName.ToLower()}-{brightness}";
@@ -33,7 +33,7 @@
 
         <td>
           <select id="@GetHtmlID(implant.Slot, "shiny")" class="form-control" disabled="@implant.IsUnavailable"
-                  onchange="@(e => { implant.ShinyClusterSelection = Convert.ToString(e.Value); ModelChanged?.Invoke(); })">
+                  @onchange="e => { implant.ShinyClusterSelection = Convert.ToString(e.Value); ModelChanged?.Invoke(); }">
             <option></option>
             @foreach (var option in implant.ShinyClusterOptions)
             {
@@ -44,7 +44,7 @@
 
         <td>
           <select id="@GetHtmlID(implant.Slot, "bright")" class="form-control" disabled="@implant.IsUnavailable"
-                  onchange="@(e => { implant.BrightClusterSelection = Convert.ToString(e.Value); ModelChanged?.Invoke(); })">
+                  @onchange="e => { implant.BrightClusterSelection = Convert.ToString(e.Value); ModelChanged?.Invoke(); }">
             <option></option>
             @foreach (var option in implant.BrightClusterOptions)
             {
@@ -55,7 +55,7 @@
 
         <td>
           <select id="@GetHtmlID(implant.Slot, "faded")" class="form-control" disabled="@implant.IsUnavailable"
-                  onchange="@(e => { implant.FadedClusterSelection = Convert.ToString(e.Value); ModelChanged?.Invoke(); })">
+                  @onchange="e => { implant.FadedClusterSelection = Convert.ToString(e.Value); ModelChanged?.Invoke(); }">
             <option></option>
             @foreach (var option in implant.FadedClusterOptions)
             {
@@ -68,7 +68,7 @@
           <label title="Mark the slot as not available for laddering (because it's already occupied).">
             N/A <br />
             <input type="checkbox" class="form-control" checked="@implant.IsUnavailable"
-                   onchange="@(e => { implant.IsUnavailable = Convert.ToBoolean(e.Value); ModelChanged?.Invoke(); })"/>
+                   @onchange="e => { implant.IsUnavailable = Convert.ToBoolean(e.Value); ModelChanged?.Invoke(); }"/>
           </label>
         </td>
       </tr>

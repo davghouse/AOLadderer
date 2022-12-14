@@ -67,7 +67,7 @@ namespace AOLadderer.Blazor.Models
                 implant.ShinyClusterSelection = Convert.ToString(data.Dequeue());
                 implant.BrightClusterSelection = Convert.ToString(data.Dequeue());
                 implant.FadedClusterSelection = Convert.ToString(data.Dequeue());
-                implant.IsUnavailable = Convert.ToInt32(data.Dequeue()) == 1;
+                implant.IsUnavailable = Convert.ToString(data.Dequeue()) == "1";
             }
         }
 

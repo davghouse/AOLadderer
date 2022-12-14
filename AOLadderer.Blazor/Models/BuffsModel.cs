@@ -59,17 +59,17 @@ namespace AOLadderer.Blazor.Models
 
         public void UrlTokenDeserialize(Queue<object> data)
         {
-            Composites = (CompositesBuff)Convert.ToInt32(data.Dequeue());
-            UseSurgeryClinicEffect = Convert.ToInt32(data.Dequeue()) == 1;
-            UseSuperiorFirstAid = Convert.ToInt32(data.Dequeue()) == 1;
-            UseEnhancedSenses = Convert.ToInt32(data.Dequeue()) == 1;
-            UseFelineGrace = Convert.ToInt32(data.Dequeue()) == 1;
-            UseEssenceOfBehemoth = Convert.ToInt32(data.Dequeue()) == 1;
-            UseGauntlet = Convert.ToInt32(data.Dequeue()) == 1;
-            UseExtruderBar = Convert.ToInt32(data.Dequeue()) == 1;
-            UseExplosifs = Convert.ToInt32(data.Dequeue()) == 1;
-            StrengthAndStamina = (StrengthAndStaminaBuff)Convert.ToInt32(data.Dequeue());
-            UseNeuronalStimulator = Convert.ToInt32(data.Dequeue()) == 1;
+            Composites = (CompositesBuff)Convert.ToInt32(Convert.ToString(data.Dequeue()));
+            UseSurgeryClinicEffect = Convert.ToString(data.Dequeue()) == "1";
+            UseSuperiorFirstAid = Convert.ToString(data.Dequeue()) == "1";
+            UseEnhancedSenses = Convert.ToString(data.Dequeue()) == "1";
+            UseFelineGrace = Convert.ToString(data.Dequeue()) == "1";
+            UseEssenceOfBehemoth = Convert.ToString(data.Dequeue()) == "1";
+            UseGauntlet = Convert.ToString(data.Dequeue()) == "1";
+            UseExtruderBar = Convert.ToString(data.Dequeue()) == "1";
+            UseExplosifs = Convert.ToString(data.Dequeue()) == "1";
+            StrengthAndStamina = (StrengthAndStaminaBuff)Convert.ToInt32(Convert.ToString(data.Dequeue()));
+            UseNeuronalStimulator = Convert.ToString(data.Dequeue()) == "1";
         }
 
         public void UrlTokenSerialize(Queue<object> data)

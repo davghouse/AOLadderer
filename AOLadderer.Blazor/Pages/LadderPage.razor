@@ -1,0 +1,36 @@
+﻿@page "/ladder"
+@inject AppState appState
+
+@code {
+    protected override Task OnInitializedAsync()
+        => appState.InitializeLadderProcess();
+}
+
+@if (appState.Ladder == null)
+{
+  <LoadingPlaceholder></LoadingPlaceholder>
+}
+else if (appState.Ladder.Count == 0)
+{
+  <BuildPlaceholder></BuildPlaceholder>
+}
+else
+{
+  <h5>Insert implants in order, removing previous implants only when necessary</h5>
+
+  <Ladder Model="appState.Ladder"></Ladder>
+
+  <p>
+    <strong>Average final implant QL:</strong> @(appState.Ladder.AverageFinalImplantQL.ToString("N"))
+  </p>
+}
+
+<hr class="border-secondary" />
+
+<NavLink href="build" class="btn btn-primary btn-lg float-left">
+  <span class="oi oi-chevron-left"></span> Build
+</NavLink>
+
+<NavLink href="shopping" class="btn btn-primary btn-lg float-right">
+  Shopping <span class="oi oi-chevron-right"></span>
+</NavLink>

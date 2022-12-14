@@ -1,7 +1,7 @@
-﻿using Microsoft.JSInterop;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json;
 
 namespace AOLadderer.Blazor.Models
 {
@@ -17,7 +17,7 @@ namespace AOLadderer.Blazor.Models
         {
             var data = new Queue<object>();
             serializable.UrlTokenSerialize(data);
-            string json = Json.Serialize(data);
+            string json = JsonSerializer.Serialize(data);
 
             // TODO: Compress JSON when DeflateStream is fixed, see: https://github.com/aspnet/Blazor/issues/445
             return Convert.ToBase64String(Encoding.UTF8.GetBytes(json))
@@ -29,7 +29,7 @@ namespace AOLadderer.Blazor.Models
             string json = Encoding.UTF8.GetString(Convert.FromBase64String(
                 token.Replace('-', '+').Replace('_', '/')));
 
-            var data = Json.Deserialize<object[]>(json);
+            var data = JsonSerializer.Deserialize<object[]>(json);
             var data2 = new Queue<object>(data);
             serializable.UrlTokenDeserialize(data2);
         }

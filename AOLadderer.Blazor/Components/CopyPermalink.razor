@@ -1,0 +1,22 @@
+﻿@inject NavigationManager navigationManager
+@inject IJSRuntime jsRuntime
+@inject AppState appState
+
+@code {
+    bool WasJustCopied { get; set; }
+
+    protected async Task HandleClick()
+    {
+        Uri url = navigationManager.ToAbsoluteUri($"permalink?{appState.Build.UrlTokenSerialize()}");
+        WasJustCopied = await jsRuntime.InvokeAsync<bool>("copyToClipboard", url.ToString());
+    }
+
+    protected void HandleMouseOut()
+    {
+        WasJustCopied = false;
+    }
+}
+
+<a class="nav-link nav-item" style="cursor: pointer;" @onclick="HandleClick" @onmouseout="HandleMouseOut">
+  <span class="oi @(WasJustCopied ? "oi-check" : "oi-link-intact")"></span> Copy permalink
+</a>

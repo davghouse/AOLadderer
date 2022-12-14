@@ -1,0 +1,10 @@
+﻿@page "/permalink"
+@inject AppState appState
+@inject NavigationManager navigationManager
+
+@{
+    Uri url = new Uri(navigationManager.Uri);
+    string token = url.Query.TrimStart('?');
+    appState.Build.UrlTokenDeserialize(token);
+    navigationManager.NavigateTo("/build");
+}

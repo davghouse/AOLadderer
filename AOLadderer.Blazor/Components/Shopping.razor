@@ -1,5 +1,5 @@
-﻿@functions {
-  [Parameter] ShoppingModel Model { get; set; }
+﻿@code {
+    [Parameter] public ShoppingModel Model { get; set; }
 }
 
 <div class="row">
@@ -26,7 +26,7 @@
           @foreach (var cluster in clusterType.clusters)
           {
             <tr class="@(cluster.IsChecked ? "text-secondary" : null)"
-                onclick="@(e => cluster.IsChecked = !cluster.IsChecked)">
+                @onclick="e => cluster.IsChecked = !cluster.IsChecked">
               <td><input type="checkbox" bind="cluster.IsChecked" /></td>
               <td>@cluster.MinimumQL</td>
               <td>@cluster.Stat</td>
