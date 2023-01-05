@@ -1,9 +1,11 @@
 ﻿AO Ladderer
 ===========
 
-Implant laddering tool for the sci-fi MMORPG Anarchy Online. 
+Implant laddering tool for the sci-fi MMORPG Anarchy Online.
 
-Latest release [here](https://github.com/davghouse/AOLadderer/releases/tag/v2.2.0) (built for W10, but it probably works on W7 too). If you can't use that, there's a slower web-based version [here](https://ao-ladderer.github.io) (requires a modern browser), or an old cross-platform version [here](https://github.com/davghouse/AOLadderer/releases/tag/v1.3.3).
+Web-based version [here](https://ao-ladderer.github.io).  
+Desktop version [here](https://github.com/davghouse/AOLadderer/releases/tag/v2.2.0).  
+Old cross-platform desktop version [here](https://github.com/davghouse/AOLadderer/releases/tag/v1.3.3).  
 
 ![Build](/Screenshots/Build.png)
 ![Basic Ladder](/Screenshots/BasicLadder.png)
