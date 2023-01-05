@@ -19,7 +19,7 @@
     {
       <tr class="@(step.IsChecked ? "text-secondary" : null)"
           @onclick="e => step.IsChecked = !step.IsChecked">
-        <td><input type="checkbox" bind="step.IsChecked" /></td>
+        <td><input type="checkbox" @bind="step.IsChecked" /></td>
         <td>@step.ImplantQL</td>
         <td>@step.ImplantSlot</td>
         <td>@step.ShinyStat</td>

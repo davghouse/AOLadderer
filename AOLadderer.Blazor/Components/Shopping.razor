@@ -27,7 +27,7 @@
           {
             <tr class="@(cluster.IsChecked ? "text-secondary" : null)"
                 @onclick="e => cluster.IsChecked = !cluster.IsChecked">
-              <td><input type="checkbox" bind="cluster.IsChecked" /></td>
+              <td><input type="checkbox" @bind="cluster.IsChecked" /></td>
               <td>@cluster.MinimumQL</td>
               <td>@cluster.Stat</td>
             </tr>
