@@ -16,12 +16,12 @@ else if (appState.Ladder.Count == 0)
 }
 else
 {
-  <h5>Insert implants in order, removing previous implants only when necessary</h5>
+  <h5>Ladder: Insert implants in order, removing previous implants only when necessary.</h5>
 
   <Ladder Model="appState.Ladder"></Ladder>
 
   <p>
-    <strong>Average final implant QL:</strong> @(appState.Ladder.AverageFinalImplantQL.ToString("N"))
+    Average QL = @(appState.Ladder.AverageFinalImplantQL.ToString("N2"))
   </p>
 }
 
